@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13240" systemVersion="17B1002" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="Train" representedClassName="Train" syncable="YES" codeGenerationType="class">
+        <attribute name="bell_function" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="dcc_address" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="function_0" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_3" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_4" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_5" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_6" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_7" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_8" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_9" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_10" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_11" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_12" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_13" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_14" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_15" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_16" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_17" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_18" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_19" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_20" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_21" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_22" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_23" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_24" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_25" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_26" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_27" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function_28" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="headlight_function" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="horn_function" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Train" positionX="-63" positionY="-18" width="128" height="555"/>
+    </elements>
+</model>

@@ -1,0 +1,586 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A548BC831FCE5065006D03F8 /* NEOnboardingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A548BC821FCE5065006D03F8 /* NEOnboardingViewController.m */; };
+		A548BCA91FCE59AB006D03F8 /* trains.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A548BCA71FCE59AB006D03F8 /* trains.xcdatamodeld */; };
+		A548BCB21FCE64BA006D03F8 /* NECreateTrainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A548BCB11FCE64BA006D03F8 /* NECreateTrainViewController.m */; };
+		A54BABE31E64F92E0082FD6B /* DS-DIGI.TTF in Resources */ = {isa = PBXBuildFile; fileRef = A54BABE11E64F92E0082FD6B /* DS-DIGI.TTF */; };
+		A54BABE41E64F92E0082FD6B /* DS-DIGIB.TTF in Resources */ = {isa = PBXBuildFile; fileRef = A54BABE21E64F92E0082FD6B /* DS-DIGIB.TTF */; };
+		A54BABE61E6508760082FD6B /* LEDCalculator.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A54BABE51E6508760082FD6B /* LEDCalculator.ttf */; };
+		A54BABE91E6527D60082FD6B /* NEProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = A54BABE81E6527D60082FD6B /* NEProgram.m */; };
+		A54BABEC1E67C9E80082FD6B /* NENumberFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = A54BABEB1E67C9E80082FD6B /* NENumberFormatter.m */; };
+		A54BABEF1E6A8A290082FD6B /* NETrackPadView.m in Sources */ = {isa = PBXBuildFile; fileRef = A54BABEE1E6A8A290082FD6B /* NETrackPadView.m */; };
+		A57B32E31E60E12F009FD63D /* NECommand.m in Sources */ = {isa = PBXBuildFile; fileRef = A57B32E21E60E12F009FD63D /* NECommand.m */; };
+		A57FC0F81F3951C20094A5A0 /* NESerialManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A57FC0F71F3951C20094A5A0 /* NESerialManager.m */; };
+		A5AAE86F1E5FD7D7006CF087 /* NEMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5AAE86E1E5FD7D7006CF087 /* NEMenuViewController.m */; };
+		A5D19BF81FE7708D00805A6E /* NENCEController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5D19BF71FE7708D00805A6E /* NENCEController.m */; };
+		A5FC9D301E52AF9700D5F086 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FC9D2F1E52AF9700D5F086 /* AppDelegate.m */; };
+		A5FC9D331E52AF9700D5F086 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FC9D321E52AF9700D5F086 /* main.m */; };
+		A5FC9D361E52AF9700D5F086 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FC9D351E52AF9700D5F086 /* ViewController.m */; };
+		A5FC9D381E52AF9700D5F086 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5FC9D371E52AF9700D5F086 /* Assets.xcassets */; };
+		A5FC9D3B1E52AF9700D5F086 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5FC9D391E52AF9700D5F086 /* Main.storyboard */; };
+		A5FC9D4A1E53D54300D5F086 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FC9D491E53D54300D5F086 /* CoreFoundation.framework */; };
+		A5FC9D4C1E53D55000D5F086 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FC9D4B1E53D55000D5F086 /* IOKit.framework */; };
+		A5FC9D591E567C9400D5F086 /* ORSSerialBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FC9D501E567C9400D5F086 /* ORSSerialBuffer.m */; };
+		A5FC9D5A1E567C9400D5F086 /* ORSSerialPacketDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FC9D521E567C9400D5F086 /* ORSSerialPacketDescriptor.m */; };
+		A5FC9D5B1E567C9400D5F086 /* ORSSerialPort.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FC9D541E567C9400D5F086 /* ORSSerialPort.m */; };
+		A5FC9D5C1E567C9400D5F086 /* ORSSerialPortManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FC9D561E567C9400D5F086 /* ORSSerialPortManager.m */; };
+		A5FC9D5D1E567C9400D5F086 /* ORSSerialRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FC9D581E567C9400D5F086 /* ORSSerialRequest.m */; };
+		A5FC9D651E59D0A300D5F086 /* NETrain.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FC9D641E59D0A300D5F086 /* NETrain.m */; };
+		A5FC9D681E59D14900D5F086 /* NEFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FC9D671E59D14900D5F086 /* NEFunction.m */; };
+		A5FC9D6A1E5AA24400D5F086 /* SFMono-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = A5FC9D691E5AA24400D5F086 /* SFMono-Regular.otf */; };
+		A5FC9D6E1E5AA3E500D5F086 /* NEConsoleView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FC9D6D1E5AA3E500D5F086 /* NEConsoleView.m */; };
+		A5FC9D711E5AA43F00D5F086 /* NECommandView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FC9D701E5AA43F00D5F086 /* NECommandView.m */; };
+		A5FC9D741E5BD9A800D5F086 /* NEFunctionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FC9D731E5BD9A800D5F086 /* NEFunctionCell.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A548BC811FCE5065006D03F8 /* NEOnboardingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NEOnboardingViewController.h; sourceTree = "<group>"; };
+		A548BC821FCE5065006D03F8 /* NEOnboardingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NEOnboardingViewController.m; sourceTree = "<group>"; };
+		A548BCA81FCE59AB006D03F8 /* trains.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = trains.xcdatamodel; sourceTree = "<group>"; };
+		A548BCB01FCE64BA006D03F8 /* NECreateTrainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NECreateTrainViewController.h; sourceTree = "<group>"; };
+		A548BCB11FCE64BA006D03F8 /* NECreateTrainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NECreateTrainViewController.m; sourceTree = "<group>"; };
+		A54BABE11E64F92E0082FD6B /* DS-DIGI.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DS-DIGI.TTF"; sourceTree = "<group>"; };
+		A54BABE21E64F92E0082FD6B /* DS-DIGIB.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DS-DIGIB.TTF"; sourceTree = "<group>"; };
+		A54BABE51E6508760082FD6B /* LEDCalculator.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LEDCalculator.ttf; sourceTree = "<group>"; };
+		A54BABE71E6527D60082FD6B /* NEProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NEProgram.h; sourceTree = "<group>"; };
+		A54BABE81E6527D60082FD6B /* NEProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NEProgram.m; sourceTree = "<group>"; };
+		A54BABEA1E67C9E80082FD6B /* NENumberFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NENumberFormatter.h; sourceTree = "<group>"; };
+		A54BABEB1E67C9E80082FD6B /* NENumberFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NENumberFormatter.m; sourceTree = "<group>"; };
+		A54BABED1E6A8A290082FD6B /* NETrackPadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NETrackPadView.h; sourceTree = "<group>"; };
+		A54BABEE1E6A8A290082FD6B /* NETrackPadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NETrackPadView.m; sourceTree = "<group>"; };
+		A57B32E11E60E12F009FD63D /* NECommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NECommand.h; sourceTree = "<group>"; };
+		A57B32E21E60E12F009FD63D /* NECommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NECommand.m; sourceTree = "<group>"; };
+		A57FC0F61F3951C20094A5A0 /* NESerialManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NESerialManager.h; sourceTree = "<group>"; };
+		A57FC0F71F3951C20094A5A0 /* NESerialManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NESerialManager.m; sourceTree = "<group>"; };
+		A5AAE86D1E5FD7D7006CF087 /* NEMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NEMenuViewController.h; sourceTree = "<group>"; };
+		A5AAE86E1E5FD7D7006CF087 /* NEMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NEMenuViewController.m; sourceTree = "<group>"; };
+		A5D19BF61FE7708D00805A6E /* NENCEController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NENCEController.h; sourceTree = "<group>"; };
+		A5D19BF71FE7708D00805A6E /* NENCEController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NENCEController.m; sourceTree = "<group>"; };
+		A5ED56EF1FD3B048001F1BC0 /* trains_v1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = trains_v1.xcdatamodel; sourceTree = "<group>"; };
+		A5FC9D2B1E52AF9700D5F086 /* Command.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Command.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5FC9D2E1E52AF9700D5F086 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A5FC9D2F1E52AF9700D5F086 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A5FC9D321E52AF9700D5F086 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A5FC9D341E52AF9700D5F086 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		A5FC9D351E52AF9700D5F086 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		A5FC9D371E52AF9700D5F086 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A5FC9D3A1E52AF9700D5F086 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A5FC9D3C1E52AF9700D5F086 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A5FC9D491E53D54300D5F086 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		A5FC9D4B1E53D55000D5F086 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		A5FC9D4F1E567C9400D5F086 /* ORSSerialBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORSSerialBuffer.h; sourceTree = "<group>"; };
+		A5FC9D501E567C9400D5F086 /* ORSSerialBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORSSerialBuffer.m; sourceTree = "<group>"; };
+		A5FC9D511E567C9400D5F086 /* ORSSerialPacketDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORSSerialPacketDescriptor.h; sourceTree = "<group>"; };
+		A5FC9D521E567C9400D5F086 /* ORSSerialPacketDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORSSerialPacketDescriptor.m; sourceTree = "<group>"; };
+		A5FC9D531E567C9400D5F086 /* ORSSerialPort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORSSerialPort.h; sourceTree = "<group>"; };
+		A5FC9D541E567C9400D5F086 /* ORSSerialPort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORSSerialPort.m; sourceTree = "<group>"; };
+		A5FC9D551E567C9400D5F086 /* ORSSerialPortManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORSSerialPortManager.h; sourceTree = "<group>"; };
+		A5FC9D561E567C9400D5F086 /* ORSSerialPortManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORSSerialPortManager.m; sourceTree = "<group>"; };
+		A5FC9D571E567C9400D5F086 /* ORSSerialRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORSSerialRequest.h; sourceTree = "<group>"; };
+		A5FC9D581E567C9400D5F086 /* ORSSerialRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORSSerialRequest.m; sourceTree = "<group>"; };
+		A5FC9D631E59D0A300D5F086 /* NETrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NETrain.h; sourceTree = "<group>"; };
+		A5FC9D641E59D0A300D5F086 /* NETrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NETrain.m; sourceTree = "<group>"; };
+		A5FC9D661E59D14900D5F086 /* NEFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NEFunction.h; sourceTree = "<group>"; };
+		A5FC9D671E59D14900D5F086 /* NEFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NEFunction.m; sourceTree = "<group>"; };
+		A5FC9D691E5AA24400D5F086 /* SFMono-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFMono-Regular.otf"; sourceTree = "<group>"; };
+		A5FC9D6C1E5AA3E500D5F086 /* NEConsoleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NEConsoleView.h; sourceTree = "<group>"; };
+		A5FC9D6D1E5AA3E500D5F086 /* NEConsoleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NEConsoleView.m; sourceTree = "<group>"; };
+		A5FC9D6F1E5AA43F00D5F086 /* NECommandView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NECommandView.h; sourceTree = "<group>"; };
+		A5FC9D701E5AA43F00D5F086 /* NECommandView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NECommandView.m; sourceTree = "<group>"; };
+		A5FC9D721E5BD9A800D5F086 /* NEFunctionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NEFunctionCell.h; sourceTree = "<group>"; };
+		A5FC9D731E5BD9A800D5F086 /* NEFunctionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NEFunctionCell.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A5FC9D281E52AF9700D5F086 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A5FC9D4C1E53D55000D5F086 /* IOKit.framework in Frameworks */,
+				A5FC9D4A1E53D54300D5F086 /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A548BC801FCE503E006D03F8 /* Onboarding View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A548BC811FCE5065006D03F8 /* NEOnboardingViewController.h */,
+				A548BC821FCE5065006D03F8 /* NEOnboardingViewController.m */,
+			);
+			name = "Onboarding View Controller";
+			sourceTree = "<group>";
+		};
+		A548BCAA1FCE63AB006D03F8 /* Create Train View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A548BCB01FCE64BA006D03F8 /* NECreateTrainViewController.h */,
+				A548BCB11FCE64BA006D03F8 /* NECreateTrainViewController.m */,
+			);
+			name = "Create Train View Controller";
+			sourceTree = "<group>";
+		};
+		A57B32E51E62984E009FD63D /* Control View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A5FC9D341E52AF9700D5F086 /* ViewController.h */,
+				A5FC9D351E52AF9700D5F086 /* ViewController.m */,
+			);
+			name = "Control View Controller";
+			sourceTree = "<group>";
+		};
+		A57B32E61E62985A009FD63D /* Menu View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A5AAE86D1E5FD7D7006CF087 /* NEMenuViewController.h */,
+				A5AAE86E1E5FD7D7006CF087 /* NEMenuViewController.m */,
+			);
+			name = "Menu View Controller";
+			sourceTree = "<group>";
+		};
+		A5D19BF51FE7705F00805A6E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A5D19BF61FE7708D00805A6E /* NENCEController.h */,
+				A5D19BF71FE7708D00805A6E /* NENCEController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		A5FC9D221E52AF9700D5F086 = {
+			isa = PBXGroup;
+			children = (
+				A5FC9D2D1E52AF9700D5F086 /* Command */,
+				A5FC9D2C1E52AF9700D5F086 /* Products */,
+				A5FC9D481E53D54300D5F086 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		A5FC9D2C1E52AF9700D5F086 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A5FC9D2B1E52AF9700D5F086 /* Command.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A5FC9D2D1E52AF9700D5F086 /* Command */ = {
+			isa = PBXGroup;
+			children = (
+				A5FC9D4D1E567C8800D5F086 /* Third Party */,
+				A5FC9D421E52AF9C00D5F086 /* App Delegate */,
+				A5FC9D431E52AFA400D5F086 /* View Controller */,
+				A5FC9D371E52AF9700D5F086 /* Assets.xcassets */,
+				A5FC9D441E52AFAB00D5F086 /* Storyboards */,
+				A5FC9D3C1E52AF9700D5F086 /* Info.plist */,
+				A5FC9D311E52AF9700D5F086 /* Supporting Files */,
+			);
+			path = Command;
+			sourceTree = "<group>";
+		};
+		A5FC9D311E52AF9700D5F086 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A54BABE51E6508760082FD6B /* LEDCalculator.ttf */,
+				A54BABE11E64F92E0082FD6B /* DS-DIGI.TTF */,
+				A54BABE21E64F92E0082FD6B /* DS-DIGIB.TTF */,
+				A5FC9D691E5AA24400D5F086 /* SFMono-Regular.otf */,
+				A5FC9D321E52AF9700D5F086 /* main.m */,
+				A548BCA71FCE59AB006D03F8 /* trains.xcdatamodeld */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A5FC9D421E52AF9C00D5F086 /* App Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				A5FC9D2E1E52AF9700D5F086 /* AppDelegate.h */,
+				A5FC9D2F1E52AF9700D5F086 /* AppDelegate.m */,
+			);
+			name = "App Delegate";
+			sourceTree = "<group>";
+		};
+		A5FC9D431E52AFA400D5F086 /* View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A5D19BF51FE7705F00805A6E /* Controllers */,
+				A5FC9D621E59D08E00D5F086 /* Models */,
+				A5FC9D6B1E5AA3D300D5F086 /* Views */,
+				A548BC801FCE503E006D03F8 /* Onboarding View Controller */,
+				A57B32E61E62985A009FD63D /* Menu View Controller */,
+				A57B32E51E62984E009FD63D /* Control View Controller */,
+				A548BCAA1FCE63AB006D03F8 /* Create Train View Controller */,
+			);
+			name = "View Controller";
+			sourceTree = "<group>";
+		};
+		A5FC9D441E52AFAB00D5F086 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				A5FC9D391E52AF9700D5F086 /* Main.storyboard */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		A5FC9D481E53D54300D5F086 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A5FC9D4B1E53D55000D5F086 /* IOKit.framework */,
+				A5FC9D491E53D54300D5F086 /* CoreFoundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A5FC9D4D1E567C8800D5F086 /* Third Party */ = {
+			isa = PBXGroup;
+			children = (
+				A5FC9D4E1E567C9400D5F086 /* ORSSerialPort */,
+			);
+			name = "Third Party";
+			sourceTree = "<group>";
+		};
+		A5FC9D4E1E567C9400D5F086 /* ORSSerialPort */ = {
+			isa = PBXGroup;
+			children = (
+				A5FC9D4F1E567C9400D5F086 /* ORSSerialBuffer.h */,
+				A5FC9D501E567C9400D5F086 /* ORSSerialBuffer.m */,
+				A5FC9D511E567C9400D5F086 /* ORSSerialPacketDescriptor.h */,
+				A5FC9D521E567C9400D5F086 /* ORSSerialPacketDescriptor.m */,
+				A5FC9D531E567C9400D5F086 /* ORSSerialPort.h */,
+				A5FC9D541E567C9400D5F086 /* ORSSerialPort.m */,
+				A5FC9D551E567C9400D5F086 /* ORSSerialPortManager.h */,
+				A5FC9D561E567C9400D5F086 /* ORSSerialPortManager.m */,
+				A5FC9D571E567C9400D5F086 /* ORSSerialRequest.h */,
+				A5FC9D581E567C9400D5F086 /* ORSSerialRequest.m */,
+			);
+			path = ORSSerialPort;
+			sourceTree = "<group>";
+		};
+		A5FC9D621E59D08E00D5F086 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A57B32E11E60E12F009FD63D /* NECommand.h */,
+				A57B32E21E60E12F009FD63D /* NECommand.m */,
+				A5FC9D631E59D0A300D5F086 /* NETrain.h */,
+				A5FC9D641E59D0A300D5F086 /* NETrain.m */,
+				A5FC9D661E59D14900D5F086 /* NEFunction.h */,
+				A5FC9D671E59D14900D5F086 /* NEFunction.m */,
+				A54BABE71E6527D60082FD6B /* NEProgram.h */,
+				A54BABE81E6527D60082FD6B /* NEProgram.m */,
+				A57FC0F61F3951C20094A5A0 /* NESerialManager.h */,
+				A57FC0F71F3951C20094A5A0 /* NESerialManager.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		A5FC9D6B1E5AA3D300D5F086 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A54BABED1E6A8A290082FD6B /* NETrackPadView.h */,
+				A54BABEE1E6A8A290082FD6B /* NETrackPadView.m */,
+				A5FC9D6C1E5AA3E500D5F086 /* NEConsoleView.h */,
+				A5FC9D6D1E5AA3E500D5F086 /* NEConsoleView.m */,
+				A5FC9D6F1E5AA43F00D5F086 /* NECommandView.h */,
+				A5FC9D701E5AA43F00D5F086 /* NECommandView.m */,
+				A5FC9D721E5BD9A800D5F086 /* NEFunctionCell.h */,
+				A5FC9D731E5BD9A800D5F086 /* NEFunctionCell.m */,
+				A54BABEA1E67C9E80082FD6B /* NENumberFormatter.h */,
+				A54BABEB1E67C9E80082FD6B /* NENumberFormatter.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A5FC9D2A1E52AF9700D5F086 /* Command */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A5FC9D3F1E52AF9700D5F086 /* Build configuration list for PBXNativeTarget "Command" */;
+			buildPhases = (
+				A5FC9D271E52AF9700D5F086 /* Sources */,
+				A5FC9D281E52AF9700D5F086 /* Frameworks */,
+				A5FC9D291E52AF9700D5F086 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Command;
+			productName = Command;
+			productReference = A5FC9D2B1E52AF9700D5F086 /* Command.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A5FC9D231E52AF9700D5F086 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = "Nicholas Eby";
+				TargetAttributes = {
+					A5FC9D2A1E52AF9700D5F086 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = T4562QZ3Y4;
+						LastSwiftMigration = 0900;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = A5FC9D261E52AF9700D5F086 /* Build configuration list for PBXProject "Command" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A5FC9D221E52AF9700D5F086;
+			productRefGroup = A5FC9D2C1E52AF9700D5F086 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A5FC9D2A1E52AF9700D5F086 /* Command */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A5FC9D291E52AF9700D5F086 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A54BABE31E64F92E0082FD6B /* DS-DIGI.TTF in Resources */,
+				A54BABE41E64F92E0082FD6B /* DS-DIGIB.TTF in Resources */,
+				A5FC9D6A1E5AA24400D5F086 /* SFMono-Regular.otf in Resources */,
+				A54BABE61E6508760082FD6B /* LEDCalculator.ttf in Resources */,
+				A5FC9D381E52AF9700D5F086 /* Assets.xcassets in Resources */,
+				A5FC9D3B1E52AF9700D5F086 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A5FC9D271E52AF9700D5F086 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A5FC9D5D1E567C9400D5F086 /* ORSSerialRequest.m in Sources */,
+				A54BABE91E6527D60082FD6B /* NEProgram.m in Sources */,
+				A5FC9D5B1E567C9400D5F086 /* ORSSerialPort.m in Sources */,
+				A5FC9D361E52AF9700D5F086 /* ViewController.m in Sources */,
+				A548BCB21FCE64BA006D03F8 /* NECreateTrainViewController.m in Sources */,
+				A5FC9D331E52AF9700D5F086 /* main.m in Sources */,
+				A5FC9D651E59D0A300D5F086 /* NETrain.m in Sources */,
+				A5FC9D741E5BD9A800D5F086 /* NEFunctionCell.m in Sources */,
+				A5FC9D681E59D14900D5F086 /* NEFunction.m in Sources */,
+				A57B32E31E60E12F009FD63D /* NECommand.m in Sources */,
+				A5FC9D5A1E567C9400D5F086 /* ORSSerialPacketDescriptor.m in Sources */,
+				A548BCA91FCE59AB006D03F8 /* trains.xcdatamodeld in Sources */,
+				A5FC9D5C1E567C9400D5F086 /* ORSSerialPortManager.m in Sources */,
+				A5FC9D711E5AA43F00D5F086 /* NECommandView.m in Sources */,
+				A548BC831FCE5065006D03F8 /* NEOnboardingViewController.m in Sources */,
+				A57FC0F81F3951C20094A5A0 /* NESerialManager.m in Sources */,
+				A54BABEC1E67C9E80082FD6B /* NENumberFormatter.m in Sources */,
+				A5FC9D301E52AF9700D5F086 /* AppDelegate.m in Sources */,
+				A5FC9D591E567C9400D5F086 /* ORSSerialBuffer.m in Sources */,
+				A5AAE86F1E5FD7D7006CF087 /* NEMenuViewController.m in Sources */,
+				A5D19BF81FE7708D00805A6E /* NENCEController.m in Sources */,
+				A5FC9D6E1E5AA3E500D5F086 /* NEConsoleView.m in Sources */,
+				A54BABEF1E6A8A290082FD6B /* NETrackPadView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A5FC9D391E52AF9700D5F086 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A5FC9D3A1E52AF9700D5F086 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A5FC9D3D1E52AF9700D5F086 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		A5FC9D3E1E52AF9700D5F086 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		A5FC9D401E52AF9700D5F086 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = T4562QZ3Y4;
+				INFOPLIST_FILE = Command/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nicholasleby.Command;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A5FC9D411E52AF9700D5F086 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = T4562QZ3Y4;
+				INFOPLIST_FILE = Command/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nicholasleby.Command;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A5FC9D261E52AF9700D5F086 /* Build configuration list for PBXProject "Command" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5FC9D3D1E52AF9700D5F086 /* Debug */,
+				A5FC9D3E1E52AF9700D5F086 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A5FC9D3F1E52AF9700D5F086 /* Build configuration list for PBXNativeTarget "Command" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5FC9D401E52AF9700D5F086 /* Debug */,
+				A5FC9D411E52AF9700D5F086 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A548BCA71FCE59AB006D03F8 /* trains.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A5ED56EF1FD3B048001F1BC0 /* trains_v1.xcdatamodel */,
+				A548BCA81FCE59AB006D03F8 /* trains.xcdatamodel */,
+			);
+			currentVersion = A548BCA81FCE59AB006D03F8 /* trains.xcdatamodel */;
+			path = trains.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = A5FC9D231E52AF9700D5F086 /* Project object */;
+}

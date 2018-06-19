@@ -183,6 +183,7 @@ static __strong NSMutableArray *allSerialPorts;
 		self.baudRate = @B19200;
 		self.allowsNonStandardBaudRates = NO;
 		self.numberOfStopBits = 1;
+        self.numberOfDataBits = 8;
 		self.parity = ORSSerialPortParityNone;
 		self.shouldEchoReceivedData = NO;
 		self.usesRTSCTSFlowControl = NO;
@@ -279,14 +280,14 @@ static __strong NSMutableArray *allSerialPorts;
 	tcgetattr(descriptor, &originalPortAttributes); // Get original options so they can be reset later
 	[self setPortOptions];
 	[self updateModemLines];
-	
-	if ([self.delegate respondsToSelector:@selector(serialPortWasOpened:)])
-	{
-		dispatch_async(mainQueue, ^{
+
+	dispatch_async(mainQueue, ^{
+		if ([self.delegate respondsToSelector:@selector(serialPortWasOpened:)])
+		{
 			[self.delegate serialPortWasOpened:self];
-		});
-	}
-	
+		}
+	});
+
 	// Start a read dispatch source in the background
 	dispatch_source_t readPollSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_READ, self.fileDescriptor, 0, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));
 	dispatch_source_set_event_handler(readPollSource, ^{
@@ -568,12 +569,12 @@ static __strong NSMutableArray *allSerialPorts;
 
 - (void)receiveData:(NSData *)data;
 {
-	if ([self.delegate respondsToSelector:@selector(serialPort:didReceiveData:)])
-	{
-		dispatch_async(dispatch_get_main_queue(), ^{
+	dispatch_async(dispatch_get_main_queue(), ^{
+		if ([self.delegate respondsToSelector:@selector(serialPort:didReceiveData:)])
+		{
 			[self.delegate serialPort:self didReceiveData:data];
-		});
-	}
+		}
+	});
 	
 	dispatch_async(self.requestHandlingQueue, ^{
 		const void *bytes = [data bytes];
@@ -593,12 +594,12 @@ static __strong NSMutableArray *allSerialPorts;
 				if (![completePacket length]) continue;
 				
 				// Complete packet received, so notify delegate then clear buffer
-				if ([self.delegate respondsToSelector:@selector(serialPort:didReceivePacket:matchingDescriptor:)])
-				{
-					dispatch_async(dispatch_get_main_queue(), ^{
+				dispatch_async(dispatch_get_main_queue(), ^{
+					if ([self.delegate respondsToSelector:@selector(serialPort:didReceivePacket:matchingDescriptor:)])
+					{
 						[self.delegate serialPort:self didReceivePacket:completePacket matchingDescriptor:descriptor];
-					});
-				}
+					}
+				});
 				[buffer clearBuffer];
 			}
 			
@@ -624,8 +625,23 @@ static __strong NSMutableArray *allSerialPorts;
 	
 	// Set 8 data bits
 	options.c_cflag &= ~CSIZE;
-	options.c_cflag |= CS8;
-	
+    switch (self.numberOfDataBits) {
+        case 5:
+            options.c_cflag |= CS5;
+            break;
+        case 6:
+            options.c_cflag |= CS5;
+            break;
+        case 7:
+            options.c_cflag |= CS7;
+            break;
+        case 8:
+            options.c_cflag |= CS8;
+            break;
+        default:
+            break;
+    }
+    
 	// Set parity
 	switch (self.parity) {
 		case ORSSerialPortParityNone:
@@ -643,7 +659,7 @@ static __strong NSMutableArray *allSerialPorts;
 			break;
 	}
 	
-	options.c_cflag = [self numberOfStopBits] > 1 ? options.c_cflag | CSTOPB : options.c_cflag & ~CSTOPB; // number of stop bits
+    options.c_cflag = [self numberOfStopBits] > 1 ? options.c_cflag | CSTOPB : options.c_cflag & ~CSTOPB; // number of stop bits
 	options.c_lflag = [self shouldEchoReceivedData] ? options.c_lflag | ECHO : options.c_lflag & ~ECHO; // echo
 	options.c_cflag = [self usesRTSCTSFlowControl] ? options.c_cflag | CRTSCTS : options.c_cflag & ~CRTSCTS; // RTS/CTS Flow Control
 	options.c_cflag = [self usesDTRDSRFlowControl] ? options.c_cflag | (CDTR_IFLOW | CDSR_OFLOW) : options.c_cflag & ~(CDTR_IFLOW | CDSR_OFLOW); // DTR/DSR Flow Control
@@ -848,6 +864,15 @@ static __strong NSMutableArray *allSerialPorts;
 		_numberOfStopBits = num;
 		[self setPortOptions];
 	}
+}
+
+- (void)setNumberOfDataBits:(NSUInteger)num
+{
+    if (num != _numberOfDataBits)
+    {
+        _numberOfDataBits = num;
+        [self setPortOptions];
+    }
 }
 
 - (void)setShouldEchoReceivedData:(BOOL)flag

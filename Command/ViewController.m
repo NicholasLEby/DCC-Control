@@ -277,7 +277,7 @@ NSInteger const default_horn_tag = 2;
     [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
 
     //Block
-    [_serialManager sendCommand:command_to_send withPacketLegnth:command_to_send.length andCallback:^(BOOL success, NSString *response)
+    [_serialManager sendCommand:command_to_send withPacketResponseLength:1 andUserInfo:@"A2" andCallback:^(BOOL success, NSString *response)
      {
          if(success)
          {
@@ -318,7 +318,7 @@ NSInteger const default_horn_tag = 2;
     [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
 
     //Block
-    [_serialManager sendCommand:command_to_send withPacketLegnth:command_to_send.length andCallback:^(BOOL success, NSString *response)
+    [_serialManager sendCommand:command_to_send withPacketResponseLength:1 andUserInfo:@"A2" andCallback:^(BOOL success, NSString *response)
      {
          if(success)
          {
@@ -348,7 +348,7 @@ NSInteger const default_horn_tag = 2;
     [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
 
     //Block
-    [_serialManager sendCommand:command_to_send withPacketLegnth:command_to_send.length andCallback:^(BOOL success, NSString *response)
+    [_serialManager sendCommand:command_to_send withPacketResponseLength:1 andUserInfo:@"A2" andCallback:^(BOOL success, NSString *response)
      {
          if(success)
          {
@@ -413,7 +413,7 @@ NSInteger const default_horn_tag = 2;
             [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
 
             //Block
-            [_serialManager sendCommand:command_to_send withPacketLegnth:command_to_send.length andCallback:^(BOOL success, NSString *response)
+            [_serialManager sendCommand:command_to_send withPacketResponseLength:1 andUserInfo:@"A2" andCallback:^(BOOL success, NSString *response)
              {
                  if(success)
                  {
@@ -434,6 +434,36 @@ NSInteger const default_horn_tag = 2;
         }
 
     }
+}
+    
+    
+-(IBAction)consistCommand:(id)sender
+{
+    NSInteger tag = ((NSButton*)sender).tag;
+    
+    //Execute Command
+    NSInteger address = (currentTrain) ? currentTrain.dcc_short : 03;
+    
+    NSData *command_to_send = [command locomotiveConsistCommandWithAddr:address andPosition:tag];
+    
+    //Update Console
+    [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
+    
+    //Block
+    [_serialManager sendCommand:command_to_send withPacketResponseLength:1 andUserInfo:@"A2" andCallback:^(BOOL success, NSString *response)
+     {
+         if(success)
+         {
+             [self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:YES];
+         }
+         else
+         {
+             [self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:NO];
+         }
+         
+         //Refresh UI
+         [self refreshUI];
+     }];
 }
 
 //---------------------------------- Keyboard Events ----------------------------------//

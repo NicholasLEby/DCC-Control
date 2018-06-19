@@ -35,6 +35,7 @@ typedef NS_OPTIONS(NSUInteger, FunctionGroup)
 ;
 -(NSData*)locomotiveEmergencyStopCommandWithAddr:(NSInteger)addr andDirection:(NSInteger)direction;
 -(NSData*)locomotiveFunctionCommand:(NSInteger)addr andFunctionKey:(NEFunction*)function;
-
+-(NSData*)softwareVersion;
+-(NSData*)locomotiveConsistCommandWithAddr:(NSInteger)addr andPosition:(NSInteger)position;
 
 @end

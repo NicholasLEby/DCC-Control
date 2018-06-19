@@ -22,6 +22,6 @@ typedef void(^MyClassCallback)(BOOL success, NSString *response);
 @property(nonatomic, strong) ORSSerialPort *serialPort;
 
 //Public Methods
--(void)sendCommand:(NSData*)command withPacketLegnth:(NSInteger)length andCallback:(MyClassCallback)callback;
+-(void)sendCommand:(NSData*)command withPacketResponseLength:(NSInteger)length andUserInfo:(NSString*)userInfo andCallback:(MyClassCallback)c;
 
 @end

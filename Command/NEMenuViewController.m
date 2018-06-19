@@ -13,6 +13,8 @@
 #import "AppDelegate.h"
 //
 #import "NETrain.h"
+#import "NESerialManager.h"
+#import "NECommand.h"
 //Third Party
 #import "ORSSerialPortManager.h"
 #import "ORSSerialPort.h"
@@ -20,12 +22,15 @@
 
 @interface NEMenuViewController () <ORSSerialPortDelegate, NSWindowDelegate>
 {
-
+    //Helpers
+    NECommand *command;
 }
 
 //UI
 @property(nonatomic, strong) NSMutableArray *addedWindowControllers;
 @property(nonatomic, strong) NSWindowController *currentWindowController;
+//
+@property(nonatomic, strong)  NESerialManager *serialManager;
 //Serial
 @property(nonatomic, strong)  ORSSerialPort *serialPort;
 
@@ -39,6 +44,11 @@
 {
     [super viewDidLoad];
 
+    _serialManager = [[NESerialManager alloc] init];
+
+    //Command Helper
+    command = [[NECommand alloc] init];
+    
     //Init Array
     self.addedWindowControllers = [[NSMutableArray alloc] init];
     
@@ -254,6 +264,28 @@
     _serial_connections_menu.image = [NSImage imageNamed:@"NSStatusAvailable"];
     _serial_connections_menu.imagePosition = NSImageRight;
 
+    
+    
+    self.serialManager.serialPort = serialPort;
+
+    NSData *command_to_send = [command softwareVersion];
+
+    //Block
+    [_serialManager sendCommand:command_to_send withPacketResponseLength:3 andUserInfo:@"AA" andCallback:^(BOOL success, NSString *response)
+     {
+         if(success)
+         {
+             //[self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:YES];
+         }
+         else
+         {
+             //function.on = !function.on; //revert to last state
+             //[self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:NO];
+         }
+         
+         //Update UI
+         //[self refreshUI];
+     }];
 }
 
 -(void)serialPortWasRemovedFromSystem:(ORSSerialPort *)serialPort

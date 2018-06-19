@@ -52,6 +52,38 @@
     return [self hexStringToNSData:command_string];
 }
 
+-(NSData*)locomotiveConsistCommandWithAddr:(NSInteger)addr andPosition:(NSInteger)position
+{
+    int dcc_address_mode = 0;//for future
+    
+    NSString *cmd = @"A2";
+    NSString *addr_h  = (dcc_address_mode == 0) ? @"00" : @"c0";
+    NSString *addr_l = [NSString stringWithFormat:@"%02x", (unsigned int) addr];
+    NSString *op_1;
+    
+    switch (position)
+    {
+        case 0: op_1 = @"11"; break;
+        case 1: op_1 = @"0a"; break;
+        case 2: op_1 = @"0b"; break;
+        case 3: op_1 = @"0c"; break;
+        case 4: op_1 = @"0d"; break;
+        case 5: op_1 = @"0e"; break;
+        case 6: op_1 = @"0f"; break;
+        default: op_1 = @"11"; break;
+    }
+    
+    NSString *data_1 = (position == 0) ? @"00" : [NSString stringWithFormat:@"%02x", (unsigned int) 00];
+    
+    //------------------------ Final Command
+    NSString *command_string = [NSString stringWithFormat:@"%@ %@ %@ %@ %@", cmd, addr_h, addr_l, op_1, data_1];
+    
+    NSLog(@"Command: %@", command_string);
+    
+    return [self hexStringToNSData:command_string];
+}
+    
+    
 -(NSData*)locomotiveFunctionCommand:(NSInteger)addr andFunctionKey:(NEFunction*)function
 {
     int dcc_address_mode = 0;//for future
@@ -163,7 +195,17 @@
 
 
 
+-(NSData*)softwareVersion
+    {
+        NSString *cmd = @"AA";
 
+        //------------------------ Final Command
+        NSString *command_string = [NSString stringWithFormat:@"%@", cmd];
+        
+        NSLog(@"Command: %@", command_string);
+        
+        return [self hexStringToNSData:command_string];
+    }
 
 
 

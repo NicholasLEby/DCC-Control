@@ -9,9 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface NEFunction : NSObject
-{
-
-}
 
 @property(nonatomic) NSInteger key;
 

@@ -10,9 +10,14 @@
 #import "NETrain.h"
 #import "NEFunction.h"
 #import "NEFunctionCell.h"
-#import "NECommand.h"
-#import "NEProgram.h"
+#import "NENCECommand.h"
 #import "NESerialManager.h"
+//App Delegate
+#import "AppDelegate.h"
+//Third Party
+#import "ORSSerialPortManager.h"
+#import "ORSSerialPort.h"
+#import "ORSSerialRequest.h"
 
 NSInteger const min_speed = 0;
 NSInteger const max_speed = 128;
@@ -21,42 +26,39 @@ NSInteger const default_bell_tag = 1;
 NSInteger const default_horn_tag = 2;
 
 @interface ViewController ()
-{
-    //Data
-    NSArray *functions;
-    
-    //Helpers
-    NECommand *command;
-    
-    //State
-    NETrain *currentTrain;
-    NSInteger speed;
-    NSInteger direction;
-    BOOL keyDown; //for tracking key state
-}
 
-@property(nonatomic, strong)  NESerialManager *serialManager;
+//Data
+@property(nonatomic, strong) NSArray *functions;
+//Helpers
+@property(nonatomic, strong) NENCECommand *command;
+//State
+@property(nonatomic, strong) NETrain *currentTrain;
+@property(nonatomic) NSInteger speed;
+@property(nonatomic) NSInteger direction;
+@property(nonatomic) BOOL keyDown; //for tracking key state
+
+@property(nonatomic, strong) AppDelegate *appDelegate;
 
 @end
 
 @implementation ViewController
-@synthesize serialPath = _serialPath, serialPort = _serialPort;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
     //State Defaults
-    currentTrain = nil;
-    speed = 0;
-    direction = kForward128;
-    keyDown = NO;
+    self.currentTrain = nil;
+    self.speed = 0;
+    self.direction = kForward128;
+    self.keyDown = NO;
     
+    self.appDelegate = (AppDelegate *)[NSApp delegate];
+
     //Command Helper
-    command = [[NECommand alloc] init];
+    self.command = [[NENCECommand alloc] init];
     
-    _serialManager = [[NESerialManager alloc] init];
-    [self.view.window setTitle:[NSString stringWithFormat:@"Command (%@)", _serialPath]];
+    [self.view.window setTitle:[NSString stringWithFormat:@"Command (%@)", _appDelegate.serialManager.serialPort.path]];
     
     //Inits
     [self initDefaultData];
@@ -66,8 +68,7 @@ NSInteger const default_horn_tag = 2;
 -(void)viewDidAppear
 {
     [super viewDidAppear];
-    
-    _serialManager.serialPort = _serialPort;
+
 }
 
 
@@ -95,7 +96,7 @@ NSInteger const default_horn_tag = 2;
         [temp addObject:function];
     }
     
-    functions = [NSArray arrayWithArray:temp];
+    self.functions = [NSArray arrayWithArray:temp];
     [self.tableView reloadData];
 }
 
@@ -113,11 +114,11 @@ NSInteger const default_horn_tag = 2;
     self.horn_button.keyEquivalent = [NSString stringWithFormat:@"%ld",(long)default_horn_tag];
     
     //Speed Slider
-    self.speed_slider_textField.stringValue = [NSString stringWithFormat:@"%ld", speed];
+    self.speed_slider_textField.stringValue = [NSString stringWithFormat:@"%ld", _speed];
     self.speed_slider.altIncrementValue = 1;
     self.speed_slider.minValue = min_speed;
     self.speed_slider.maxValue = max_speed;
-    self.speed_slider.integerValue = speed;
+    self.speed_slider.integerValue = _speed;
     
     //Direction Segmented Control
     self.speed_segmentedControl.selectedSegment = 1;
@@ -136,15 +137,15 @@ NSInteger const default_horn_tag = 2;
 
 -(void)updateStatusWindow
 {
-    NSString *name = [NSString stringWithFormat:@"%@ (%@)", (currentTrain) ? currentTrain.name : @"Default", (currentTrain) ? [currentTrain dcc_short_string] : @"003"];
+    NSString *name = [NSString stringWithFormat:@"%@ (%@)", (_currentTrain) ? _currentTrain.name : @"Default", (_currentTrain) ? [_currentTrain dcc_short_string] : @"003"];
     
-    NSString *speed_string = [NSString stringWithFormat:@"Speed: %@ %ld", (direction == 0) ? @"Reverse" : @"Forward", speed];
+    NSString *speed_string = [NSString stringWithFormat:@"Speed: %@ %ld", (_direction == 0) ? @"Reverse" : @"Forward", _speed];
     
     self.consoleLeftTop_label.stringValue = name;
     self.consoleLeftBottom_label.stringValue = speed_string;
-    self.speed_slider.integerValue = speed;
+    self.speed_slider.integerValue = _speed;
     
-    for(NEFunction *function in functions)
+    for(NEFunction *function in _functions)
     {
         if(function.key == 0)
         {
@@ -185,7 +186,6 @@ NSInteger const default_horn_tag = 2;
          //the user selected a file
          if (result == NSModalResponseOK)
          {
-             
              //get the selected file URLs
              NSURL *selection = openPanel.URLs[0];
              
@@ -200,8 +200,6 @@ NSInteger const default_horn_tag = 2;
              
              NSLog(@"%@", theDict);
              [self loadTrain:train];
-             //here add yuor own code to open the file
-             
          }
          
      }];
@@ -209,11 +207,11 @@ NSInteger const default_horn_tag = 2;
 
 -(void)loadTrain:(NETrain*)loadedTrain
 {
-    currentTrain = loadedTrain;
+    self.currentTrain = loadedTrain;
     
     [self.tableView reloadData];
     
-    if(currentTrain.programs)
+    if(_currentTrain.programs)
     {
         self.program_button.hidden = NO;
     }
@@ -230,7 +228,7 @@ NSInteger const default_horn_tag = 2;
     
     for(NSButton *button in hard_buttons)
     {
-        for(NEFunction *function in functions)
+        for(NEFunction *function in _functions)
         {
             if(function.key == button.tag)
             {
@@ -264,20 +262,20 @@ NSInteger const default_horn_tag = 2;
 {
     NSButton *button = (NSButton*)sender;
     
-    NEFunction *function = [functions objectAtIndex:button.tag];
+    NEFunction *function = [_functions objectAtIndex:button.tag];
     function.on = !function.on;
 
     NSLog(@"%ld - %d", (long)function.key, function.on);
     
     //Execute Command
-    NSInteger address = (currentTrain) ? currentTrain.dcc_short : 03;
-    NSData *command_to_send = [command locomotiveFunctionCommand:address andFunctionKey:function];
+    NSInteger address = (_currentTrain) ? _currentTrain.dcc_short : 03;
+    NSData *command_to_send = [_command locomotiveFunctionCommand:address andFunctionKey:function];
    
     //Update Console
     [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
 
     //Block
-    [_serialManager sendCommand:command_to_send withPacketResponseLength:1 andUserInfo:@"A2" andCallback:^(BOOL success, NSString *response)
+    [_appDelegate.serialManager sendCommand:command_to_send withPacketResponseLength:1 andUserInfo:@"A2" andCallback:^(BOOL success, NSString *response)
      {
          if(success)
          {
@@ -298,27 +296,27 @@ NSInteger const default_horn_tag = 2;
 {
     NSSegmentedControl *segmented_control = (NSSegmentedControl*)sender;
     
-    if(segmented_control.selectedSegment == direction) return;
+    if(segmented_control.selectedSegment == _direction) return;
     
-    NSInteger current_direction = direction;
+    NSInteger current_direction = _direction;
     
     //Play Sound
     [[NSSound soundNamed:@"Tink"] play];
     
-    direction = segmented_control.selectedSegment;
-    speed = 0; //stop the train first. JMRI does +56 -> -56, I prefer +56 -> -0
+    self.direction = segmented_control.selectedSegment;
+    self.speed = 0; //stop the train first. JMRI does +56 -> -56, I prefer +56 -> -0
 
-    NSLog(@"Control Panel: Change Direction from %ld to %ld", current_direction, direction);
+    NSLog(@"Control Panel: Change Direction from %ld to %ld", current_direction, _direction);
     
     //Execute Command
-    NSInteger address = (currentTrain) ? currentTrain.dcc_short : 03;
-    NSData *command_to_send = [command locomotiveSpeedCommandWithAddr:address andSpeed:speed andDirection:direction];
+    NSInteger address = (_currentTrain) ? _currentTrain.dcc_short : 03;
+    NSData *command_to_send = [_command locomotiveSpeedCommandWithAddr:address andSpeed:_speed andDirection:_direction];
     
     //Update Console
     [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
 
     //Block
-    [_serialManager sendCommand:command_to_send withPacketResponseLength:1 andUserInfo:@"A2" andCallback:^(BOOL success, NSString *response)
+    [_appDelegate.serialManager sendCommand:command_to_send withPacketResponseLength:1 andUserInfo:@"A2" andCallback:^(BOOL success, NSString *response)
      {
          if(success)
          {
@@ -336,19 +334,19 @@ NSInteger const default_horn_tag = 2;
 
 -(IBAction)emergency:(id)sender
 {
-    speed = 0;
+    self.speed = 0;
     
     NSLog(@"Control Panel: Emergency Stop!");
     
     //Execute Command
-    NSInteger address = (currentTrain) ? currentTrain.dcc_short : 03;
-    NSData *command_to_send = [command locomotiveEmergencyStopCommandWithAddr:address andDirection:direction];
+    NSInteger address = (_currentTrain) ? _currentTrain.dcc_short : 03;
+    NSData *command_to_send = [_command locomotiveEmergencyStopCommandWithAddr:address andDirection:_direction];
     
     //Update Console
     [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
 
     //Block
-    [_serialManager sendCommand:command_to_send withPacketResponseLength:1 andUserInfo:@"A2" andCallback:^(BOOL success, NSString *response)
+    [_appDelegate.serialManager sendCommand:command_to_send withPacketResponseLength:1 andUserInfo:@"A2" andCallback:^(BOOL success, NSString *response)
      {
          if(success)
          {
@@ -387,7 +385,7 @@ NSInteger const default_horn_tag = 2;
     
     if(new_speed < max_speed)
     {
-        speed = new_speed;
+        self.speed = new_speed;
         //Refresh UI
         [self updateStatusWindow];
         
@@ -403,17 +401,17 @@ NSInteger const default_horn_tag = 2;
         
         if(new_speed < max_speed)
         {
-            speed = new_speed;
+            self.speed = new_speed;
             
             //Execute Command
-            NSInteger address = (currentTrain) ? currentTrain.dcc_short : 03;
-            NSData *command_to_send = [command locomotiveSpeedCommandWithAddr:address andSpeed:speed andDirection:direction];
+            NSInteger address = (_currentTrain) ? _currentTrain.dcc_short : 03;
+            NSData *command_to_send = [_command locomotiveSpeedCommandWithAddr:address andSpeed:_speed andDirection:_direction];
             
             //Update Console
             [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
 
             //Block
-            [_serialManager sendCommand:command_to_send withPacketResponseLength:1 andUserInfo:@"A2" andCallback:^(BOOL success, NSString *response)
+            [_appDelegate.serialManager sendCommand:command_to_send withPacketResponseLength:1 andUserInfo:@"A2" andCallback:^(BOOL success, NSString *response)
              {
                  if(success)
                  {
@@ -442,15 +440,15 @@ NSInteger const default_horn_tag = 2;
     NSInteger tag = ((NSButton*)sender).tag;
     
     //Execute Command
-    NSInteger address = (currentTrain) ? currentTrain.dcc_short : 03;
+    NSInteger address = (_currentTrain) ? _currentTrain.dcc_short : 03;
     
-    NSData *command_to_send = [command locomotiveConsistCommandWithAddr:address andPosition:tag];
+    NSData *command_to_send = [_command locomotiveConsistCommandWithAddr:address andPosition:tag];
     
     //Update Console
     [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
     
     //Block
-    [_serialManager sendCommand:command_to_send withPacketResponseLength:1 andUserInfo:@"A2" andCallback:^(BOOL success, NSString *response)
+    [_appDelegate.serialManager sendCommand:command_to_send withPacketResponseLength:1 andUserInfo:@"A2" andCallback:^(BOOL success, NSString *response)
      {
          if(success)
          {
@@ -539,7 +537,7 @@ NSInteger const default_horn_tag = 2;
 
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-    return functions.count;
+    return self.functions.count;
 }
 
 -(CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
@@ -560,7 +558,7 @@ NSInteger const default_horn_tag = 2;
     
     if ([tableView.identifier isEqualToString:@"FunctionTable"])
     {
-        NEFunction *function = [functions objectAtIndex:row];
+        NEFunction *function = [_functions objectAtIndex:row];
         
         tableColumn.headerCell.title = @"DCC Functions";
         
@@ -570,13 +568,13 @@ NSInteger const default_horn_tag = 2;
             [cellView.label setStringValue:[NSString stringWithFormat:@"Function %ld", function.key]];
             
             //If current train meta, use function label
-            if(currentTrain)
+            if(_currentTrain)
             {
                 NSString *key = [NSString stringWithFormat:@"%ld", function.key];
                 
-                if([currentTrain.functions objectForKey:key])
+                if([_currentTrain.functions objectForKey:key])
                 {
-                    NSString *title = [NSString stringWithFormat:@"F%ld: %@", function.key, [currentTrain.functions objectForKey:key]];
+                    NSString *title = [NSString stringWithFormat:@"F%ld: %@", function.key, [_currentTrain.functions objectForKey:key]];
                     [cellView.label setStringValue:title];
                 }
             }
@@ -621,21 +619,19 @@ NSInteger const default_horn_tag = 2;
 - (void)setRepresentedObject:(id)representedObject
 {
     [super setRepresentedObject:representedObject];
-    
-    // Update the view, if already loaded.
 }
 
 -(void)resetUI
 {
     //Defaults
-    speed = 0;
-    direction = kForward128;
+    self.speed = 0;
+    self.direction = kForward128;
     self.headlight_buton.tag = default_headlight_tag;
     self.bell_button.tag = default_bell_tag;
     self.horn_button.tag = default_horn_tag;
     
     //Clear
-    currentTrain = nil;
+    self.currentTrain = nil;
     
     [self initDefaultData]; //reset data
     [self refreshUI];
@@ -662,7 +658,7 @@ NSInteger const default_horn_tag = 2;
 
 -(void)showConsoleMessage:(NSString*)message withReset:(BOOL)reset
 {
-    if(_serialPath)
+    if(_appDelegate.serialManager.serialPort.path)
     {
         [self.console_label setStringValue:[NSString stringWithFormat:@"Console: %@", message]];
     

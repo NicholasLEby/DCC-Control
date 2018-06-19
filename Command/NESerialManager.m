@@ -14,7 +14,6 @@
 
 static const NSTimeInterval kTimeoutDuration = 2.0;
 
-
 @interface NESerialManager () <ORSSerialPortDelegate>
 {
     
@@ -26,7 +25,74 @@ static const NSTimeInterval kTimeoutDuration = 2.0;
 @synthesize serialPort = _serialPort, callback;
 
 
++ (id)sharedManager
+{
+    static NESerialManager *sharedMyManager = nil;
 
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^
+    {
+        sharedMyManager = [[self alloc] init];
+    });
+    
+    return sharedMyManager;
+}
+
+- (id)init
+{
+    if (self = [super init])
+    {
+        _filePath = @"Default File Path";
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    //The dealloc must not
+}
+
+
+
+
+-(void)openSerialWithPath:(NSString*)path
+{
+    self.serialPort = [ORSSerialPort serialPortWithPath:path];
+    self.serialPort.baudRate = @19200;
+    self.serialPort.delegate = self;
+    [_serialPort open];
+}
+
+-(void)serialPortWasOpened:(ORSSerialPort *)serialPort
+{
+    NSLog(@"Serial: port opened (%@)", serialPort.path);
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"kSerialPortWasOpened" object:self userInfo:nil];
+}
+
+-(void)serialPortWasRemovedFromSystem:(ORSSerialPort *)serialPort
+{
+    NSLog(@"Serial: port was removed from system (%@)", serialPort.path);
+    self.serialPort = nil;
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"kSerialPortWasRemoved" object:self userInfo:nil];
+}
+
+-(void)serialPortWasClosed:(ORSSerialPort *)serialPort
+{
+    NSLog(@"Serial: port was closed (%@)", serialPort.path);
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"kSerialPortWasClosed" object:self userInfo:nil];
+}
+
+
+-(void)closeSerial
+{
+    if(_serialPort.isOpen)
+    {
+        [self.serialPort close];
+    }
+}
 
 
 
@@ -157,10 +223,6 @@ static const NSTimeInterval kTimeoutDuration = 2.0;
     NSLog(@"---------- Command End ----------");
 }
 
-- (void)serialPortWasRemovedFromSystem:(ORSSerialPort *)serialPort
-{
-    self.serialPort = nil;
-}
 
 
 

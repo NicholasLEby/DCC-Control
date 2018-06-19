@@ -18,21 +18,6 @@ typedef NS_ENUM(NSUInteger, Train_Type)
 
 
 @interface NETrain : NSObject
-{
-    NSString *name;
-    Train_Type type;
-    NSString *model;
-    NSString *manufacturer;
-    NSNumber *number;
-    NSInteger dcc_short;
-    NSInteger dcc_long;
-    NSNumber *horn_function_key;
-    NSNumber *bell_function_key;
-    NSNumber *headlights_function_key;
-
-    NSDictionary *functions;
-    NSArray *programs;
-}
 
 @property(nonatomic, strong) NSString *name;
 @property(nonatomic) Train_Type type;

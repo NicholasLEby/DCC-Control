@@ -12,16 +12,18 @@
 
 typedef void(^MyClassCallback)(BOOL success, NSString *response);
 
-
 @interface NESerialManager : NSObject
-{
-    
-}
+
+
+@property (atomic, retain) NSString *filePath;
++(id)sharedManager;
 
 @property (nonatomic, readwrite, copy) MyClassCallback callback;
 @property(nonatomic, strong) ORSSerialPort *serialPort;
 
 //Public Methods
+-(void)openSerialWithPath:(NSString*)path;
+-(void)closeSerial;
 -(void)sendCommand:(NSData*)command withPacketResponseLength:(NSInteger)length andUserInfo:(NSString*)userInfo andCallback:(MyClassCallback)c;
 
 @end

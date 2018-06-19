@@ -13,28 +13,19 @@
 #import "AppDelegate.h"
 //
 #import "NETrain.h"
-#import "NESerialManager.h"
-#import "NECommand.h"
+#import "NENCECommand.h"
 //Third Party
 #import "ORSSerialPortManager.h"
 #import "ORSSerialPort.h"
 #import "ORSSerialRequest.h"
 
-@interface NEMenuViewController () <ORSSerialPortDelegate, NSWindowDelegate>
-{
-    //Helpers
-    NECommand *command;
-}
+
+@interface NEMenuViewController () <NSWindowDelegate>
 
 //UI
+@property(nonatomic, strong) AppDelegate *appDelegate;
 @property(nonatomic, strong) NSMutableArray *addedWindowControllers;
 @property(nonatomic, strong) NSWindowController *currentWindowController;
-//
-@property(nonatomic, strong)  NESerialManager *serialManager;
-//Serial
-@property(nonatomic, strong)  ORSSerialPort *serialPort;
-
-
 
 @end
 
@@ -44,16 +35,18 @@
 {
     [super viewDidLoad];
 
-    _serialManager = [[NESerialManager alloc] init];
-
-    //Command Helper
-    command = [[NECommand alloc] init];
+    self.appDelegate = (AppDelegate *)[NSApp delegate];
     
     //Init Array
     self.addedWindowControllers = [[NSMutableArray alloc] init];
     
     //Default UI
     self.control_button.enabled = NO;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(serialPortWasOpened) name:@"kSerialPortWasOpened" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(serialPortWasClosed) name:@"kSerialPortWasClosed" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(serialPortWasRemovedFromSystem) name:@"kSerialPortWasRemoved" object:nil];
+
 }
 
 
@@ -79,7 +72,7 @@
 
 -(IBAction)menuChanged:(id)sender
 {
-    NSPopUpButton *button = (NSPopUpButton*)sender;
+    //NSPopUpButton *button = (NSPopUpButton*)sender;
     
     if(_dcc_menu.indexOfSelectedItem != 0 && _serial_connections_menu.indexOfSelectedItem != 0 && _baud_menu.indexOfSelectedItem != 0)
     {
@@ -107,9 +100,6 @@
     if([controllerWindow.contentViewController isKindOfClass:[ViewController class]])
     {
         ViewController *vc = (ViewController*)controllerWindow.contentViewController;
-        vc.mvc = self;
-        vc.serialPath = _serialPort.path;
-        vc.serialPort = _serialPort;
     }
     
     //Add to Array to Retain
@@ -119,9 +109,8 @@
     [controllerWindow.window cascadeTopLeftFromPoint:NSMakePoint(20,20)];
     [controllerWindow showWindow:self];
     
-    //Close
-    AppDelegate *appDelegate = (AppDelegate *)[NSApp delegate];
-    [appDelegate togglePopover:nil];
+    //Close Popover
+    [_appDelegate togglePopover:nil];
 }
 
 -(IBAction)showManage:(id)sender
@@ -137,15 +126,15 @@
     {
         NSLog(@"Failed to open url: %@",[url description]);
     }
+    
+    //Close Popover
+    [_appDelegate togglePopover:nil];
 }
 
 -(IBAction)quit:(id)sender
 {
-    //Maybe show alert here about closing serial first, or just auto close it
-    if(_serialPort.isOpen)
-    {
-        [_serialPort close];
-    }
+    //Close Serial
+    [self.appDelegate.serialManager closeSerial];
     
     #warning debug only
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"kFirstLaunch"];
@@ -159,9 +148,7 @@
 {
     if([segue.identifier isEqualToString:@"Manage_Segue"])
     {
-        //Close
-        AppDelegate *appDelegate = (AppDelegate *)[NSApp delegate];
-        [appDelegate togglePopover:nil];
+        [_appDelegate togglePopover:nil];
     }
 }
 
@@ -222,7 +209,6 @@
 {
     if(_serial_connections_menu.indexOfSelectedItem == 0)
     {
-        
         return;
     }
     
@@ -230,32 +216,23 @@
     ORSSerialPort *port = [ports objectAtIndex:_serial_connections_menu.indexOfSelectedItem-1];
     
     NSLog(@"Serial: open port (%@)", port.path);
-    
-    self.serialPort = [ORSSerialPort serialPortWithPath:port.path];
-    self.serialPort.baudRate = @19200;
-    self.serialPort.delegate = self;
-    //self.serialPort.parity = ORSSerialPortParityNone;
-    //self.serialPort.numberOfStopBits = 1;
-    //port.usesRTSCTSFlowControl = YES;
-    
-    [_serialPort open];
+    [_appDelegate.serialManager openSerialWithPath:port.path];
 }
 
 -(IBAction)closeSerial:(id)sender
 {
     NSLog(@"Serial: close port");
 
-    [_serialPort close];
+    [_appDelegate.serialManager closeSerial];
 }
 
--(void)serialPortWasOpened:(ORSSerialPort *)serialPort
+-(void)serialPortWasOpened
 {
-    NSLog(@"Serial: port opened (%@)", serialPort.path);
-
     self.connect_button.image = [NSImage imageNamed:@"NSStatusAvailable"];
     self.connect_button.imagePosition = NSImageRight;
     self.connect_button.enabled = NO;
-    self.connect_button.title = serialPort.name;
+    self.connect_button.title = _appDelegate.serialManager.serialPort.name;
+    
     self.quit_button.title = @"Close Port & Quit";
     self.control_button.enabled = YES;
     
@@ -264,56 +241,63 @@
     _serial_connections_menu.image = [NSImage imageNamed:@"NSStatusAvailable"];
     _serial_connections_menu.imagePosition = NSImageRight;
 
+    self.dcc_menu.hidden = YES;
+    self.serial_connections_menu.hidden = YES;
+    self.baud_menu.hidden = YES;
     
+    //Send a test command, if successful show alert
     
-    self.serialManager.serialPort = serialPort;
+    //Command Helper
+    NENCECommand *command = [[NENCECommand alloc] init];
 
     NSData *command_to_send = [command softwareVersion];
 
     //Block
-    [_serialManager sendCommand:command_to_send withPacketResponseLength:3 andUserInfo:@"AA" andCallback:^(BOOL success, NSString *response)
+    [_appDelegate.serialManager sendCommand:command_to_send withPacketResponseLength:3 andUserInfo:@"AA" andCallback:^(BOOL success, NSString *response)
      {
          if(success)
          {
-             //[self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:YES];
+             NSAlert *alert = [[NSAlert alloc] init];
+             [alert setMessageText:@"Success!"];
+             [alert setInformativeText:response];
+             [alert addButtonWithTitle:@"OK"];
+             [alert runModal];
          }
          else
          {
-             //function.on = !function.on; //revert to last state
-             //[self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:NO];
+             NSAlert *alert = [[NSAlert alloc] init];
+             [alert setMessageText:@"Failed!"];
+             [alert setInformativeText:response];
+             [alert addButtonWithTitle:@"OK"];
+             [alert beginSheetModalForWindow:self.view.window completionHandler:nil];
          }
-         
-         //Update UI
-         //[self refreshUI];
      }];
 }
 
--(void)serialPortWasRemovedFromSystem:(ORSSerialPort *)serialPort
+-(void)serialPortWasRemovedFromSystem
 {
-    NSLog(@"Serial: port was removed from system (%@)", serialPort.path);
+    [self serialRemoved];
+}
 
+-(void)serialPortWasClosed
+{
+    [self serialRemoved];
+}
+
+-(void)serialRemoved
+{
     self.connect_button.image = nil;
     self.connect_button.enabled = YES;
     self.connect_button.title = @"Connect";
     self.quit_button.title = @"Quit";
     self.control_button.enabled = NO;
-
+    
+    self.dcc_menu.hidden = NO;
+    self.serial_connections_menu.hidden = NO;
+    self.baud_menu.hidden = NO;
+    
     self.disconnect_button.enabled = NO;
 }
-
--(void)serialPortWasClosed:(ORSSerialPort *)serialPort
-{
-    NSLog(@"Serial: port was closed (%@)", serialPort.path);
-
-    self.connect_button.image = nil;
-    self.connect_button.enabled = YES;
-    self.connect_button.title = @"Connect";
-    self.quit_button.title = @"Quit";
-    self.control_button.enabled = NO;
-
-    self.disconnect_button.enabled = NO;
-}
-
 
 
 

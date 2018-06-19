@@ -7,7 +7,6 @@
 //
 
 #import "NETrain.h"
-#import "NEProgram.h"
 
 @implementation NETrain
 @synthesize name = _name, type = _type, model = _model, manufacturer = _manufacturer, number = _number, dcc_short = _dcc_short, dcc_long = _dcc_long, functions = _functions, horn_function_key = _horn_function_key, bell_function_key = _bell_function_key, headlights_function_key = _headlights_function_key, programs = _programs;
@@ -80,22 +79,6 @@
     if([dict objectForKey:@"functions"])
     {
         self.functions = [dict objectForKey:@"functions"];
-    }
-    
-    //Programs
-    
-    if([dict objectForKey:@"programs"])
-    {
-        NSMutableArray *temp = [[NSMutableArray alloc] init];
-        
-        for(NSDictionary *program_dict in [dict objectForKey:@"programs"])
-        {
-            NEProgram *program = [[NEProgram alloc] init];
-            [program loadFromDict:program_dict];
-            [temp addObject:program];
-        }
-        
-        self.programs = [NSArray arrayWithArray:temp];
     }
 }
 

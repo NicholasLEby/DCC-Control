@@ -6,9 +6,9 @@
 //  Copyright © 2017 Nicholas Eby. All rights reserved.
 //
 
-#import "NECommand.h"
+#import "NENCECommand.h"
 
-@implementation NECommand
+@implementation NENCECommand
 
 
 //---------------------------------- Locomotive Command Helpers ----------------------------------//
@@ -101,15 +101,15 @@
         
         switch(function.key)
         {
-            case 1: if(function.on) { function_group_1 |= Bit0; } else { function_group_1 &= ~Bit0; }; break;
-            case 2: if(function.on) { function_group_1 |= Bit1; } else { function_group_1 &= ~Bit1; }; break;
-            case 3: if(function.on) { function_group_1 |= Bit2; } else { function_group_1 &= ~Bit2; }; break;
-            case 4: if(function.on) { function_group_1 |= Bit3; } else { function_group_1 &= ~Bit3; }; break;
-            case 0: if(function.on) { function_group_1 |= Bit4; } else { function_group_1 &= ~Bit4; }; break;
+            case 1: if(function.on) { self.function_group_1 |= Bit0; } else { self.function_group_1 &= ~Bit0; }; break;
+            case 2: if(function.on) { self.function_group_1 |= Bit1; } else { self.function_group_1 &= ~Bit1; }; break;
+            case 3: if(function.on) { self.function_group_1 |= Bit2; } else { self.function_group_1 &= ~Bit2; }; break;
+            case 4: if(function.on) { self.function_group_1 |= Bit3; } else { self.function_group_1 &= ~Bit3; }; break;
+            case 0: if(function.on) { self.function_group_1 |= Bit4; } else { self.function_group_1 &= ~Bit4; }; break;
             default: break;
         }
         
-        data_1 = [NSString stringWithFormat:@"%02lx", (unsigned long)function_group_1];
+        data_1 = [NSString stringWithFormat:@"%02lx", (unsigned long)_function_group_1];
     }
     //Function Group 2
     else if(function.key == 5 || function.key == 6 || function.key == 7 || function.key == 8)
@@ -118,14 +118,14 @@
         
         switch(function.key)
         {
-            case 5: if(function.on) { function_group_2 |= Bit0; } else { function_group_2 &= ~Bit0; }; break;
-            case 6: if(function.on) { function_group_2 |= Bit1; } else { function_group_2 &= ~Bit1; }; break;
-            case 7: if(function.on) { function_group_2 |= Bit2; } else { function_group_2 &= ~Bit2; }; break;
-            case 8: if(function.on) { function_group_2 |= Bit3; } else { function_group_2 &= ~Bit3; }; break;
+            case 5: if(function.on) { self.function_group_2 |= Bit0; } else { self.function_group_2 &= ~Bit0; }; break;
+            case 6: if(function.on) { self.function_group_2 |= Bit1; } else { self.function_group_2 &= ~Bit1; }; break;
+            case 7: if(function.on) { self.function_group_2 |= Bit2; } else { self.function_group_2 &= ~Bit2; }; break;
+            case 8: if(function.on) { self.function_group_2 |= Bit3; } else { self.function_group_2 &= ~Bit3; }; break;
             default: break;
         }
         
-        data_1 = [NSString stringWithFormat:@"%02lx", (unsigned long)function_group_2];
+        data_1 = [NSString stringWithFormat:@"%02lx", (unsigned long)_function_group_2];
     }
     //Function Group 3
     else if(function.key == 9 || function.key == 10 || function.key == 11 || function.key == 12)
@@ -134,14 +134,14 @@
         
         switch(function.key)
         {
-            case 9: if(function.on) { function_group_3 |= Bit0; } else { function_group_3 &= ~Bit0; }; break;
-            case 10: if(function.on) { function_group_3 |= Bit1; } else { function_group_3 &= ~Bit1; }; break;
-            case 11: if(function.on) { function_group_3 |= Bit2; } else { function_group_3 &= ~Bit2; }; break;
-            case 12: if(function.on) { function_group_3 |= Bit3; } else { function_group_3 &= ~Bit3; }; break;
+            case 9: if(function.on) { self.function_group_3 |= Bit0; } else { self.function_group_3 &= ~Bit0; }; break;
+            case 10: if(function.on) { self.function_group_3 |= Bit1; } else { self.function_group_3 &= ~Bit1; }; break;
+            case 11: if(function.on) { self.function_group_3 |= Bit2; } else { self.function_group_3 &= ~Bit2; }; break;
+            case 12: if(function.on) { self.function_group_3 |= Bit3; } else { self.function_group_3 &= ~Bit3; }; break;
             default: break;
         }
         
-        data_1 = [NSString stringWithFormat:@"%02lx", (unsigned long)function_group_3];
+        data_1 = [NSString stringWithFormat:@"%02lx", (unsigned long)_function_group_3];
     }
     //Function Group 4 - not really a group in NCE terms, but functions 13-20
     else if(function.key == 13 || function.key == 14 || function.key == 15 || function.key == 16 || function.key == 17 || function.key == 18 || function.key == 19 || function.key == 20)
@@ -150,18 +150,18 @@
         
         switch(function.key)
         {
-            case 13: if(function.on) { function_group_4 |= Bit0; } else { function_group_4 &= ~Bit0; }; break;
-            case 14: if(function.on) { function_group_4 |= Bit1; } else { function_group_4 &= ~Bit1; }; break;
-            case 15: if(function.on) { function_group_4 |= Bit2; } else { function_group_4 &= ~Bit2; }; break;
-            case 16: if(function.on) { function_group_4 |= Bit3; } else { function_group_4 &= ~Bit3; }; break;
-            case 17: if(function.on) { function_group_4 |= Bit4; } else { function_group_4 &= ~Bit4; }; break;
-            case 18: if(function.on) { function_group_4 |= Bit5; } else { function_group_4 &= ~Bit5; }; break;
-            case 19: if(function.on) { function_group_4 |= Bit6; } else { function_group_4 &= ~Bit6; }; break;
-            case 20: if(function.on) { function_group_4 |= Bit7; } else { function_group_4 &= ~Bit7; }; break;
+            case 13: if(function.on) { self.function_group_4 |= Bit0; } else { self.function_group_4 &= ~Bit0; }; break;
+            case 14: if(function.on) { self.function_group_4 |= Bit1; } else { self.function_group_4 &= ~Bit1; }; break;
+            case 15: if(function.on) { self.function_group_4 |= Bit2; } else { self.function_group_4 &= ~Bit2; }; break;
+            case 16: if(function.on) { self.function_group_4 |= Bit3; } else { self.function_group_4 &= ~Bit3; }; break;
+            case 17: if(function.on) { self.function_group_4 |= Bit4; } else { self.function_group_4 &= ~Bit4; }; break;
+            case 18: if(function.on) { self.function_group_4 |= Bit5; } else { self.function_group_4 &= ~Bit5; }; break;
+            case 19: if(function.on) { self.function_group_4 |= Bit6; } else { self.function_group_4 &= ~Bit6; }; break;
+            case 20: if(function.on) { self.function_group_4 |= Bit7; } else { self.function_group_4 &= ~Bit7; }; break;
             default: break;
         }
         
-        data_1 = [NSString stringWithFormat:@"%02lx", (unsigned long)function_group_4];
+        data_1 = [NSString stringWithFormat:@"%02lx", (unsigned long)_function_group_4];
     }
     //Function Group 5 - not really a group in NCE terms, but functions 21-28
     else if(function.key == 21 || function.key == 22 || function.key == 23 || function.key == 24 || function.key == 25 || function.key == 26 || function.key == 27 || function.key == 28)
@@ -170,18 +170,18 @@
         
         switch(function.key)
         {
-            case 21: if(function.on) { function_group_5 |= Bit0; } else { function_group_5 &= ~Bit0; }; break;
-            case 22: if(function.on) { function_group_5 |= Bit1; } else { function_group_5 &= ~Bit1; }; break;
-            case 23: if(function.on) { function_group_5 |= Bit2; } else { function_group_5 &= ~Bit2; }; break;
-            case 24: if(function.on) { function_group_5 |= Bit3; } else { function_group_5 &= ~Bit3; }; break;
-            case 25: if(function.on) { function_group_5 |= Bit4; } else { function_group_5 &= ~Bit4; }; break;
-            case 26: if(function.on) { function_group_5 |= Bit5; } else { function_group_5 &= ~Bit5; }; break;
-            case 27: if(function.on) { function_group_5 |= Bit6; } else { function_group_5 &= ~Bit6; }; break;
-            case 28: if(function.on) { function_group_5 |= Bit7; } else { function_group_5 &= ~Bit7; }; break;
+            case 21: if(function.on) { self.function_group_5 |= Bit0; } else { self.function_group_5 &= ~Bit0; }; break;
+            case 22: if(function.on) { self.function_group_5 |= Bit1; } else { self.function_group_5 &= ~Bit1; }; break;
+            case 23: if(function.on) { self.function_group_5 |= Bit2; } else { self.function_group_5 &= ~Bit2; }; break;
+            case 24: if(function.on) { self.function_group_5 |= Bit3; } else { self.function_group_5 &= ~Bit3; }; break;
+            case 25: if(function.on) { self.function_group_5 |= Bit4; } else { self.function_group_5 &= ~Bit4; }; break;
+            case 26: if(function.on) { self.function_group_5 |= Bit5; } else { self.function_group_5 &= ~Bit5; }; break;
+            case 27: if(function.on) { self.function_group_5 |= Bit6; } else { self.function_group_5 &= ~Bit6; }; break;
+            case 28: if(function.on) { self.function_group_5 |= Bit7; } else { self.function_group_5 &= ~Bit7; }; break;
             default: break;
         }
         
-        data_1 = [NSString stringWithFormat:@"%02lx", (unsigned long)function_group_5];
+        data_1 = [NSString stringWithFormat:@"%02lx", (unsigned long)_function_group_5];
     }
     
     //------------------------ Final Command

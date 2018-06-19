@@ -57,6 +57,10 @@
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"kFirstLaunch"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
+    
+    
+    //Serial Manager Singleton
+    self.serialManager = [NESerialManager sharedManager];
 }
 
 

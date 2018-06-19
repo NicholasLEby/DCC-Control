@@ -10,10 +10,8 @@
 #import "NEFunction.h"
 
 @interface NEMenuViewController : NSViewController
-{
-    
-}
 
+//UI
 @property(nonatomic, weak) IBOutlet NSPopUpButton *dcc_menu;
 @property(nonatomic, weak) IBOutlet NSPopUpButton *serial_connections_menu;
 @property(nonatomic, weak) IBOutlet NSPopUpButton *baud_menu;

@@ -21,15 +21,6 @@ typedef NS_ENUM(NSUInteger, Locomotive_Control_Direction)
 
 
 @interface ViewController : NSViewController <NSTableViewDelegate, NSTableViewDataSource>
-{
-    
-}
-
-//Passed Serail Port for
-@property(nonatomic, strong) NSString *serialPath;
-@property(nonatomic, strong) ORSSerialPort *serialPort;
-@property(nonatomic, strong) NEMenuViewController *mvc;
-
 
 //UI
 @property(nonatomic, weak) IBOutlet NSButton *horn_button;
@@ -55,11 +46,6 @@ typedef NS_ENUM(NSUInteger, Locomotive_Control_Direction)
 -(IBAction)function:(id)sender;
 -(IBAction)changeDirection:(id)sender;
 -(IBAction)emergency:(id)sender;
-
-
--(void)updateStatus;
--(void)loadTrain:(NETrain*)loadedTrain;
-
 
 @end
 

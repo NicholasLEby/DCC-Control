@@ -21,15 +21,13 @@ typedef NS_OPTIONS(NSUInteger, FunctionGroup)
     Bit7    = (1 << 7)  // => 10000000
 };
 
-@interface NECommand : NSObject
-{
-    FunctionGroup function_group_1;
-    FunctionGroup function_group_2;
-    FunctionGroup function_group_3;
-    FunctionGroup function_group_4;
-    FunctionGroup function_group_5;
-}
+@interface NENCECommand : NSObject
 
+@property(nonatomic) FunctionGroup function_group_1;
+@property(nonatomic) FunctionGroup function_group_2;
+@property(nonatomic) FunctionGroup function_group_3;
+@property(nonatomic) FunctionGroup function_group_4;
+@property(nonatomic) FunctionGroup function_group_5;
 
 -(NSData*)locomotiveSpeedCommandWithAddr:(NSInteger)addr andSpeed:(NSInteger)speed andDirection:(NSInteger)direction
 ;

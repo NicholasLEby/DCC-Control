@@ -8,12 +8,14 @@
 
 #import <Cocoa/Cocoa.h>
 #import <CoreData/CoreData.h>
+#import "NESerialManager.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 {
 
 }
 
+@property(nonatomic, strong) NESerialManager *serialManager;
 @property (readonly, strong) NSPersistentContainer *persistentContainer;
 
 //Public Methods

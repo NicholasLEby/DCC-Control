@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 //
-#import "NETrain.h"
 #import "NEMenuViewController.h"
 
 @class ORSSerialPort;
@@ -40,6 +39,8 @@ typedef NS_ENUM(NSUInteger, Locomotive_Control_Direction)
 @property(nonatomic, weak) IBOutlet NSSegmentedControl *speed_segmentedControl;
 @property(nonatomic, weak) IBOutlet NSTextField *speed_mid_label;
 @property(nonatomic, weak) IBOutlet NSTextField *speed_max_label;
+@property(nonatomic, weak) IBOutlet NSPopUpButton *consist_popUpButton;
+@property(nonatomic, weak) IBOutlet NSPopUpButton *saved_popUpButton;
 
 
 //User Control

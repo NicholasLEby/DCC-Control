@@ -12,7 +12,6 @@
 //App Delegate
 #import "AppDelegate.h"
 //
-#import "NETrain.h"
 #import "NENCECommand.h"
 //Third Party
 #import "ORSSerialPortManager.h"
@@ -42,7 +41,9 @@
     
     //Default UI
     self.control_button.enabled = NO;
-    
+    self.hardware_heightConstraint.constant = 24.0f;
+    self.hardware_view.hidden = YES;
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(serialPortWasOpened) name:@"kSerialPortWasOpened" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(serialPortWasClosed) name:@"kSerialPortWasClosed" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(serialPortWasRemovedFromSystem) name:@"kSerialPortWasRemoved" object:nil];
@@ -99,7 +100,7 @@
     
     if([controllerWindow.contentViewController isKindOfClass:[ViewController class]])
     {
-        ViewController *vc = (ViewController*)controllerWindow.contentViewController;
+        //ViewController *vc = (ViewController*)controllerWindow.contentViewController;
     }
     
     //Add to Array to Retain
@@ -148,7 +149,7 @@
 {
     if([segue.identifier isEqualToString:@"Manage_Segue"])
     {
-        [_appDelegate togglePopover:nil];
+        [self.appDelegate togglePopover:nil];
     }
 }
 
@@ -241,9 +242,9 @@
     _serial_connections_menu.image = [NSImage imageNamed:@"NSStatusAvailable"];
     _serial_connections_menu.imagePosition = NSImageRight;
 
-    self.dcc_menu.hidden = YES;
-    self.serial_connections_menu.hidden = YES;
-    self.baud_menu.hidden = YES;
+    self.dcc_menu.enabled = NO;
+    self.serial_connections_menu.enabled = NO;
+    self.baud_menu.enabled = NO;
     
     //Send a test command, if successful show alert
     
@@ -255,21 +256,17 @@
     //Block
     [_appDelegate.serialManager sendCommand:command_to_send withPacketResponseLength:3 andUserInfo:@"AA" andCallback:^(BOOL success, NSString *response)
      {
+         
+         self.hardware_heightConstraint.constant = 104.0f;
+         self.hardware_view.hidden = NO;
+         
          if(success)
          {
-             NSAlert *alert = [[NSAlert alloc] init];
-             [alert setMessageText:@"Success!"];
-             [alert setInformativeText:response];
-             [alert addButtonWithTitle:@"OK"];
-             [alert runModal];
+             [self.hardware_label setStringValue:[NSString stringWithFormat:@"Version: %@", response]];
          }
          else
          {
-             NSAlert *alert = [[NSAlert alloc] init];
-             [alert setMessageText:@"Failed!"];
-             [alert setInformativeText:response];
-             [alert addButtonWithTitle:@"OK"];
-             [alert beginSheetModalForWindow:self.view.window completionHandler:nil];
+             [self.hardware_label setStringValue:[NSString stringWithFormat:@"Version: %@", response]];
          }
      }];
 }
@@ -286,15 +283,19 @@
 
 -(void)serialRemoved
 {
+    //Resets
+    self.hardware_heightConstraint.constant = 24.0f;
+    self.hardware_view.hidden = YES;
+    
     self.connect_button.image = nil;
     self.connect_button.enabled = YES;
     self.connect_button.title = @"Connect";
     self.quit_button.title = @"Quit";
     self.control_button.enabled = NO;
     
-    self.dcc_menu.hidden = NO;
-    self.serial_connections_menu.hidden = NO;
-    self.baud_menu.hidden = NO;
+    self.dcc_menu.enabled = YES;
+    self.serial_connections_menu.enabled = YES;
+    self.baud_menu.enabled = YES;
     
     self.disconnect_button.enabled = NO;
 }

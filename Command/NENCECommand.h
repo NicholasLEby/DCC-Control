@@ -32,7 +32,7 @@ typedef NS_OPTIONS(NSUInteger, FunctionGroup)
 -(NSData*)locomotiveSpeedCommandWithAddr:(NSInteger)addr andSpeed:(NSInteger)speed andDirection:(NSInteger)direction
 ;
 -(NSData*)locomotiveEmergencyStopCommandWithAddr:(NSInteger)addr andDirection:(NSInteger)direction;
--(NSData*)locomotiveFunctionCommand:(NSInteger)addr andFunctionKey:(NEFunction*)function;
+-(NSData*)locomotiveFunctionCommand:(NSInteger)addr andFunctionKey:(NSNumber*)functionNumber andFunctionState:(BOOL)state;
 -(NSData*)softwareVersion;
 -(NSData*)locomotiveConsistCommandWithAddr:(NSInteger)addr andPosition:(NSInteger)position;
 

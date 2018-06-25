@@ -30,7 +30,6 @@
 		A5FC9D5B1E567C9400D5F086 /* ORSSerialPort.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FC9D541E567C9400D5F086 /* ORSSerialPort.m */; };
 		A5FC9D5C1E567C9400D5F086 /* ORSSerialPortManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FC9D561E567C9400D5F086 /* ORSSerialPortManager.m */; };
 		A5FC9D5D1E567C9400D5F086 /* ORSSerialRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FC9D581E567C9400D5F086 /* ORSSerialRequest.m */; };
-		A5FC9D651E59D0A300D5F086 /* NETrain.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FC9D641E59D0A300D5F086 /* NETrain.m */; };
 		A5FC9D681E59D14900D5F086 /* NEFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FC9D671E59D14900D5F086 /* NEFunction.m */; };
 		A5FC9D6A1E5AA24400D5F086 /* SFMono-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = A5FC9D691E5AA24400D5F086 /* SFMono-Regular.otf */; };
 		A5FC9D6E1E5AA3E500D5F086 /* NEConsoleView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FC9D6D1E5AA3E500D5F086 /* NEConsoleView.m */; };
@@ -79,8 +78,6 @@
 		A5FC9D561E567C9400D5F086 /* ORSSerialPortManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORSSerialPortManager.m; sourceTree = "<group>"; };
 		A5FC9D571E567C9400D5F086 /* ORSSerialRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORSSerialRequest.h; sourceTree = "<group>"; };
 		A5FC9D581E567C9400D5F086 /* ORSSerialRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORSSerialRequest.m; sourceTree = "<group>"; };
-		A5FC9D631E59D0A300D5F086 /* NETrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NETrain.h; sourceTree = "<group>"; };
-		A5FC9D641E59D0A300D5F086 /* NETrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NETrain.m; sourceTree = "<group>"; };
 		A5FC9D661E59D14900D5F086 /* NEFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NEFunction.h; sourceTree = "<group>"; };
 		A5FC9D671E59D14900D5F086 /* NEFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NEFunction.m; sourceTree = "<group>"; };
 		A5FC9D691E5AA24400D5F086 /* SFMono-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFMono-Regular.otf"; sourceTree = "<group>"; };
@@ -272,8 +269,6 @@
 		A5FC9D621E59D08E00D5F086 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				A5FC9D631E59D0A300D5F086 /* NETrain.h */,
-				A5FC9D641E59D0A300D5F086 /* NETrain.m */,
 				A5FC9D661E59D14900D5F086 /* NEFunction.h */,
 				A5FC9D671E59D14900D5F086 /* NEFunction.m */,
 			);
@@ -378,7 +373,6 @@
 				A5FC9D361E52AF9700D5F086 /* ViewController.m in Sources */,
 				A548BCB21FCE64BA006D03F8 /* NECreateTrainViewController.m in Sources */,
 				A5FC9D331E52AF9700D5F086 /* main.m in Sources */,
-				A5FC9D651E59D0A300D5F086 /* NETrain.m in Sources */,
 				A5FC9D741E5BD9A800D5F086 /* NEFunctionCell.m in Sources */,
 				A5FC9D681E59D14900D5F086 /* NEFunction.m in Sources */,
 				A5FC9D5A1E567C9400D5F086 /* ORSSerialPacketDescriptor.m in Sources */,

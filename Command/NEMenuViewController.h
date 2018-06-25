@@ -12,6 +12,9 @@
 @interface NEMenuViewController : NSViewController
 
 //UI
+@property(nonatomic, strong) IBOutlet NSLayoutConstraint *hardware_heightConstraint;
+@property(nonatomic, weak) IBOutlet NSView *hardware_view;
+@property(nonatomic, weak) IBOutlet NSTextField *hardware_label;
 @property(nonatomic, weak) IBOutlet NSPopUpButton *dcc_menu;
 @property(nonatomic, weak) IBOutlet NSPopUpButton *serial_connections_menu;
 @property(nonatomic, weak) IBOutlet NSPopUpButton *baud_menu;

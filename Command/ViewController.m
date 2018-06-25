@@ -7,13 +7,15 @@
 //
 
 #import "ViewController.h"
-#import "NETrain.h"
-#import "NEFunction.h"
 #import "NEFunctionCell.h"
 #import "NENCECommand.h"
 #import "NESerialManager.h"
 //App Delegate
 #import "AppDelegate.h"
+//Core Data
+#import "Train+CoreDataClass.h"
+#import "Train+CoreDataProperties.h"
+#import "trains+CoreDataModel.h"
 //Third Party
 #import "ORSSerialPortManager.h"
 #import "ORSSerialPort.h"
@@ -29,15 +31,18 @@ NSInteger const default_horn_tag = 2;
 
 //Data
 @property(nonatomic, strong) NSArray *functions;
+@property(nonatomic, strong) NSMutableArray *active_functions;
 //Helpers
 @property(nonatomic, strong) NENCECommand *command;
 //State
-@property(nonatomic, strong) NETrain *currentTrain;
+@property(nonatomic, strong) Train *currentTrain;
 @property(nonatomic) NSInteger speed;
 @property(nonatomic) NSInteger direction;
 @property(nonatomic) BOOL keyDown; //for tracking key state
-
+//
 @property(nonatomic, strong) AppDelegate *appDelegate;
+@property(nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property(nonatomic, strong) NSArray *savedTrains;
 
 @end
 
@@ -52,8 +57,11 @@ NSInteger const default_horn_tag = 2;
     self.speed = 0;
     self.direction = kForward128;
     self.keyDown = NO;
+    [self.saved_popUpButton removeAllItems];
+    self.active_functions = [[NSMutableArray alloc] init];
     
     self.appDelegate = (AppDelegate *)[NSApp delegate];
+    self.managedObjectContext = [self managedObjectContext];
 
     //Command Helper
     self.command = [[NENCECommand alloc] init];
@@ -81,7 +89,20 @@ NSInteger const default_horn_tag = 2;
 
 -(void)initDefaultData
 {
-    //Create Default Function Set
+    //Create Default Function Set (this will create a managed object but not insert into moc)
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Train" inManagedObjectContext:_managedObjectContext];
+    Train *default_train = [[Train alloc] initWithEntity:entity insertIntoManagedObjectContext:nil];
+    default_train.name = @"Default";
+    default_train.dcc_address = 3;
+    default_train.headlight_function = 0;
+    default_train.bell_function = 1;
+    default_train.horn_function = 2;
+    
+    self.savedTrains = [NSArray arrayWithObject:default_train];
+    
+    self.currentTrain = [_savedTrains firstObject];
+    
+    /*
     NSMutableArray *temp = [[NSMutableArray alloc] init];
     
     for(int i = 0; i < 29; i++)
@@ -98,6 +119,38 @@ NSInteger const default_horn_tag = 2;
     
     self.functions = [NSArray arrayWithArray:temp];
     [self.tableView reloadData];
+    */
+    
+    
+    
+    //Load Saved Trains
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    [fetchRequest setEntity:entity];
+
+    // Specify how the fetched objects should be sorted
+    //NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    //[fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];
+    
+    NSError *error = nil;
+    NSArray *fetchedObjects = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    if (fetchedObjects != nil)
+    {
+        NSMutableArray *temp = [NSMutableArray arrayWithArray:_savedTrains];
+        [temp addObjectsFromArray:fetchedObjects];
+        self.savedTrains = [NSArray arrayWithArray:temp];
+        
+        //Add Saved to Drop Down
+        for(Train *train in _savedTrains)
+        {
+            NSString *name = [NSString stringWithFormat:@"%@ (%.3d)", train.name, train.dcc_address];
+            [self.saved_popUpButton addItemWithTitle:name];
+        }
+    }
+    else
+    {
+        [self.saved_popUpButton addItemWithTitle:@"Default (003)"];
+    }
 }
 
 -(void)initUI
@@ -137,7 +190,7 @@ NSInteger const default_horn_tag = 2;
 
 -(void)updateStatusWindow
 {
-    NSString *name = [NSString stringWithFormat:@"%@ (%@)", (_currentTrain) ? _currentTrain.name : @"Default", (_currentTrain) ? [_currentTrain dcc_short_string] : @"003"];
+    NSString *name = [NSString stringWithFormat:@"%@ (%.3d)", _currentTrain.name, _currentTrain.dcc_address];
     
     NSString *speed_string = [NSString stringWithFormat:@"Speed: %@ %ld", (_direction == 0) ? @"Reverse" : @"Forward", _speed];
     
@@ -145,26 +198,42 @@ NSInteger const default_horn_tag = 2;
     self.consoleLeftBottom_label.stringValue = speed_string;
     self.speed_slider.integerValue = _speed;
     
-    for(NEFunction *function in _functions)
+    //Reset
+    self.console_headlight_imageView.hidden = YES;
+    self.console_bell_imageView.hidden = YES;
+    self.console_horn_imageView.hidden = YES;
+    
+    for(NSNumber *function_number in _active_functions)
     {
-        if(function.key == 0)
+        if(function_number.integerValue == 0)
         {
-            self.console_headlight_imageView.hidden = !function.on;
+            self.console_headlight_imageView.hidden = NO;
         }
-        else if(function.key == 1)
+        else if(function_number.integerValue == 1)
         {
-            self.console_bell_imageView.hidden = !function.on;
+            self.console_bell_imageView.hidden = NO;
         }
-        else if(function.key == 2)
+        else if(function_number.integerValue == 2)
         {
-            self.console_horn_imageView.hidden = !function.on;
+            self.console_horn_imageView.hidden = NO;
         }
     }
 }
 
+-(IBAction)savedTrainSelected:(id)sender
+{
+    NSInteger selectedIndex = self.saved_popUpButton.indexOfSelectedItem;
+    
+    Train *selected_train = [_savedTrains objectAtIndex:selectedIndex];
+    
+    [self loadTrain:selected_train];
+}
 
+
+/*
 -(IBAction)showPanel:(id)sender
 {
+
     //this gives you a copy of an open file dialogue
     NSOpenPanel* openPanel = [NSOpenPanel openPanel];
     openPanel.title = @"Choose a Train Metadata file";
@@ -204,18 +273,14 @@ NSInteger const default_horn_tag = 2;
          
      }];
 }
+*/
 
--(void)loadTrain:(NETrain*)loadedTrain
+-(void)loadTrain:(Train*)loadedTrain
 {
     self.currentTrain = loadedTrain;
     
     [self.tableView reloadData];
-    
-    if(_currentTrain.programs)
-    {
-        self.program_button.hidden = NO;
-    }
-    
+        
     //Update Status
     [self updateStatusWindow];
 }
@@ -223,16 +288,18 @@ NSInteger const default_horn_tag = 2;
 -(void)refreshUI
 {
     //Update Hard Buttons
-    
     NSArray *hard_buttons = @[_horn_button, _bell_button, _headlight_buton];
     
     for(NSButton *button in hard_buttons)
     {
-        for(NEFunction *function in _functions)
+        //Reset button state
+        button.state = NO;
+        
+        for(NSNumber *function_number in _active_functions)
         {
-            if(function.key == button.tag)
+            if(function_number.integerValue == button.tag)
             {
-                button.state = function.on;
+                button.state = YES;
             }
         }
     }
@@ -262,14 +329,24 @@ NSInteger const default_horn_tag = 2;
 {
     NSButton *button = (NSButton*)sender;
     
-    NEFunction *function = [_functions objectAtIndex:button.tag];
-    function.on = !function.on;
-
-    NSLog(@"%ld - %d", (long)function.key, function.on);
+    NSNumber *function_number = [NSNumber numberWithInteger:button.tag];
     
+    BOOL state;
+    
+    if([_active_functions containsObject:function_number])
+    {
+        state = NO;
+        [_active_functions removeObject:function_number];
+    }
+    else
+    {
+        state = YES;
+        [_active_functions addObject:function_number];
+    }
+    
+        
     //Execute Command
-    NSInteger address = (_currentTrain) ? _currentTrain.dcc_short : 03;
-    NSData *command_to_send = [_command locomotiveFunctionCommand:address andFunctionKey:function];
+    NSData *command_to_send = [_command locomotiveFunctionCommand:_currentTrain.dcc_address andFunctionKey:function_number andFunctionState:state];
    
     //Update Console
     [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
@@ -283,7 +360,15 @@ NSInteger const default_horn_tag = 2;
          }
          else
          {
-             function.on = !function.on; //revert to last state
+             if([self.active_functions containsObject:function_number])
+             {
+                 [self.active_functions removeObject:function_number];
+             }
+             else
+             {
+                 [self.active_functions addObject:function_number];
+             }
+             
              [self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:NO];
          }
          
@@ -309,8 +394,7 @@ NSInteger const default_horn_tag = 2;
     NSLog(@"Control Panel: Change Direction from %ld to %ld", current_direction, _direction);
     
     //Execute Command
-    NSInteger address = (_currentTrain) ? _currentTrain.dcc_short : 03;
-    NSData *command_to_send = [_command locomotiveSpeedCommandWithAddr:address andSpeed:_speed andDirection:_direction];
+    NSData *command_to_send = [_command locomotiveSpeedCommandWithAddr:_currentTrain.dcc_address andSpeed:_speed andDirection:_direction];
     
     //Update Console
     [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
@@ -339,8 +423,7 @@ NSInteger const default_horn_tag = 2;
     NSLog(@"Control Panel: Emergency Stop!");
     
     //Execute Command
-    NSInteger address = (_currentTrain) ? _currentTrain.dcc_short : 03;
-    NSData *command_to_send = [_command locomotiveEmergencyStopCommandWithAddr:address andDirection:_direction];
+    NSData *command_to_send = [_command locomotiveEmergencyStopCommandWithAddr:_currentTrain.dcc_address andDirection:_direction];
     
     //Update Console
     [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
@@ -404,8 +487,7 @@ NSInteger const default_horn_tag = 2;
             self.speed = new_speed;
             
             //Execute Command
-            NSInteger address = (_currentTrain) ? _currentTrain.dcc_short : 03;
-            NSData *command_to_send = [_command locomotiveSpeedCommandWithAddr:address andSpeed:_speed andDirection:_direction];
+            NSData *command_to_send = [_command locomotiveSpeedCommandWithAddr:_currentTrain.dcc_address andSpeed:_speed andDirection:_direction];
             
             //Update Console
             [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
@@ -437,12 +519,33 @@ NSInteger const default_horn_tag = 2;
     
 -(IBAction)consistCommand:(id)sender
 {
-    NSInteger tag = ((NSButton*)sender).tag;
-    
+    //Reset
+    if([sender isMemberOfClass:[NSButton class]])
+    {
+        NSInteger tag = ((NSButton*)sender).tag;
+        NSLog(@"1 %ld",(long)tag);
+        [self executeCommand:tag];
+        
+        [self.consist_popUpButton itemAtIndex:0].enabled = NO;
+        [self.consist_popUpButton selectItemAtIndex:0];
+    }
+    //Dropdown Menu
+    else if([sender isMemberOfClass:[NSPopUpButton class]])
+    {
+        NSInteger tag = ((NSPopUpButton*)sender).selectedTag;
+        
+        if(tag)
+        {
+            NSLog(@"2 %ld",(long)tag);
+            [self executeCommand:tag];
+        }
+    }
+}
+
+-(void)executeCommand:(NSInteger)tag
+{
     //Execute Command
-    NSInteger address = (_currentTrain) ? _currentTrain.dcc_short : 03;
-    
-    NSData *command_to_send = [_command locomotiveConsistCommandWithAddr:address andPosition:tag];
+    NSData *command_to_send = [_command locomotiveConsistCommandWithAddr:_currentTrain.dcc_address andPosition:tag];
     
     //Update Console
     [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
@@ -463,6 +566,25 @@ NSInteger const default_horn_tag = 2;
          [self refreshUI];
      }];
 }
+
+-(IBAction)consistCV:(id)sender
+{
+    NSInteger tag = ((NSButton*)sender).tag;
+
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert setMessageText:(tag == 0) ? @"Set CV 21" : @"Set CV 22"];
+    [alert setInformativeText:@"This is informative text."];
+    [alert addButtonWithTitle:@"Set"];
+    [alert addButtonWithTitle:@"Cancel"];
+
+    NSTextField *input = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 200, 24)];
+    input.placeholderString = @"24";
+    
+    [alert setAccessoryView:input];
+    [alert runModal];
+}
+
+
 
 //---------------------------------- Keyboard Events ----------------------------------//
 
@@ -537,7 +659,7 @@ NSInteger const default_horn_tag = 2;
 
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-    return self.functions.count;
+    return 29;
 }
 
 -(CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
@@ -558,29 +680,50 @@ NSInteger const default_horn_tag = 2;
     
     if ([tableView.identifier isEqualToString:@"FunctionTable"])
     {
-        NEFunction *function = [_functions objectAtIndex:row];
-        
         tableColumn.headerCell.title = @"DCC Functions";
         
         if ([tableColumn.identifier isEqualToString:@"FunctionColumn"])
         {
-            //Label
-            [cellView.label setStringValue:[NSString stringWithFormat:@"Function %ld", function.key]];
+            NSNumber *function_number = [NSNumber numberWithInteger:row];
+            NSString *function_label = @"";
             
-            //If current train meta, use function label
-            if(_currentTrain)
-            {
-                NSString *key = [NSString stringWithFormat:@"%ld", function.key];
-                
-                if([_currentTrain.functions objectForKey:key])
-                {
-                    NSString *title = [NSString stringWithFormat:@"F%ld: %@", function.key, [_currentTrain.functions objectForKey:key]];
-                    [cellView.label setStringValue:title];
-                }
-            }
+            if(row == 0) { function_label = _currentTrain.function0; }
+            else if(row == 1) { function_label = _currentTrain.function1; }
+            else if(row == 2) { function_label = _currentTrain.function2; }
+            else if(row == 3) { function_label = _currentTrain.function3; }
+            else if(row == 4) { function_label = _currentTrain.function4; }
+            else if(row == 5) { function_label = _currentTrain.function5; }
+            else if(row == 6) { function_label = _currentTrain.function6; }
+            else if(row == 7) { function_label = _currentTrain.function7; }
+            else if(row == 8) { function_label = _currentTrain.function8; }
+            else if(row == 9) { function_label = _currentTrain.function9; }
+            else if(row == 10) { function_label = _currentTrain.function10; }
+            else if(row == 11) { function_label = _currentTrain.function11; }
+            else if(row == 12) { function_label = _currentTrain.function12; }
+            else if(row == 13) { function_label = _currentTrain.function13; }
+            else if(row == 14) { function_label = _currentTrain.function14; }
+            else if(row == 15) { function_label = _currentTrain.function15; }
+            else if(row == 16) { function_label = _currentTrain.function16; }
+            else if(row == 17) { function_label = _currentTrain.function17; }
+            else if(row == 18) { function_label = _currentTrain.function18; }
+            else if(row == 19) { function_label = _currentTrain.function19; }
+            else if(row == 20) { function_label = _currentTrain.function20; }
+            else if(row == 21) { function_label = _currentTrain.function21; }
+            else if(row == 22) { function_label = _currentTrain.function22; }
+            else if(row == 23) { function_label = _currentTrain.function23; }
+            else if(row == 24) { function_label = _currentTrain.function24; }
+            else if(row == 25) { function_label = _currentTrain.function25; }
+            else if(row == 26) { function_label = _currentTrain.function26; }
+            else if(row == 27) { function_label = _currentTrain.function27; }
+            else if(row == 28) { function_label = _currentTrain.function28; }
+
+            
+            NSString *title = [NSString stringWithFormat:@"F%@: %@", function_number, function_label];
+            [cellView.label setStringValue:title];
+        
             
             //Button
-            if(function.momentary) //key 2 is usually the horn, which needs a momentary button
+            if(function_number.integerValue == _currentTrain.horn_function) //key 2 is usually the horn, which needs a momentary button
             {
                 [cellView.button sendActionOn:(NSEventMaskLeftMouseDown|NSEventMaskLeftMouseUp)];
             }
@@ -589,10 +732,13 @@ NSInteger const default_horn_tag = 2;
                 [cellView.button sendActionOn:(NSEventMaskLeftMouseUp)];
             }
             
+            
+            BOOL state = [_active_functions containsObject:function_number];
+            
             [cellView.button setButtonType:NSButtonTypePushOnPushOff];
-            [cellView.button setTitle:[NSString stringWithFormat:@"F%ld", (long)function.key]];
-            [cellView.button setTag:function.key];
-            [cellView.button setState:function.on];
+            [cellView.button setTitle:[NSString stringWithFormat:@"F%@", function_number]];
+            [cellView.button setTag:function_number.integerValue];
+            [cellView.button setState:state];
             [cellView.button setTarget:self];
             [cellView.button setAction:@selector(function:)];
         }
@@ -724,7 +870,11 @@ NSInteger const default_horn_tag = 2;
  255
 
 */
-
+- (NSManagedObjectContext *)managedObjectContext
+{
+    AppDelegate *delegate = (AppDelegate*)[NSApplication sharedApplication].delegate;
+    return delegate.persistentContainer.viewContext;
+}
 
 @end
 

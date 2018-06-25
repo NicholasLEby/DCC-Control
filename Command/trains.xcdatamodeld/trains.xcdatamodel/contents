@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13240" systemVersion="17B1002" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17E202" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="Train" representedClassName="Train" syncable="YES" codeGenerationType="class">
         <attribute name="bell_function" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="dcc_address" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="function_0" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_1" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_2" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_3" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_4" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_5" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_6" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_7" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_8" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_9" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_10" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_11" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_12" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_13" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_14" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_15" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_16" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_17" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_18" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_19" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_20" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_21" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_22" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_23" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_24" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_25" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_26" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_27" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="function_28" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function0" optional="YES" attributeType="String" defaultValueString="Function 0" syncable="YES"/>
+        <attribute name="function1" optional="YES" attributeType="String" defaultValueString="Function 1" syncable="YES"/>
+        <attribute name="function2" optional="YES" attributeType="String" defaultValueString="Function 2" syncable="YES"/>
+        <attribute name="function3" optional="YES" attributeType="String" defaultValueString="Function 3" syncable="YES"/>
+        <attribute name="function4" optional="YES" attributeType="String" defaultValueString="Function 4" syncable="YES"/>
+        <attribute name="function5" optional="YES" attributeType="String" defaultValueString="Function 5" syncable="YES"/>
+        <attribute name="function6" optional="YES" attributeType="String" defaultValueString="Function 6" syncable="YES"/>
+        <attribute name="function7" optional="YES" attributeType="String" defaultValueString="Function 7" syncable="YES"/>
+        <attribute name="function8" optional="YES" attributeType="String" defaultValueString="Function 8" syncable="YES"/>
+        <attribute name="function9" optional="YES" attributeType="String" defaultValueString="Function 9" syncable="YES"/>
+        <attribute name="function10" optional="YES" attributeType="String" defaultValueString="Function 10" syncable="YES"/>
+        <attribute name="function11" optional="YES" attributeType="String" defaultValueString="Function 11" syncable="YES"/>
+        <attribute name="function12" optional="YES" attributeType="String" defaultValueString="Function 12" syncable="YES"/>
+        <attribute name="function13" optional="YES" attributeType="String" defaultValueString="Function 13" syncable="YES"/>
+        <attribute name="function14" optional="YES" attributeType="String" defaultValueString="Function 14" syncable="YES"/>
+        <attribute name="function15" optional="YES" attributeType="String" defaultValueString="Function 15" syncable="YES"/>
+        <attribute name="function16" optional="YES" attributeType="String" defaultValueString="Function 16" syncable="YES"/>
+        <attribute name="function17" optional="YES" attributeType="String" defaultValueString="Function 17" syncable="YES"/>
+        <attribute name="function18" optional="YES" attributeType="String" defaultValueString="Function 18" syncable="YES"/>
+        <attribute name="function19" optional="YES" attributeType="String" defaultValueString="Function 19" syncable="YES"/>
+        <attribute name="function20" optional="YES" attributeType="String" defaultValueString="Function 20" syncable="YES"/>
+        <attribute name="function21" optional="YES" attributeType="String" defaultValueString="Function 21" syncable="YES"/>
+        <attribute name="function22" optional="YES" attributeType="String" defaultValueString="Function 22" syncable="YES"/>
+        <attribute name="function23" optional="YES" attributeType="String" defaultValueString="Function 23" syncable="YES"/>
+        <attribute name="function24" optional="YES" attributeType="String" defaultValueString="Function 24" syncable="YES"/>
+        <attribute name="function25" optional="YES" attributeType="String" defaultValueString="Function 25" syncable="YES"/>
+        <attribute name="function26" optional="YES" attributeType="String" defaultValueString="Function 26" syncable="YES"/>
+        <attribute name="function27" optional="YES" attributeType="String" defaultValueString="Function 27" syncable="YES"/>
+        <attribute name="function28" optional="YES" attributeType="String" defaultValueString="Function 28" syncable="YES"/>
         <attribute name="headlight_function" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="horn_function" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" defaultValueString="Untitled" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Train" positionX="-63" positionY="-18" width="128" height="555"/>
+        <element name="Train" positionX="270" positionY="-18" width="128" height="553"/>
     </elements>
 </model>

@@ -15,8 +15,8 @@
 
 -(NSData*)locomotiveSpeedCommandWithAddr:(NSInteger)addr andSpeed:(NSInteger)speed andDirection:(NSInteger)direction
 {
-    int dcc_address_mode = 0;//for future
-    
+    int dcc_address_mode = 0;//for future / remove this, check if addr is 0,127 or > to determine long or short
+
     NSString *cmd = @"A2";
     NSString *addr_h  = (dcc_address_mode == 0) ? @"00" : @"c0";
     NSString *addr_l = [NSString stringWithFormat:@"%02x", (unsigned int) addr];
@@ -34,8 +34,8 @@
 
 -(NSData*)locomotiveEmergencyStopCommandWithAddr:(NSInteger)addr andDirection:(NSInteger)direction
 {
-    int dcc_address_mode = 0;//for future
-    
+    int dcc_address_mode = 0;//for future / remove this, check if addr is 0,127 or > to determine long or short
+
     NSString *cmd = @"A2";
     NSString *addr_h  = (dcc_address_mode == 0) ? @"00" : @"c0";
     NSString *addr_l = [NSString stringWithFormat:@"%02x", (unsigned int) addr];
@@ -52,15 +52,63 @@
     return [self hexStringToNSData:command_string];
 }
 
+
+
+
+-(NSData*)locomotiveConsistCommandWithAddr:(NSInteger)addr consistNumber:(NSInteger)consistNumber andPosition:(NSInteger)position
+{
+    //Postion, 0 = F, 1 = R
+    
+    int dcc_address_mode = 0;//for future / remove this, check if addr is 0,127 or > to determine long or short
+    
+    NSString *cmd = @"AE";
+    NSString *addr_h  = (dcc_address_mode == 0) ? @"00" : @"c0";
+    NSString *addr_l = [NSString stringWithFormat:@"%02x", (unsigned int) addr];
+    NSString *cv_h = @"00";
+    NSString *cv_l = @"13";
+    NSString *data_1 = (position == 0) ? [NSString stringWithFormat:@"%02x", (unsigned int) consistNumber] : [NSString stringWithFormat:@"%02x", (unsigned int) consistNumber + 128];
+    
+    //------------------------ Final Command
+    NSString *command_string = [NSString stringWithFormat:@"%@ %@ %@ %@ %@ %@", cmd, addr_h, addr_l, cv_h, cv_l, data_1];
+    
+    NSLog(@"Command: %@", command_string);
+    
+    return [self hexStringToNSData:command_string];
+}
+
+-(NSData*)locomotiveResetConsistCommandWithAddr:(NSInteger)addr
+{
+    //Postion, 0 = F, 1 = R
+    
+    int dcc_address_mode = 0;//for future / remove this, check if addr is 0,127 or > to determine long or short
+    
+    NSString *cmd = @"AE";
+    NSString *addr_h  = (dcc_address_mode == 0) ? @"00" : @"c0";
+    NSString *addr_l = [NSString stringWithFormat:@"%02x", (unsigned int) addr];
+    NSString *cv_h = @"00";
+    NSString *cv_l = @"13";
+    NSString *data_1 = @"00";
+    
+    //------------------------ Final Command
+    NSString *command_string = [NSString stringWithFormat:@"%@ %@ %@ %@ %@ %@", cmd, addr_h, addr_l, cv_h, cv_l, data_1];
+    
+    NSLog(@"Command: %@", command_string);
+    
+    return [self hexStringToNSData:command_string];
+}
+
+
+
+/*
 -(NSData*)locomotiveConsistCommandWithAddr:(NSInteger)addr andPosition:(NSInteger)position
 {
-    int dcc_address_mode = 0;//for future
-    
+    int dcc_address_mode = 0;//for future / remove this, check if addr is 0,127 or > to determine long or short
+
     NSString *cmd = @"A2";
     NSString *addr_h  = (dcc_address_mode == 0) ? @"00" : @"c0";
     NSString *addr_l = [NSString stringWithFormat:@"%02x", (unsigned int) addr];
     NSString *op_1;
-    
+ 
     switch (position)
     {
         case 0: op_1 = @"11"; break;
@@ -73,7 +121,7 @@
         default: op_1 = @"11"; break;
     }
     
-    NSString *data_1 = (position == 0) ? @"00" : [NSString stringWithFormat:@"%02x", (unsigned int) 00];
+    NSString *data_1 = (position == 0) ? @"00" : [NSString stringWithFormat:@"%02x", (unsigned int) 127];
     
     //------------------------ Final Command
     NSString *command_string = [NSString stringWithFormat:@"%@ %@ %@ %@ %@", cmd, addr_h, addr_l, op_1, data_1];
@@ -82,11 +130,11 @@
     
     return [self hexStringToNSData:command_string];
 }
-    
+*/
     
 -(NSData*)locomotiveFunctionCommand:(NSInteger)addr andFunctionKey:(NSNumber*)functionNumber andFunctionState:(BOOL)state
 {
-    int dcc_address_mode = 0;//for future
+    int dcc_address_mode = 0;//for future / remove this, check if addr is 0,127 or > to determine long or short
     
     NSString *cmd = @"A2";
     NSString *addr_h  = (dcc_address_mode == 0) ? @"00" : @"c0";

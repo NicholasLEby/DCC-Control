@@ -48,6 +48,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(serialPortWasClosed) name:@"kSerialPortWasClosed" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(serialPortWasRemovedFromSystem) name:@"kSerialPortWasRemoved" object:nil];
 
+    ushort number = 19;
+    uint8_t upper = (uint8_t) (number >> 8);
+    uint8_t lower = (uint8_t) (number & 0xff);
+    
+    NSLog(@"%d %d", upper, lower);
 }
 
 

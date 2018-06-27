@@ -167,16 +167,22 @@ static const NSTimeInterval kTimeoutDuration = 2.0;
     NSLog(@"%@", responseData);
     
     NSString *userInfo = request.userInfo;
+    NSString *dataAsString = [[NSString alloc] initWithData:responseData encoding:NSASCIIStringEncoding];
+
+    
+    //This logic should move to NCE class
     
     if([userInfo isEqualToString:@"AA"])
     {
-        NSLog(@"3. Received Response: [%@]", responseData);
-        
-        self.callback(YES, @"Success: Command Sent!");
+        NSLog(@"3. Received Response: [%@]", dataAsString);
+
+        if (self.callback != nil)
+        {
+            self.callback(YES, [NSString stringWithFormat:@"%@", [responseData description]]);
+        }
     }
-    else
+    else if([userInfo isEqualToString:@"A2"] || [userInfo isEqualToString:@"AE"] )
     {
-        NSString *dataAsString = [[NSString alloc] initWithData:responseData encoding:NSASCIIStringEncoding];
 
         NSLog(@"3. Received Response: [%@]", dataAsString);
         

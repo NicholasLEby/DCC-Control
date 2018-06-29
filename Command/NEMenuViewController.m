@@ -99,7 +99,7 @@
     NSWindowController *controllerWindow = [storyBoard instantiateControllerWithIdentifier:@"NEWindowController"];
     controllerWindow.window.delegate = self;
     controllerWindow.shouldCascadeWindows = YES;
-    controllerWindow.window.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
+    controllerWindow.window.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
     controllerWindow.window.titlebarAppearsTransparent = YES;
     controllerWindow.window.styleMask = controllerWindow.window.styleMask | NSFullSizeContentViewWindowMask;
     
@@ -203,9 +203,19 @@
     
     //Add all Availabe Ports to Popup Menu UI
     //Make sure to remove default items
+    NSString *selected_title = _serial_connections_menu.selectedItem.title;
+    
     for(ORSSerialPort *port in ports)
     {
         [_serial_connections_menu addItemWithTitle:port.path];
+    }
+    
+    
+    NSMenuItem *selected = [_serial_connections_menu itemWithTitle:selected_title];
+    
+    if(selected)
+    {
+        [_serial_connections_menu selectItem:selected];
     }
 }
 
@@ -303,6 +313,38 @@
     self.baud_menu.enabled = YES;
     
     self.disconnect_button.enabled = NO;
+    
+    NSArray *added = [NSArray arrayWithArray:_addedWindowControllers];
+    
+    for(NSWindowController *controller in added)
+    {
+        NSLog(@"%@", controller);
+        [controller.window close];
+    }
+}
+
+
+
+
+-(IBAction)softReset:(id)sender
+{
+    //Command Helper
+    NENCECommand *command = [[NENCECommand alloc] init];
+    
+    NSData *command_to_send = [command softResetCommandStation];
+    
+    //Block
+    [_appDelegate.serialManager sendCommand:command_to_send withPacketResponseLength:0 andUserInfo:@"A8" andCallback:^(BOOL success, NSString *response)
+     {
+         if(success)
+         {
+             NSLog(@"Success");
+         }
+         else
+         {
+             NSLog(@"Fail");
+         }
+     }];
 }
 
 

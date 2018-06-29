@@ -97,6 +97,16 @@
     return [self hexStringToNSData:command_string];
 }
 
+-(NSData*)softResetCommandStation
+{
+    NSString *cmd = @"A8";
+
+    NSString *command_string = [NSString stringWithFormat:@"%@", cmd];
+    
+    NSLog(@"Command: %@", command_string);
+    
+    return [self hexStringToNSData:command_string];
+}
 
 
 /*

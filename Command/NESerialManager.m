@@ -181,6 +181,15 @@ static const NSTimeInterval kTimeoutDuration = 2.0;
             self.callback(YES, [NSString stringWithFormat:@"%@", [responseData description]]);
         }
     }
+    else if([userInfo isEqualToString:@"A8"])
+    {
+        NSLog(@"3. Received Response: [%@]", dataAsString);
+        
+        if (self.callback != nil)
+        {
+            self.callback(YES, @"");
+        }
+    }
     else if([userInfo isEqualToString:@"A2"] || [userInfo isEqualToString:@"AE"] )
     {
 

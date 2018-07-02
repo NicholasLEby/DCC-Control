@@ -109,8 +109,8 @@
 }
 
 
-/*
--(NSData*)locomotiveConsistCommandWithAddr:(NSInteger)addr andPosition:(NSInteger)position
+
+-(NSData*)locomotiveNCEConsistCommandWithAddr:(NSInteger)addr andPosition:(NSInteger)position
 {
     int dcc_address_mode = 0;//for future / remove this, check if addr is 0,127 or > to determine long or short
 
@@ -121,13 +121,13 @@
  
     switch (position)
     {
-        case 0: op_1 = @"11"; break;
-        case 1: op_1 = @"0a"; break;
-        case 2: op_1 = @"0b"; break;
-        case 3: op_1 = @"0c"; break;
-        case 4: op_1 = @"0d"; break;
-        case 5: op_1 = @"0e"; break;
-        case 6: op_1 = @"0f"; break;
+        case 0: op_1 = @"11"; break; //Kill
+        case 1: op_1 = @"0a"; break; //lead reverse
+        case 2: op_1 = @"0b"; break; //lead forward
+        case 3: op_1 = @"0c"; break; //rear reverse
+        case 4: op_1 = @"0d"; break; //rear forward
+        case 5: op_1 = @"0e"; break; //other forward
+        case 6: op_1 = @"0f"; break; //other reverse
         default: op_1 = @"11"; break;
     }
     
@@ -140,7 +140,7 @@
     
     return [self hexStringToNSData:command_string];
 }
-*/
+
     
 -(NSData*)locomotiveFunctionCommand:(NSInteger)addr andFunctionKey:(NSNumber*)functionNumber andFunctionState:(BOOL)state
 {

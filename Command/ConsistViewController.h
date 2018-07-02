@@ -12,14 +12,7 @@
 
 @class ORSSerialPort;
 
-typedef NS_ENUM(NSUInteger, Locomotive_Control_Direction)
-{
-    kReverse128,
-    kForward128
-};
-
-
-@interface ViewController : NSViewController <NSTableViewDelegate, NSTableViewDataSource>
+@interface ConsistViewController : NSViewController <NSTableViewDelegate, NSTableViewDataSource>
 
 //UI
 @property(nonatomic, weak) IBOutlet NSButton *horn_button;
@@ -38,11 +31,30 @@ typedef NS_ENUM(NSUInteger, Locomotive_Control_Direction)
 @property(nonatomic, weak) IBOutlet NSSegmentedControl *speed_segmentedControl;
 @property(nonatomic, weak) IBOutlet NSTextField *speed_mid_label;
 @property(nonatomic, weak) IBOutlet NSTextField *speed_max_label;
-@property(nonatomic, weak) IBOutlet NSPopUpButton *saved_popUpButton;
 
-@property(nonatomic, weak) IBOutlet NSTextField *consist_address_textField;
-@property(nonatomic, weak) IBOutlet NSPopUpButton *consist_popupButton;
+@property(nonatomic, weak) IBOutlet NSView *custom_view;
 
+
+//
+@property(nonatomic, weak) IBOutlet NSTextField *consist_textField;
+
+@property(nonatomic, weak) IBOutlet NSPopUpButton *lead_train_popupButton;
+@property(nonatomic, weak) IBOutlet NSPopUpButton *rear_train_popupButton;
+@property(nonatomic, weak) IBOutlet NSPopUpButton *other1_train_popupButton;
+@property(nonatomic, weak) IBOutlet NSPopUpButton *other2_train_popupButton;
+@property(nonatomic, weak) IBOutlet NSPopUpButton *other3_train_popupButton;
+
+@property(nonatomic, weak) IBOutlet NSPopUpButton *lead_popupButton;
+@property(nonatomic, weak) IBOutlet NSPopUpButton *rear_popupButton;
+@property(nonatomic, weak) IBOutlet NSPopUpButton *other1_popupButton;
+@property(nonatomic, weak) IBOutlet NSPopUpButton *other2_popupButton;
+@property(nonatomic, weak) IBOutlet NSPopUpButton *other3_popupButton;
+
+@property(nonatomic, weak) IBOutlet NSButton *lead_button;
+@property(nonatomic, weak) IBOutlet NSButton *rear_button;
+@property(nonatomic, weak) IBOutlet NSButton *other1_button;
+@property(nonatomic, weak) IBOutlet NSButton *other2_button;
+@property(nonatomic, weak) IBOutlet NSButton *other3_button;
 
 
 //User Control

@@ -30,8 +30,8 @@ typedef NS_OPTIONS(NSUInteger, FunctionGroup)
 @property(nonatomic) FunctionGroup function_group_5;
 
 -(NSData*)softResetCommandStation;
--(NSData*)locomotiveSpeedCommandWithAddr:(NSInteger)addr andSpeed:(NSInteger)speed andDirection:(NSInteger)direction
-;
+-(NSData*)locomotiveSpeedCommandWithAddr:(NSInteger)addr andSpeed:(NSInteger)speed andDirection:(NSInteger)direction;
+-(NSData*)locomotiveNCEConsistCommandWithAddr:(NSInteger)addr andPosition:(NSInteger)position;
 -(NSData*)locomotiveEmergencyStopCommandWithAddr:(NSInteger)addr andDirection:(NSInteger)direction;
 -(NSData*)locomotiveFunctionCommand:(NSInteger)addr andFunctionKey:(NSNumber*)functionNumber andFunctionState:(BOOL)state;
 -(NSData*)softwareVersion;

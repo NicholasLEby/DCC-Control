@@ -9,6 +9,7 @@
 #import "NEMenuViewController.h"
 //Controller
 #import "ViewController.h"
+#import "ConsistViewController.h"
 //App Delegate
 #import "AppDelegate.h"
 //
@@ -119,6 +120,35 @@
     [_appDelegate togglePopover:nil];
 }
 
+-(IBAction)newConsistControlPanel:(id)sender
+{
+    NSLog(@"UI: Create new Consist Control Panel");
+    
+    NSStoryboard *storyBoard = [NSStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    NSWindowController *controllerWindow = [storyBoard instantiateControllerWithIdentifier:@"NEConsistWindowController"];
+    controllerWindow.window.delegate = self;
+    controllerWindow.shouldCascadeWindows = YES;
+    controllerWindow.window.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+    controllerWindow.window.titlebarAppearsTransparent = YES;
+    controllerWindow.window.styleMask = controllerWindow.window.styleMask | NSFullSizeContentViewWindowMask;
+    
+    if([controllerWindow.contentViewController isKindOfClass:[ViewController class]])
+    {
+        //ViewController *vc = (ViewController*)controllerWindow.contentViewController;
+    }
+    
+    //Add to Array to Retain
+    [_addedWindowControllers addObject:controllerWindow];
+    
+    //Show Window
+    [controllerWindow.window cascadeTopLeftFromPoint:NSMakePoint(20,20)];
+    [controllerWindow showWindow:self];
+    
+    //Close Popover
+    [_appDelegate togglePopover:nil];
+}
+
 -(IBAction)showManage:(id)sender
 {
     [self performSegueWithIdentifier:@"Manage_Segue" sender:self];
@@ -159,7 +189,7 @@
 }
 
 
-
+/*
 -(void)windowDidBecomeMain:(NSNotification *)notification
 {
     NSLog(@"UI: Window did become main");
@@ -185,7 +215,7 @@
         [_addedWindowControllers removeObject:windowController];
     }
 }
-
+*/
 
 
 

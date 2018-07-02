@@ -6,10 +6,11 @@
 //  Copyright © 2017 Nicholas Eby. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "ConsistViewController.h"
 #import "NEFunctionCell.h"
 #import "NENCECommand.h"
 #import "NESerialManager.h"
+#import "ViewController.h"
 //App Delegate
 #import "AppDelegate.h"
 //Core Data
@@ -20,22 +21,24 @@
 #import "ORSSerialPortManager.h"
 #import "ORSSerialPort.h"
 #import "ORSSerialRequest.h"
+//Consist
+#import "NEConsist.h"
 
-NSInteger const min_speed = 0;
-NSInteger const max_speed = 128;
-NSInteger const default_headlight_tag = 0;
-NSInteger const default_bell_tag = 1;
-NSInteger const default_horn_tag = 2;
+NSInteger const consist_min_speed = 0;
+NSInteger const consist_max_speed = 128;
+NSInteger const default_consist_headlight_tag = 0;
+NSInteger const default_consist_bell_tag = 1;
+NSInteger const default_consist_horn_tag = 2;
 
-@interface ViewController ()
+@interface ConsistViewController () <NSWindowDelegate>
 
 //Data
-@property(nonatomic, strong) NSArray *functions;
 @property(nonatomic, strong) NSMutableArray *active_functions;
 //Helpers
 @property(nonatomic, strong) NENCECommand *command;
 //State
-@property(nonatomic, strong) Train *currentTrain;
+@property(nonatomic, strong) NEConsist *currentConsist;
+
 @property(nonatomic) NSInteger speed;
 @property(nonatomic) NSInteger direction;
 @property(nonatomic) BOOL keyDown; //for tracking key state
@@ -46,18 +49,17 @@ NSInteger const default_horn_tag = 2;
 
 @end
 
-@implementation ViewController
+@implementation ConsistViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
     //State Defaults
-    self.currentTrain = nil;
+    self.currentConsist = nil;
     self.speed = 0;
     self.direction = kForward128;
     self.keyDown = NO;
-    [self.saved_popUpButton removeAllItems];
     self.active_functions = [[NSMutableArray alloc] init];
     
     self.appDelegate = (AppDelegate *)[NSApp delegate];
@@ -65,23 +67,45 @@ NSInteger const default_horn_tag = 2;
 
     //Command Helper
     self.command = [[NENCECommand alloc] init];
+    NSLog(@"%@", self.view.window);
+    self.view.window.delegate = self;
     
     [self.view.window setTitle:[NSString stringWithFormat:@"Command (%@)", _appDelegate.serialManager.serialPort.path]];
     
     //Inits
     [self initDefaultData];
     [self initUI];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillClose:) name:NSWindowWillCloseNotification object:self.view.window];
 }
 
 -(void)viewDidAppear
 {
     [super viewDidAppear];
 
+    NSLog(@"%@", self.view.window);
+
+    [self initConsistBuilder];
 }
 
+-(BOOL)windowShouldClose:(NSWindow *)sender
+{
+    NSLog(@"windowShouldClose");
+    
+    if(_currentConsist && _currentConsist.lead_train)
+    {
+        [self initConsistBuilder];
 
+        return NO;
+    }
+    
+    return YES;
+}
 
-
+-(void)windowWillClose:(NSNotification *)notification
+{
+    
+}
 
 
 
@@ -89,44 +113,21 @@ NSInteger const default_horn_tag = 2;
 
 -(void)initDefaultData
 {
-    //Create Default Function Set (this will create a managed object but not insert into moc)
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Train" inManagedObjectContext:_managedObjectContext];
-    Train *default_train = [[Train alloc] initWithEntity:entity insertIntoManagedObjectContext:nil];
-    default_train.name = @"Default";
-    default_train.dcc_address = 3;
-    default_train.headlight_function = 0;
-    default_train.bell_function = 1;
-    default_train.horn_function = 2;
-    
-    self.savedTrains = [NSArray arrayWithObject:default_train];
-    
-    self.currentTrain = [_savedTrains firstObject];
-    
-    /*
-    NSMutableArray *temp = [[NSMutableArray alloc] init];
-    
-    for(int i = 0; i < 29; i++)
-    {
-        NEFunction *function = [[NEFunction alloc] initWithKey:i];
-        
-        if(i == default_horn_tag)
-        {
-            function.momentary = YES;
-        }
-        
-        [temp addObject:function];
-    }
-    
-    self.functions = [NSArray arrayWithArray:temp];
-    [self.tableView reloadData];
-    */
+    self.currentConsist = [[NEConsist alloc] init];
     
     
     
     //Load Saved Trains
+    [self.lead_train_popupButton removeAllItems];
+    [self.rear_train_popupButton removeAllItems];
+    [self.other1_train_popupButton removeAllItems];
+    [self.other2_train_popupButton removeAllItems];
+    [self.other3_train_popupButton removeAllItems];
+    
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Train" inManagedObjectContext:_managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     [fetchRequest setEntity:entity];
-
+    
     // Specify how the fetched objects should be sorted
     //NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
     //[fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];
@@ -144,40 +145,221 @@ NSInteger const default_horn_tag = 2;
         for(Train *train in _savedTrains)
         {
             NSString *name = [NSString stringWithFormat:@"%@ (%.3d)", train.name, train.dcc_address];
-            [self.saved_popUpButton addItemWithTitle:name];
+            [self.lead_train_popupButton addItemWithTitle:name];
+            [self.rear_train_popupButton addItemWithTitle:name];
+            [self.other1_train_popupButton addItemWithTitle:name];
+            [self.other2_train_popupButton addItemWithTitle:name];
+            [self.other3_train_popupButton addItemWithTitle:name];
         }
     }
-    else
+}
+
+-(IBAction)addTrainToConsist:(id)sender
+{
+    
+    if(self.consist_textField.stringValue == nil || [self.consist_textField.stringValue isEqualToString:@""])
     {
-        [self.saved_popUpButton addItemWithTitle:@"Default (003)"];
+        [self showErrorMessage:@"No consist address!"];
+        
+        return;
+    }
+    
+    
+    NSInteger tag = ((NSButton*)sender).tag;
+
+    
+    //Lead
+    if(tag == 0)
+    {
+        Train *selected_train = [_savedTrains objectAtIndex:_lead_train_popupButton.indexOfSelectedItem];
+
+        //Execute Command
+        NSData *command_to_send = [_command locomotiveConsistCommandWithAddr:selected_train.dcc_address consistNumber:_consist_textField.integerValue andPosition:_lead_popupButton.indexOfSelectedItem];
+        
+        //Update Console
+        [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
+        
+        //Block
+        [_appDelegate.serialManager sendCommand:command_to_send withPacketResponseLength:1 andUserInfo:@"AE" andCallback:^(BOOL success, NSString *response)
+         {
+             if(success)
+             {
+                 [self.lead_button setTitle:@"Added!"];
+                                  
+                 self.currentConsist.lead_train = selected_train;
+                 
+                 [self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:YES];
+             }
+             else
+             {
+                 [self.lead_button setTitle:@"Error"];
+                 [self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:NO];
+             }
+             
+             //Refresh UI
+             [self refreshUI];
+         }];
+    }
+    //Rear
+    else if(tag == 1)
+    {
+        Train *selected_train = [_savedTrains objectAtIndex:_rear_train_popupButton.indexOfSelectedItem];
+
+        //Execute Command
+        NSData *command_to_send = [_command locomotiveConsistCommandWithAddr:selected_train.dcc_address consistNumber:_consist_textField.integerValue andPosition:_rear_popupButton.indexOfSelectedItem];
+
+        //Update Console
+        [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
+        
+        //Block
+        [_appDelegate.serialManager sendCommand:command_to_send withPacketResponseLength:1 andUserInfo:@"AE" andCallback:^(BOOL success, NSString *response)
+         {
+             if(success)
+             {
+                 [self.rear_button setTitle:@"Added!"];
+                 
+                 self.currentConsist.rear_train = selected_train;
+                 
+                 [self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:YES];
+             }
+             else
+             {
+                 [self.rear_button setTitle:@"Error"];
+                 [self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:NO];
+             }
+             
+             //Refresh UI
+             [self refreshUI];
+         }];
+    }
+    //Other 1
+    else if(tag == 2)
+    {
+        Train *selected_train = [_savedTrains objectAtIndex:_other1_train_popupButton.indexOfSelectedItem];
+
+        //Execute Command
+        NSData *command_to_send = [_command locomotiveConsistCommandWithAddr:selected_train.dcc_address consistNumber:_consist_textField.integerValue andPosition:_other1_popupButton.indexOfSelectedItem];
+
+        //Update Console
+        [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
+        
+        //Block
+        [_appDelegate.serialManager sendCommand:command_to_send withPacketResponseLength:1 andUserInfo:@"AE" andCallback:^(BOOL success, NSString *response)
+         {
+             if(success)
+             {
+                 [self.other1_button setTitle:@"Added!"];
+                 
+                 self.currentConsist.other1_train = selected_train;
+
+                 [self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:YES];
+             }
+             else
+             {
+                 [self.other1_button setTitle:@"Error"];
+                 [self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:NO];
+             }
+             
+             //Refresh UI
+             [self refreshUI];
+         }];
+    }
+    //Other 2
+    else if(tag == 3)
+    {
+        Train *selected_train = [_savedTrains objectAtIndex:_other2_train_popupButton.indexOfSelectedItem];
+
+        //Execute Command
+        NSData *command_to_send = [_command locomotiveConsistCommandWithAddr:selected_train.dcc_address consistNumber:_consist_textField.integerValue andPosition:_other2_popupButton.indexOfSelectedItem];
+
+        //Update Console
+        [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
+        
+        //Block
+        [_appDelegate.serialManager sendCommand:command_to_send withPacketResponseLength:1 andUserInfo:@"AE" andCallback:^(BOOL success, NSString *response)
+         {
+             if(success)
+             {
+                 [self.other2_button setTitle:@"Added!"];
+                 
+                 self.currentConsist.other2_train = selected_train;
+
+                 [self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:YES];
+             }
+             else
+             {
+                 [self.other2_button setTitle:@"Error"];
+                 [self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:NO];
+             }
+             
+             //Refresh UI
+             [self refreshUI];
+         }];
+    }
+    //Other 3
+    else if(tag == 4)
+    {
+        Train *selected_train = [_savedTrains objectAtIndex:_other3_train_popupButton.indexOfSelectedItem];
+
+        //Execute Command
+        NSData *command_to_send = [_command locomotiveConsistCommandWithAddr:selected_train.dcc_address consistNumber:_consist_textField.integerValue andPosition:_other3_popupButton.indexOfSelectedItem];
+
+        //Update Console
+        [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
+        
+        //Block
+        [_appDelegate.serialManager sendCommand:command_to_send withPacketResponseLength:1 andUserInfo:@"AE" andCallback:^(BOOL success, NSString *response)
+         {
+             if(success)
+             {
+                 [self.other3_button setTitle:@"Added!"];
+                 
+                 self.currentConsist.other3_train = selected_train;
+
+                 [self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:YES];
+             }
+             else
+             {
+                 [self.other3_button setTitle:@"Error"];
+                 [self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:NO];
+             }
+             
+             //Refresh UI
+             [self refreshUI];
+         }];
     }
 }
+
+
+
+
+
 
 -(void)initUI
 {
     //Set Default Hard Button Tags & Event Handelers
-    self.headlight_buton.tag = default_headlight_tag;
-    self.headlight_buton.keyEquivalent = [NSString stringWithFormat:@"%ld",(long)default_headlight_tag];
+    self.headlight_buton.tag = default_consist_headlight_tag;
+    self.headlight_buton.keyEquivalent = [NSString stringWithFormat:@"%ld",(long)default_consist_headlight_tag];
     self.headlight_buton.toolTip = [NSString stringWithFormat:@"toolip"];
     
-    self.bell_button.tag = default_bell_tag;
-    self.bell_button.keyEquivalent = [NSString stringWithFormat:@"%ld",(long)default_bell_tag];
+    self.bell_button.tag = default_consist_bell_tag;
+    self.bell_button.keyEquivalent = [NSString stringWithFormat:@"%ld",(long)default_consist_bell_tag];
     
-    self.horn_button.tag = default_horn_tag;
-    self.horn_button.keyEquivalent = [NSString stringWithFormat:@"%ld",(long)default_horn_tag];
+    self.horn_button.tag = default_consist_horn_tag;
+    self.horn_button.keyEquivalent = [NSString stringWithFormat:@"%ld",(long)default_consist_horn_tag];
     
     //Speed Slider
     self.speed_slider.altIncrementValue = 1;
-    self.speed_slider.minValue = min_speed;
-    self.speed_slider.maxValue = max_speed;
+    self.speed_slider.minValue = consist_min_speed;
+    self.speed_slider.maxValue = consist_max_speed;
     self.speed_slider.integerValue = _speed;
     
     //Direction Segmented Control
     self.speed_segmentedControl.selectedSegment = 1;
     
     //Speed Labels
-    self.speed_mid_label.stringValue = [NSString stringWithFormat:@"%ld", max_speed / 2];
-    self.speed_max_label.stringValue = [NSString stringWithFormat:@"%ld", max_speed];
+    self.speed_mid_label.stringValue = [NSString stringWithFormat:@"%ld", consist_max_speed / 2];
+    self.speed_max_label.stringValue = [NSString stringWithFormat:@"%ld", consist_max_speed];
     
     //Make sure the horn button fires on mouse up and down (momentary)
     [_horn_button sendActionOn:(NSEventMaskLeftMouseDown|NSEventMaskLeftMouseUp)];
@@ -187,9 +369,50 @@ NSInteger const default_horn_tag = 2;
     [self showConsoleMessage:@"Connected" withReset:YES];
 }
 
+-(void)initConsistBuilder
+{
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert setMessageText:@"Consist Builder"];
+    [alert setInformativeText:@"Use inputs below to add locomotives to your conist. Some locomotives will sound their horn twice when successfully added to the consist."];
+    [alert addButtonWithTitle:@"Done"];
+    [alert addButtonWithTitle:@"Cancel"];
+    [alert setAccessoryView:_custom_view];
+    [alert beginSheetModalForWindow:self.view.window
+                      completionHandler:^(NSInteger result)
+     {
+         if(result == NSAlertFirstButtonReturn)
+         {
+             NSLog(@"Done");
+             self.currentConsist.dcc_address = self.consist_textField.integerValue;
+             
+             [self.tableView reloadData];
+             
+             //Update Status
+             [self updateStatusWindow];
+         }
+         else if(result == NSAlertSecondButtonReturn)
+         {
+             NSLog(@"Cancel");
+             [self.view.window close];
+         }
+     }];
+}
+
 -(void)updateStatusWindow
 {
-    NSString *name = [NSString stringWithFormat:@"%@ (%.3d)", _currentTrain.name, _currentTrain.dcc_address];
+    NSString *locomotives = @"";
+    
+    if(_currentConsist.lead_train)
+    {
+        locomotives = [NSString stringWithFormat:@"L%d", _currentConsist.lead_train.dcc_address];
+    }
+    
+    if(_currentConsist.rear_train)
+    {
+        locomotives = [locomotives stringByAppendingString:[NSString stringWithFormat:@"  R%d", _currentConsist.rear_train.dcc_address]];
+    }
+    
+    NSString *name = [NSString stringWithFormat:@"%@ (%.3d)(%@)", @"Consist", _currentConsist.dcc_address, locomotives];
     
     NSString *speed_string = [NSString stringWithFormat:@"Speed: %@ %ld", (_direction == 0) ? @"Reverse" : @"Forward", _speed];
     
@@ -217,71 +440,6 @@ NSInteger const default_horn_tag = 2;
             self.console_horn_imageView.hidden = NO;
         }
     }
-}
-
--(IBAction)savedTrainSelected:(id)sender
-{
-    NSInteger selectedIndex = self.saved_popUpButton.indexOfSelectedItem;
-    
-    Train *selected_train = [_savedTrains objectAtIndex:selectedIndex];
-    
-    [self loadTrain:selected_train];
-}
-
-
-/*
--(IBAction)showPanel:(id)sender
-{
-
-    //this gives you a copy of an open file dialogue
-    NSOpenPanel* openPanel = [NSOpenPanel openPanel];
-    openPanel.title = @"Choose a Train Metadata file";
-    openPanel.showsResizeIndicator = YES;
-    openPanel.showsHiddenFiles = NO;
-    openPanel.canChooseDirectories = NO;
-    openPanel.canCreateDirectories = NO;
-    openPanel.allowsMultipleSelection = NO;
-    openPanel.allowedFileTypes = @[@"plist"];
-    openPanel.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
-    openPanel.titlebarAppearsTransparent = YES;
-    openPanel.styleMask = openPanel.styleMask | NSFullSizeContentViewWindowMask;
-    
-    [openPanel beginSheetModalForWindow:self.view.window
-                      completionHandler:^(NSInteger result)
-     {
-         
-         //if the result is NSOKButton
-         //the user selected a file
-         if (result == NSModalResponseOK)
-         {
-             //get the selected file URLs
-             NSURL *selection = openPanel.URLs[0];
-             
-             //finally store the selected file path as a string
-             NSString *path = [[selection path] stringByResolvingSymlinksInPath];
-             
-             NSDictionary *theDict = [NSDictionary dictionaryWithContentsOfFile:path];
-             
-             NETrain *train = [[NETrain alloc] init];
-             [train loadFromDict:theDict];
-             
-             
-             NSLog(@"%@", theDict);
-             [self loadTrain:train];
-         }
-         
-     }];
-}
-*/
-
--(void)loadTrain:(Train*)loadedTrain
-{
-    self.currentTrain = loadedTrain;
-    
-    [self.tableView reloadData];
-        
-    //Update Status
-    [self updateStatusWindow];
 }
 
 -(void)refreshUI
@@ -345,7 +503,7 @@ NSInteger const default_horn_tag = 2;
     
         
     //Execute Command
-    NSData *command_to_send = [_command locomotiveFunctionCommand:_currentTrain.dcc_address andFunctionKey:function_number andFunctionState:state];
+    NSData *command_to_send = [_command locomotiveFunctionCommand:_currentConsist.lead_train.dcc_address andFunctionKey:function_number andFunctionState:state];
    
     //Update Console
     [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
@@ -393,7 +551,7 @@ NSInteger const default_horn_tag = 2;
     NSLog(@"Control Panel: Change Direction from %ld to %ld", current_direction, _direction);
     
     //Execute Command
-    NSData *command_to_send = [_command locomotiveSpeedCommandWithAddr:_currentTrain.dcc_address andSpeed:_speed andDirection:_direction];
+    NSData *command_to_send = [_command locomotiveSpeedCommandWithAddr:_currentConsist.dcc_address andSpeed:_speed andDirection:_direction];
     
     //Update Console
     [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
@@ -422,7 +580,7 @@ NSInteger const default_horn_tag = 2;
     NSLog(@"Control Panel: Emergency Stop!");
     
     //Execute Command
-    NSData *command_to_send = [_command locomotiveEmergencyStopCommandWithAddr:_currentTrain.dcc_address andDirection:_direction];
+    NSData *command_to_send = [_command locomotiveEmergencyStopCommandWithAddr:_currentConsist.dcc_address andDirection:_direction];
     
     //Update Console
     [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
@@ -465,7 +623,7 @@ NSInteger const default_horn_tag = 2;
     // do whatever needs to be done for "uncommitted" changes
     NSInteger new_speed = [slider integerValue];
     
-    if(new_speed < max_speed)
+    if(new_speed < consist_max_speed)
     {
         self.speed = new_speed;
         //Refresh UI
@@ -481,12 +639,12 @@ NSInteger const default_horn_tag = 2;
         
         NSInteger new_speed = [slider integerValue];
         
-        if(new_speed < max_speed)
+        if(new_speed < consist_max_speed)
         {
             self.speed = new_speed;
             
             //Execute Command
-            NSData *command_to_send = [_command locomotiveSpeedCommandWithAddr:_currentTrain.dcc_address andSpeed:_speed andDirection:_direction];
+            NSData *command_to_send = [_command locomotiveSpeedCommandWithAddr:_currentConsist.dcc_address andSpeed:_speed andDirection:_direction];
             
             //Update Console
             [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
@@ -516,116 +674,6 @@ NSInteger const default_horn_tag = 2;
 }
     
     
--(IBAction)setConsist:(id)sender
-{
-    //Execute Command
-    NSData *command_to_send = [_command locomotiveConsistCommandWithAddr:_currentTrain.dcc_address consistNumber:_consist_address_textField.integerValue andPosition:_consist_popupButton.indexOfSelectedItem];
-    
-    //Update Console
-    [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
-    
-    //Block
-    [_appDelegate.serialManager sendCommand:command_to_send withPacketResponseLength:1 andUserInfo:@"AE" andCallback:^(BOOL success, NSString *response)
-     {
-         if(success)
-         {
-             [self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:YES];
-         }
-         else
-         {
-             [self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:NO];
-         }
-         
-         //Refresh UI
-         [self refreshUI];
-     }];
-}
-
--(IBAction)resetConsist:(id)sender
-{
-    //Execute Command
-    NSData *command_to_send = [_command locomotiveResetConsistCommandWithAddr:_currentTrain.dcc_address];
-    
-    //Update Console
-    [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
-    
-    //Block
-    [_appDelegate.serialManager sendCommand:command_to_send withPacketResponseLength:1 andUserInfo:@"AE" andCallback:^(BOOL success, NSString *response)
-     {
-         if(success)
-         {
-             [self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:YES];
-         }
-         else
-         {
-             [self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:NO];
-         }
-         
-         //Refresh UI
-         [self refreshUI];
-     }];
-}
-
-
-
-//---------------------------------- Keyboard Events ----------------------------------//
-
-/*
-- (void)keyDown:(NSEvent *)event
-{
-    NSLog(@"Control Panel: Key Down (%@)", event);
-    
-    if(!keyDown)
-    {
-        if(event.keyCode == 19)
-        {
-            NSButton *dummy_button = [[NSButton alloc] init];
-            dummy_button.tag = 2;
-            [self function:dummy_button];
-        }
-    }
-    
-    keyDown = YES;
-}
-
--(void)keyUp:(NSEvent *)event
-{
-    NSLog(@"Control Panel: Key Up (%@)", event);
-    
-    if(keyDown)
-    {
-        if(event.keyCode == 19)
-        {
-            NSButton *dummy_button = [[NSButton alloc] init];
-            dummy_button.tag = 2;
-            [self function:dummy_button];
-        }
-    }
-    
-    keyDown = NO;
-}
- */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -669,35 +717,35 @@ NSInteger const default_horn_tag = 2;
             NSNumber *function_number = [NSNumber numberWithInteger:row];
             NSString *function_label = @"";
             
-            if(row == 0) { function_label = _currentTrain.function0; }
-            else if(row == 1) { function_label = _currentTrain.function1; }
-            else if(row == 2) { function_label = _currentTrain.function2; }
-            else if(row == 3) { function_label = _currentTrain.function3; }
-            else if(row == 4) { function_label = _currentTrain.function4; }
-            else if(row == 5) { function_label = _currentTrain.function5; }
-            else if(row == 6) { function_label = _currentTrain.function6; }
-            else if(row == 7) { function_label = _currentTrain.function7; }
-            else if(row == 8) { function_label = _currentTrain.function8; }
-            else if(row == 9) { function_label = _currentTrain.function9; }
-            else if(row == 10) { function_label = _currentTrain.function10; }
-            else if(row == 11) { function_label = _currentTrain.function11; }
-            else if(row == 12) { function_label = _currentTrain.function12; }
-            else if(row == 13) { function_label = _currentTrain.function13; }
-            else if(row == 14) { function_label = _currentTrain.function14; }
-            else if(row == 15) { function_label = _currentTrain.function15; }
-            else if(row == 16) { function_label = _currentTrain.function16; }
-            else if(row == 17) { function_label = _currentTrain.function17; }
-            else if(row == 18) { function_label = _currentTrain.function18; }
-            else if(row == 19) { function_label = _currentTrain.function19; }
-            else if(row == 20) { function_label = _currentTrain.function20; }
-            else if(row == 21) { function_label = _currentTrain.function21; }
-            else if(row == 22) { function_label = _currentTrain.function22; }
-            else if(row == 23) { function_label = _currentTrain.function23; }
-            else if(row == 24) { function_label = _currentTrain.function24; }
-            else if(row == 25) { function_label = _currentTrain.function25; }
-            else if(row == 26) { function_label = _currentTrain.function26; }
-            else if(row == 27) { function_label = _currentTrain.function27; }
-            else if(row == 28) { function_label = _currentTrain.function28; }
+            if(row == 0) { function_label = _currentConsist.lead_train.function0; }
+            else if(row == 1) { function_label = _currentConsist.lead_train.function1; }
+            else if(row == 2) { function_label = _currentConsist.lead_train.function2; }
+            else if(row == 3) { function_label = _currentConsist.lead_train.function3; }
+            else if(row == 4) { function_label = _currentConsist.lead_train.function4; }
+            else if(row == 5) { function_label = _currentConsist.lead_train.function5; }
+            else if(row == 6) { function_label = _currentConsist.lead_train.function6; }
+            else if(row == 7) { function_label = _currentConsist.lead_train.function7; }
+            else if(row == 8) { function_label = _currentConsist.lead_train.function8; }
+            else if(row == 9) { function_label = _currentConsist.lead_train.function9; }
+            else if(row == 10) { function_label = _currentConsist.lead_train.function10; }
+            else if(row == 11) { function_label = _currentConsist.lead_train.function11; }
+            else if(row == 12) { function_label = _currentConsist.lead_train.function12; }
+            else if(row == 13) { function_label = _currentConsist.lead_train.function13; }
+            else if(row == 14) { function_label = _currentConsist.lead_train.function14; }
+            else if(row == 15) { function_label = _currentConsist.lead_train.function15; }
+            else if(row == 16) { function_label = _currentConsist.lead_train.function16; }
+            else if(row == 17) { function_label = _currentConsist.lead_train.function17; }
+            else if(row == 18) { function_label = _currentConsist.lead_train.function18; }
+            else if(row == 19) { function_label = _currentConsist.lead_train.function19; }
+            else if(row == 20) { function_label = _currentConsist.lead_train.function20; }
+            else if(row == 21) { function_label = _currentConsist.lead_train.function21; }
+            else if(row == 22) { function_label = _currentConsist.lead_train.function22; }
+            else if(row == 23) { function_label = _currentConsist.lead_train.function23; }
+            else if(row == 24) { function_label = _currentConsist.lead_train.function24; }
+            else if(row == 25) { function_label = _currentConsist.lead_train.function25; }
+            else if(row == 26) { function_label = _currentConsist.lead_train.function26; }
+            else if(row == 27) { function_label = _currentConsist.lead_train.function27; }
+            else if(row == 28) { function_label = _currentConsist.lead_train.function28; }
 
             
             NSString *title = [NSString stringWithFormat:@"F%@: %@", function_number, function_label];
@@ -705,7 +753,7 @@ NSInteger const default_horn_tag = 2;
         
             
             //Button
-            if(function_number.integerValue == _currentTrain.horn_function) //key 2 is usually the horn, which needs a momentary button
+            if(function_number.integerValue == _currentConsist.lead_train.horn_function) //key 2 is usually the horn, which needs a momentary button
             {
                 [cellView.button sendActionOn:(NSEventMaskLeftMouseDown|NSEventMaskLeftMouseUp)];
             }
@@ -754,12 +802,12 @@ NSInteger const default_horn_tag = 2;
     //Defaults
     self.speed = 0;
     self.direction = kForward128;
-    self.headlight_buton.tag = default_headlight_tag;
-    self.bell_button.tag = default_bell_tag;
-    self.horn_button.tag = default_horn_tag;
+    self.headlight_buton.tag = default_consist_headlight_tag;
+    self.bell_button.tag = default_consist_bell_tag;
+    self.horn_button.tag = default_consist_horn_tag;
     
     //Clear
-    self.currentTrain = nil;
+    self.currentConsist = nil;
     
     [self initDefaultData]; //reset data
     [self refreshUI];
@@ -770,7 +818,7 @@ NSInteger const default_horn_tag = 2;
 {
     NSAlert *alert = [[NSAlert alloc] init];
     [alert setMessageText:@"Speed warning!"];
-    [alert setInformativeText:[NSString stringWithFormat:@"You are currently at the max speed of: %ld", max_speed]];
+    [alert setInformativeText:[NSString stringWithFormat:@"You are currently at the max speed of: %ld", consist_max_speed]];
     [alert addButtonWithTitle:@"Dismiss"];
     [alert runModal];
 }

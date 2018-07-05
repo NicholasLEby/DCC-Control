@@ -31,8 +31,8 @@
     self.managedObjectContext = [self managedObjectContext];
     
     NSLog(@"%@",_trains_tableView);
-    NSLog(@"%d",_trains_tableView.numberOfSelectedRows);
-    NSLog(@"%d",_trains_tableView.selectedRow);
+    NSLog(@"%ld",(long)_trains_tableView.numberOfSelectedRows);
+    NSLog(@"%ld",(long)_trains_tableView.selectedRow);
     NSLog(@"%@",_trains_tableView.highlightedTableColumn);
 }
 
@@ -41,8 +41,8 @@
     [super viewDidAppear];
     
     NSLog(@"%@",_trains_tableView);
-    NSLog(@"%d",_trains_tableView.numberOfSelectedRows);
-    NSLog(@"%d",_trains_tableView.selectedRow);
+    NSLog(@"%ld",(long)_trains_tableView.numberOfSelectedRows);
+    NSLog(@"%ld",(long)_trains_tableView.selectedRow);
     NSLog(@"%@",_trains_tableView.highlightedTableColumn);
 
 }

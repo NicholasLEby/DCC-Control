@@ -16,25 +16,22 @@
     
     NSRect frameRect = [self bounds];
     
+    NSInteger count = 35;
+    NSInteger width = self.bounds.size.width / count;
     
-    if(dirtyRect.size.height < frameRect.size.height)
-        return;
-    NSRect newRect = NSMakeRect(dirtyRect.origin.x+2, dirtyRect.origin.y+2, dirtyRect.size.width-3, dirtyRect.size.height-3);
+    for(int i = 0; i < count; i++)
+    {
+        NSRect newRect = NSMakeRect(i * (width + 2),0, width, frameRect.size.height);
+        
+        NSBezierPath *textViewSurround = [NSBezierPath bezierPathWithRoundedRect:newRect xRadius:0 yRadius:0];
+        [[NSColor colorWithWhite:0.0f alpha:0.05f]  set];
+        [textViewSurround fill];
+    }
     
-    NSBezierPath *textViewSurround = [NSBezierPath bezierPathWithRoundedRect:newRect xRadius:5 yRadius:5];
-    [textViewSurround setLineWidth:1.0f];
-    [[NSColor colorWithWhite:0.6f alpha:1.0f]  set];
-    [textViewSurround stroke];
     
-    [[NSColor controlBackgroundColor] set];
-    [textViewSurround fill];
     
-    //[[NSColor colorWithRed:0.62 green:0.78 blue:0.71 alpha:1.0] set];
-    //NSRectFill(NSInsetRect(newRect, 6, 6));
-    
-    //[[NSColor colorWithPatternImage:[NSImage imageNamed:@"repeat"]] set];
-    //NSRectFill(NSInsetRect(newRect, 6, 6));
 
+   
     
     [super drawRect:dirtyRect];
 

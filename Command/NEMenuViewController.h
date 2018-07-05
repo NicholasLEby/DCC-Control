@@ -21,6 +21,7 @@
 @property(nonatomic, weak) IBOutlet NSButton *connect_button;
 @property(nonatomic, weak) IBOutlet NSButton *disconnect_button;
 @property(nonatomic, weak) IBOutlet NSButton *control_button;
+@property(nonatomic, weak) IBOutlet NSButton *controlConsist_button;
 @property(nonatomic, weak) IBOutlet NSButton *quit_button;
 
 @end

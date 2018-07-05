@@ -14,8 +14,6 @@
     NSButton *statusBarItemButton;
 }
 
-- (IBAction)saveAction:(id)sender;
-
 @property(nonatomic, strong) NSStatusItem *statusItem;
 @property(nonatomic, strong) NSPopover *popover;
 

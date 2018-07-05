@@ -42,18 +42,13 @@
     
     //Default UI
     self.control_button.enabled = NO;
-    self.hardware_heightConstraint.constant = 24.0f;
+    self.controlConsist_button.enabled = NO;
+    self.hardware_heightConstraint.constant = 16.0f;
     self.hardware_view.hidden = YES;
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(serialPortWasOpened) name:@"kSerialPortWasOpened" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(serialPortWasClosed) name:@"kSerialPortWasClosed" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(serialPortWasRemovedFromSystem) name:@"kSerialPortWasRemoved" object:nil];
-
-    ushort number = 19;
-    uint8_t upper = (uint8_t) (number >> 8);
-    uint8_t lower = (uint8_t) (number & 0xff);
-    
-    NSLog(@"%d %d", upper, lower);
 }
 
 
@@ -110,7 +105,7 @@
     }
     
     //Add to Array to Retain
-    [_addedWindowControllers addObject:controllerWindow];
+    //[_addedWindowControllers addObject:controllerWindow];
     
     //Show Window
     [controllerWindow.window cascadeTopLeftFromPoint:NSMakePoint(20,20)];
@@ -139,7 +134,7 @@
     }
     
     //Add to Array to Retain
-    [_addedWindowControllers addObject:controllerWindow];
+    //[_addedWindowControllers addObject:controllerWindow];
     
     //Show Window
     [controllerWindow.window cascadeTopLeftFromPoint:NSMakePoint(20,20)];
@@ -184,6 +179,11 @@
 {
     if([segue.identifier isEqualToString:@"Manage_Segue"])
     {
+        NSWindowController *wc = segue.destinationController;
+        wc.window.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+        wc.window.titlebarAppearsTransparent = YES;
+        wc.window.styleMask = wc.window.styleMask | NSFullSizeContentViewWindowMask;
+        
         [self.appDelegate togglePopover:nil];
     }
 }
@@ -281,7 +281,8 @@
     
     self.quit_button.title = @"Close Port & Quit";
     self.control_button.enabled = YES;
-    
+    self.controlConsist_button.enabled = YES;
+
     self.disconnect_button.enabled = YES;
     
     _serial_connections_menu.image = [NSImage imageNamed:@"NSStatusAvailable"];
@@ -302,7 +303,7 @@
     [_appDelegate.serialManager sendCommand:command_to_send withPacketResponseLength:3 andUserInfo:@"AA" andCallback:^(BOOL success, NSString *response)
      {
          
-         self.hardware_heightConstraint.constant = 104.0f;
+         self.hardware_heightConstraint.constant = 102.0f;
          self.hardware_view.hidden = NO;
          
          if(success)
@@ -329,7 +330,7 @@
 -(void)serialRemoved
 {
     //Resets
-    self.hardware_heightConstraint.constant = 24.0f;
+    self.hardware_heightConstraint.constant = 16.0f;
     self.hardware_view.hidden = YES;
     
     self.connect_button.image = nil;
@@ -337,6 +338,7 @@
     self.connect_button.title = @"Connect";
     self.quit_button.title = @"Quit";
     self.control_button.enabled = NO;
+    self.controlConsist_button.enabled = NO;
     
     self.dcc_menu.enabled = YES;
     self.serial_connections_menu.enabled = YES;

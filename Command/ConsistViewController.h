@@ -33,6 +33,7 @@
 @property(nonatomic, weak) IBOutlet NSTextField *speed_max_label;
 
 @property(nonatomic, weak) IBOutlet NSView *custom_view;
+@property(nonatomic, weak) IBOutlet NSView *custom_exit_view;
 
 
 //

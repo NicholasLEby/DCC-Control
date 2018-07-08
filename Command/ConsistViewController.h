@@ -37,25 +37,8 @@
 
 
 //
+@property(nonatomic, weak) IBOutlet NSTableView *consist_tableView;
 @property(nonatomic, weak) IBOutlet NSTextField *consist_textField;
-
-@property(nonatomic, weak) IBOutlet NSPopUpButton *lead_train_popupButton;
-@property(nonatomic, weak) IBOutlet NSPopUpButton *rear_train_popupButton;
-@property(nonatomic, weak) IBOutlet NSPopUpButton *other1_train_popupButton;
-@property(nonatomic, weak) IBOutlet NSPopUpButton *other2_train_popupButton;
-@property(nonatomic, weak) IBOutlet NSPopUpButton *other3_train_popupButton;
-
-@property(nonatomic, weak) IBOutlet NSPopUpButton *lead_popupButton;
-@property(nonatomic, weak) IBOutlet NSPopUpButton *rear_popupButton;
-@property(nonatomic, weak) IBOutlet NSPopUpButton *other1_popupButton;
-@property(nonatomic, weak) IBOutlet NSPopUpButton *other2_popupButton;
-@property(nonatomic, weak) IBOutlet NSPopUpButton *other3_popupButton;
-
-@property(nonatomic, weak) IBOutlet NSButton *lead_button;
-@property(nonatomic, weak) IBOutlet NSButton *rear_button;
-@property(nonatomic, weak) IBOutlet NSButton *other1_button;
-@property(nonatomic, weak) IBOutlet NSButton *other2_button;
-@property(nonatomic, weak) IBOutlet NSButton *other3_button;
 
 
 //User Control

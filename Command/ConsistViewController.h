@@ -20,6 +20,7 @@
 @property(nonatomic, weak) IBOutlet NSButton *headlight_buton;
 @property(nonatomic, weak) IBOutlet NSButton *estop_buton;
 @property(nonatomic, weak) IBOutlet NSTextField *console_label;
+@property(nonatomic, weak) IBOutlet NSTextField *consoleSecond_label;
 @property(nonatomic, weak) IBOutlet NSTextField *consoleLeftTop_label;
 @property(nonatomic, weak) IBOutlet NSTextField *consoleLeftBottom_label;
 @property(nonatomic, weak) IBOutlet NSImageView *console_headlight_imageView;
@@ -39,6 +40,7 @@
 //
 @property(nonatomic, weak) IBOutlet NSTableView *consist_tableView;
 @property(nonatomic, weak) IBOutlet NSTextField *consist_textField;
+@property(nonatomic, weak) IBOutlet NSTextField *consistWarning_textField;
 
 
 //User Control

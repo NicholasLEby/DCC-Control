@@ -308,7 +308,23 @@
          
          if(success)
          {
-             [self.hardware_label setStringValue:[NSString stringWithFormat:@"Version: %@", response]];
+             if(response.length == 8)
+             {
+                 NSString *new = response;
+                 new = [response stringByReplacingOccurrencesOfString:@">" withString:@""];
+                 new = [response stringByReplacingOccurrencesOfString:@"<" withString:@""];
+                 
+                 NSInteger first = [[new substringWithRange:NSMakeRange(0, 2)] integerValue];
+                 NSInteger middle = [[new substringWithRange:NSMakeRange(2, 2)] integerValue];
+                 NSInteger last = [[new substringWithRange:NSMakeRange(4, 2)] integerValue];
+
+                 
+                 [self.hardware_label setStringValue:[NSString stringWithFormat:@"Version: %.2ld.%.2ld.%.2ld", first, middle, last]];
+             }
+             else
+             {
+                 [self.hardware_label setStringValue:[NSString stringWithFormat:@"Version: %@", response]];
+             }
          }
          else
          {

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17E202" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14135" systemVersion="17E199" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="Train" representedClassName="Train" syncable="YES" codeGenerationType="class">
         <attribute name="bell_function" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="consist_direction" optional="YES" transient="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="consist_position" optional="YES" transient="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="dcc_address" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="function0" optional="YES" attributeType="String" defaultValueString="Function 0" syncable="YES"/>
         <attribute name="function1" optional="YES" attributeType="String" defaultValueString="Function 1" syncable="YES"/>
@@ -37,6 +39,6 @@
         <attribute name="name" optional="YES" attributeType="String" defaultValueString="Untitled" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Train" positionX="270" positionY="-18" width="128" height="553"/>
+        <element name="Train" positionX="270" positionY="-18" width="128" height="585"/>
     </elements>
 </model>

@@ -18,9 +18,7 @@
 		A57FC0F81F3951C20094A5A0 /* NESerialManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A57FC0F71F3951C20094A5A0 /* NESerialManager.m */; };
 		A5AAE86F1E5FD7D7006CF087 /* NEMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5AAE86E1E5FD7D7006CF087 /* NEMenuViewController.m */; };
 		A5D52D1820EFF03D002E47BB /* NEConsistCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5D52D1420EFF03D002E47BB /* NEConsistCellView.m */; };
-		A5D52D1920EFF03D002E47BB /* NEConsistTrain.m in Sources */ = {isa = PBXBuildFile; fileRef = A5D52D1720EFF03D002E47BB /* NEConsistTrain.m */; };
 		A5E8CD0D20E73B5300A9E98C /* ConsistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E8CD0C20E73B5300A9E98C /* ConsistViewController.m */; };
-		A5E8CD1020E85EF300A9E98C /* NEConsist.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E8CD0F20E85EF300A9E98C /* NEConsist.m */; };
 		A5FC9D301E52AF9700D5F086 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FC9D2F1E52AF9700D5F086 /* AppDelegate.m */; };
 		A5FC9D331E52AF9700D5F086 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FC9D321E52AF9700D5F086 /* main.m */; };
 		A5FC9D361E52AF9700D5F086 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FC9D351E52AF9700D5F086 /* ViewController.m */; };
@@ -57,13 +55,9 @@
 		A5AAE86D1E5FD7D7006CF087 /* NEMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NEMenuViewController.h; sourceTree = "<group>"; };
 		A5AAE86E1E5FD7D7006CF087 /* NEMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NEMenuViewController.m; sourceTree = "<group>"; };
 		A5D52D1420EFF03D002E47BB /* NEConsistCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NEConsistCellView.m; sourceTree = "<group>"; };
-		A5D52D1520EFF03D002E47BB /* NEConsistTrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NEConsistTrain.h; sourceTree = "<group>"; };
 		A5D52D1620EFF03D002E47BB /* NEConsistCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NEConsistCellView.h; sourceTree = "<group>"; };
-		A5D52D1720EFF03D002E47BB /* NEConsistTrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NEConsistTrain.m; sourceTree = "<group>"; };
 		A5E8CD0B20E73B5300A9E98C /* ConsistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsistViewController.h; sourceTree = "<group>"; };
 		A5E8CD0C20E73B5300A9E98C /* ConsistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsistViewController.m; sourceTree = "<group>"; };
-		A5E8CD0E20E85EF300A9E98C /* NEConsist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NEConsist.h; sourceTree = "<group>"; };
-		A5E8CD0F20E85EF300A9E98C /* NEConsist.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NEConsist.m; sourceTree = "<group>"; };
 		A5ED56EF1FD3B048001F1BC0 /* trains_v1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = trains_v1.xcdatamodel; sourceTree = "<group>"; };
 		A5FC9D2B1E52AF9700D5F086 /* Command.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Command.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5FC9D2E1E52AF9700D5F086 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -140,8 +134,6 @@
 			children = (
 				A5D52D1620EFF03D002E47BB /* NEConsistCellView.h */,
 				A5D52D1420EFF03D002E47BB /* NEConsistCellView.m */,
-				A5D52D1520EFF03D002E47BB /* NEConsistTrain.h */,
-				A5D52D1720EFF03D002E47BB /* NEConsistTrain.m */,
 				A5E8CD0B20E73B5300A9E98C /* ConsistViewController.h */,
 				A5E8CD0C20E73B5300A9E98C /* ConsistViewController.m */,
 				A5FC9D341E52AF9700D5F086 /* ViewController.h */,
@@ -283,8 +275,6 @@
 			children = (
 				A5FC9D661E59D14900D5F086 /* NEFunction.h */,
 				A5FC9D671E59D14900D5F086 /* NEFunction.m */,
-				A5E8CD0E20E85EF300A9E98C /* NEConsist.h */,
-				A5E8CD0F20E85EF300A9E98C /* NEConsist.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -387,12 +377,10 @@
 				A5FC9D741E5BD9A800D5F086 /* NEFunctionCell.m in Sources */,
 				A5FC9D681E59D14900D5F086 /* NEFunction.m in Sources */,
 				A5FC9D5A1E567C9400D5F086 /* ORSSerialPacketDescriptor.m in Sources */,
-				A5D52D1920EFF03D002E47BB /* NEConsistTrain.m in Sources */,
 				A548BCA91FCE59AB006D03F8 /* trains.xcdatamodeld in Sources */,
 				A5FC9D5C1E567C9400D5F086 /* ORSSerialPortManager.m in Sources */,
 				A5D52D1820EFF03D002E47BB /* NEConsistCellView.m in Sources */,
 				A548BC831FCE5065006D03F8 /* NEOnboardingViewController.m in Sources */,
-				A5E8CD1020E85EF300A9E98C /* NEConsist.m in Sources */,
 				A57FC0F81F3951C20094A5A0 /* NESerialManager.m in Sources */,
 				A5FC9D301E52AF9700D5F086 /* AppDelegate.m in Sources */,
 				A5FC9D591E567C9400D5F086 /* ORSSerialBuffer.m in Sources */,

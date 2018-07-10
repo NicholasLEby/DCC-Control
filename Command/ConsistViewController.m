@@ -19,14 +19,10 @@
 #import "trains+CoreDataModel.h"
 //View
 #import "NEConsistCellView.h"
-//Model
-#import "NEConsistTrain.h"
 //Third Party
 #import "ORSSerialPortManager.h"
 #import "ORSSerialPort.h"
 #import "ORSSerialRequest.h"
-//Consist
-#import "NEConsist.h"
 
 NSInteger const consist_min_speed = 0;
 NSInteger const consist_max_speed = 128;
@@ -34,7 +30,7 @@ NSInteger const default_consist_headlight_tag = 0;
 NSInteger const default_consist_bell_tag = 1;
 NSInteger const default_consist_horn_tag = 2;
 
-@interface ConsistViewController () <NSWindowDelegate>
+@interface ConsistViewController () <NSWindowDelegate, NSTextFieldDelegate>
 
 //Data
 @property(nonatomic, strong) NSMutableArray *active_functions;
@@ -42,8 +38,7 @@ NSInteger const default_consist_horn_tag = 2;
 //Helpers
 @property(nonatomic, strong) NENCECommand *command;
 //State
-@property(nonatomic, strong) NEConsist *currentConsist;
-
+@property(nonatomic) NSInteger consist_dcc_address;
 @property(nonatomic) NSInteger speed;
 @property(nonatomic) NSInteger direction;
 @property(nonatomic) BOOL keyDown; //for tracking key state
@@ -62,7 +57,6 @@ NSInteger const default_consist_horn_tag = 2;
     [super viewDidLoad];
 
     //State Defaults
-    self.currentConsist = nil;
     self.speed = 0;
     self.direction = kForward128;
     self.keyDown = NO;
@@ -139,9 +133,6 @@ NSInteger const default_consist_horn_tag = 2;
 
 -(void)initDefaultData
 {
-    self.currentConsist = [[NEConsist alloc] init];
-    
-
     //Load Saved Trains
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Train" inManagedObjectContext:_managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -196,8 +187,8 @@ NSInteger const default_consist_horn_tag = 2;
 -(void)initConsistBuilder
 {
     NSAlert *alert = [[NSAlert alloc] init];
-    [alert setMessageText:@"Consist Builder"];
-    [alert setInformativeText:@"Use inputs below to add locomotives to your conist. Some locomotives will sound their horn twice when successfully editing CV19."];
+    [alert setMessageText:@"Advanced Consist Builder"];
+    [alert setInformativeText:@"Ensure your locomotive supports Advanced Consisting (CV19) before proceeding. Some locomotives will sound their horn twice when successfully writing to CV19."];
     [alert addButtonWithTitle:@"Done"];
     [alert addButtonWithTitle:@"Cancel"];
     [alert setAccessoryView:_custom_view];
@@ -207,7 +198,6 @@ NSInteger const default_consist_horn_tag = 2;
          if(result == NSAlertFirstButtonReturn)
          {
              NSLog(@"Done");
-             self.currentConsist.dcc_address = self.consist_textField.integerValue;
              
              //Reloas function table
              [self.tableView reloadData];
@@ -225,23 +215,9 @@ NSInteger const default_consist_horn_tag = 2;
 
 -(void)updateStatusWindow
 {
-    NSString *locomotives = @"";
-    
-    NSString *forward_direction = (_direction == kForward128) ? @"L" : @"R";
-    locomotives = [NSString stringWithFormat:@"%@%d", forward_direction, _currentConsist.lead_train.dcc_address];
-    
-    if(_currentConsist.rear_train)
-    {
-        NSString *rear_direction = (_direction == kForward128) ? @"R" : @"L";
-        locomotives = [locomotives stringByAppendingString:[NSString stringWithFormat:@" - %@%d", rear_direction, _currentConsist.rear_train.dcc_address]];
-    }
-    
-    NSString *name = [NSString stringWithFormat:@"%@ (%.3d)(%@)", @"Consist", _currentConsist.dcc_address, locomotives];
-    
-    NSString *speed_string = [NSString stringWithFormat:@"Speed: %@ %ld", (_direction == 0) ? @"Reverse" : @"Forward", _speed];
-    
-    self.consoleLeftTop_label.stringValue = name;
-    self.consoleLeftBottom_label.stringValue = speed_string;
+    self.consoleLeftTop_label.stringValue = [NSString stringWithFormat:@"Consist: %.3ld", (long)_consist_dcc_address];
+    self.consoleSecond_label.stringValue = [self consistString];
+    self.consoleLeftBottom_label.stringValue = [NSString stringWithFormat:@"Speed: %@ %ld", (_direction == 0) ? @"Reverse" : @"Forward", _speed];
     self.speed_slider.integerValue = _speed;
     
     //Reset
@@ -375,7 +351,7 @@ NSInteger const default_consist_horn_tag = 2;
     NSLog(@"Control Panel: Change Direction from %ld to %ld", current_direction, _direction);
     
     //Execute Command
-    NSData *command_to_send = [_command locomotiveSpeedCommandWithAddr:_currentConsist.dcc_address andSpeed:_speed andDirection:_direction];
+    NSData *command_to_send = [_command locomotiveSpeedCommandWithAddr:_consist_dcc_address andSpeed:_speed andDirection:_direction];
     
     //Update Console
     [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
@@ -404,7 +380,7 @@ NSInteger const default_consist_horn_tag = 2;
     NSLog(@"Control Panel: Emergency Stop!");
     
     //Execute Command
-    NSData *command_to_send = [_command locomotiveEmergencyStopCommandWithAddr:_currentConsist.dcc_address andDirection:_direction];
+    NSData *command_to_send = [_command locomotiveEmergencyStopCommandWithAddr:_consist_dcc_address andDirection:_direction];
     
     //Update Console
     [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
@@ -468,7 +444,7 @@ NSInteger const default_consist_horn_tag = 2;
             self.speed = new_speed;
             
             //Execute Command
-            NSData *command_to_send = [_command locomotiveSpeedCommandWithAddr:_currentConsist.dcc_address andSpeed:_speed andDirection:_direction];
+            NSData *command_to_send = [_command locomotiveSpeedCommandWithAddr:_consist_dcc_address andSpeed:_speed andDirection:_direction];
             
             //Update Console
             [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
@@ -618,7 +594,7 @@ NSInteger const default_consist_horn_tag = 2;
     }
     else
     {
-        NEConsistTrain *consist_train = [_added_locomotives objectAtIndex:row];
+        Train *consist_train = [_added_locomotives objectAtIndex:row];
         
         NEConsistCellView *cell = [tableView makeViewWithIdentifier:@"NEConsistCellView" owner:self];
         
@@ -645,7 +621,7 @@ NSInteger const default_consist_horn_tag = 2;
             [[cell.position_popupButton itemAtIndex:2] setEnabled:YES];
         }
         
-        [cell.position_popupButton selectItemAtIndex:consist_train.position];
+        [cell.position_popupButton selectItemAtIndex:consist_train.consist_position];
         
         
         //Train Dropdown
@@ -660,7 +636,7 @@ NSInteger const default_consist_horn_tag = 2;
         [[cell.locomotives_popupButton itemAtIndex:0] setEnabled:NO];
 
         
-        if(consist_train.name)
+        if(consist_train.name && ![consist_train.name isEqualToString:@"Untitled"])
         {
             [cell.locomotives_popupButton selectItemWithTitle:[NSString stringWithFormat:@"%@ (%ld)",consist_train.name, (long)consist_train.dcc_address]];
         }
@@ -668,7 +644,7 @@ NSInteger const default_consist_horn_tag = 2;
         //Direction Dropdown
         cell.direction_popupButton.tag = row;
         
-        [cell.direction_popupButton selectItemAtIndex:consist_train.direction];
+        [cell.direction_popupButton selectItemAtIndex:consist_train.consist_direction];
         
         
         return cell;
@@ -680,17 +656,44 @@ NSInteger const default_consist_horn_tag = 2;
     return NO;
 }
 
+
+
+
+
+- (void)controlTextDidChange:(NSNotification *)notification
+{
+    NSTextField *textField = [notification object];
+
+    for(Train *train in _savedTrains)
+    {
+        if(train.dcc_address == _consist_textField.integerValue)
+        {
+            self.consistWarning_textField.hidden = NO;
+            return;
+        }
+    }
+    
+    self.consist_dcc_address = textField.integerValue;
+    self.consistWarning_textField.hidden = YES;
+}
+
 -(IBAction)positionChanged:(id)sender
 {
     NSPopUpButton *button = (NSPopUpButton*)sender;
-    NEConsistTrain *consist_train = [_added_locomotives objectAtIndex:button.tag];
-    consist_train.position = button.indexOfSelectedItem;
+    Train *consist_train = [_added_locomotives objectAtIndex:button.tag];
+    consist_train.consist_position = button.indexOfSelectedItem;
 }
 
 -(IBAction)locomotiveChanged:(id)sender
 {
     NSPopUpButton *button = (NSPopUpButton*)sender;
-    NEConsistTrain *consist_train = [_added_locomotives objectAtIndex:button.tag];
+    
+    if(button.indexOfSelectedItem == 0)
+    {
+        return;
+    }
+    
+    Train *consist_train = [_added_locomotives objectAtIndex:button.tag];
     Train *train = [_savedTrains objectAtIndex:(button.indexOfSelectedItem)-1];
     
     consist_train.name = train.name;
@@ -700,8 +703,8 @@ NSInteger const default_consist_horn_tag = 2;
 -(IBAction)directionChanged:(id)sender
 {
     NSPopUpButton *button = (NSPopUpButton*)sender;
-    NEConsistTrain *consist_train = [_added_locomotives objectAtIndex:button.tag];
-    consist_train.direction = button.indexOfSelectedItem;
+    Train *consist_train = [_added_locomotives objectAtIndex:button.tag];
+    consist_train.consist_direction = button.indexOfSelectedItem;
 }
 
 
@@ -715,12 +718,12 @@ NSInteger const default_consist_horn_tag = 2;
         [self showErrorMessage:@"Consist address can't be empty!"];
         return;
     }
-
-    NEConsistTrain *consist_train = [[NEConsistTrain alloc] init];
-    consist_train.position = 0;
-    consist_train.direction = 0;
-    consist_train.consist_address = _consist_textField.integerValue;
     
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Train" inManagedObjectContext:_managedObjectContext];
+    Train *consist_train = [[Train alloc] initWithEntity:entity insertIntoManagedObjectContext:nil];
+    consist_train.consist_position = 0;
+    consist_train.consist_direction = 0;
+
     [_added_locomotives addObject:consist_train];
     [_consist_tableView reloadData];
     [_consist_tableView scrollToEndOfDocument:nil];
@@ -729,7 +732,7 @@ NSInteger const default_consist_horn_tag = 2;
 -(IBAction)programLocomotive:(id)sender
 {
     NSButton *button = (NSButton*)sender;
-    NEConsistTrain *consist_train = [_added_locomotives objectAtIndex:button.tag];
+    Train *consist_train = [_added_locomotives objectAtIndex:button.tag];
 
     if(consist_train.name == nil)
     {
@@ -737,11 +740,11 @@ NSInteger const default_consist_horn_tag = 2;
         return;
     }
     
-    NSLog(@"add Position: %ld  Name: %@  Address: %ld  Direction: %ld  Consist: %ld",(long)consist_train.position, consist_train.name,(long) (long)consist_train.dcc_address,(long) (long)consist_train.direction, (long)consist_train.consist_address);
+    NSLog(@"add Position: %ld  Name: %@  Address: %ld  Direction: %ld  Consist: %ld",(long)consist_train.consist_position, consist_train.name,(long) (long)consist_train.dcc_address,(long) (long)consist_train.consist_direction, (long)_consist_dcc_address);
     
     
     //Execute Command
-    NSData *command_to_send = [_command locomotiveConsistCommandWithAddr:consist_train.dcc_address consistNumber:consist_train.consist_address andPosition:consist_train.direction];
+    NSData *command_to_send = [_command locomotiveConsistCommandWithAddr:consist_train.dcc_address consistNumber:_consist_dcc_address andDirection:consist_train.consist_direction];
     
     //Update Console
     [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
@@ -789,14 +792,13 @@ NSInteger const default_consist_horn_tag = 2;
 -(void)resetUI
 {
     //Defaults
+    self.consist_dcc_address = NSNotFound;
     self.speed = 0;
     self.direction = kForward128;
     self.headlight_buton.tag = default_consist_headlight_tag;
     self.bell_button.tag = default_consist_bell_tag;
     self.horn_button.tag = default_consist_horn_tag;
     
-    //Clear
-    self.currentConsist = nil;
     
     [self initDefaultData]; //reset data
     [self refreshUI];
@@ -846,31 +848,10 @@ NSInteger const default_consist_horn_tag = 2;
 
 -(void)resetConsistTrains
 {
-    //Execute Command
-    NSData *command_to_send = [self.command locomotiveResetConsistCommandWithAddr:self.currentConsist.lead_train.dcc_address];
-    
-    //Update Console
-    [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
-    
-    //Block
-    [self.appDelegate.serialManager sendCommand:command_to_send withPacketResponseLength:1 andUserInfo:@"AE" andCallback:^(BOOL success, NSString *response)
-     {
-         if(success)
-         {
-             [self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:YES];
-         }
-         else
-         {
-             [self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:NO];
-         }
-         
-         //Refresh UI
-         [self refreshUI];
-     }];
-    
-    if(self.currentConsist.rear_train)
+    for(Train *consist_train in _added_locomotives)
     {
-        NSData *command_to_send = [self.command locomotiveResetConsistCommandWithAddr:self.currentConsist.rear_train.dcc_address];
+        //Execute Command
+        NSData *command_to_send = [self.command locomotiveResetConsistCommandWithAddr:consist_train.dcc_address];
         
         //Update Console
         [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
@@ -890,8 +871,10 @@ NSInteger const default_consist_horn_tag = 2;
              //Refresh UI
              [self refreshUI];
          }];
+        
+    #warning intentional delay
+        [NSThread sleepForTimeInterval:1.0];
     }
-    
 }
 
 
@@ -952,16 +935,53 @@ NSInteger const default_consist_horn_tag = 2;
 {
     if(_direction == kForward128)
     {
-        return _currentConsist.lead_train;
+        return [_added_locomotives firstObject];
     }
     else
     {
-        return (_currentConsist.rear_train) ? _currentConsist.rear_train : _currentConsist.lead_train;
+        Train *train = [_added_locomotives lastObject];
+        
+        if(train.consist_position == 2)
+        {
+            return train;
+        }
+        else
+        {
+            return [_added_locomotives firstObject];
+        }
     }
 }
 
-
-
+-(NSString*)consistString
+{
+    NSString *string = @"";
+    
+    NSMutableArray *temp = [NSMutableArray arrayWithArray:_added_locomotives];
+    
+    if(_direction == kForward128)
+    {
+        string = @"< ";
+    }
+    
+    for(int i = 0; i < temp.count; i++)
+    {
+        Train *train = [temp objectAtIndex:i];
+        
+        string = [string stringByAppendingString:[NSString stringWithFormat:@"%@", train.name]];
+        
+        if(i < (temp.count-1))
+        {
+            string = [string stringByAppendingString:@"  "];
+        }
+    }
+                  
+    if(_direction == kReverse128)
+    {
+        string = [string stringByAppendingString:@" >"];
+    }
+    
+    return string;
+}
 
 @end
 

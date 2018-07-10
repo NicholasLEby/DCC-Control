@@ -515,59 +515,6 @@ NSInteger const default_horn_tag = 2;
     }
 }
     
-    
--(IBAction)setConsist:(id)sender
-{
-    //Execute Command
-    NSData *command_to_send = [_command locomotiveConsistCommandWithAddr:_currentTrain.dcc_address consistNumber:_consist_address_textField.integerValue andPosition:_consist_popupButton.indexOfSelectedItem];
-    
-    //Update Console
-    [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
-    
-    //Block
-    [_appDelegate.serialManager sendCommand:command_to_send withPacketResponseLength:1 andUserInfo:@"AE" andCallback:^(BOOL success, NSString *response)
-     {
-         if(success)
-         {
-             [self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:YES];
-         }
-         else
-         {
-             [self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:NO];
-         }
-         
-         //Refresh UI
-         [self refreshUI];
-     }];
-}
-
--(IBAction)resetConsist:(id)sender
-{
-    //Execute Command
-    NSData *command_to_send = [_command locomotiveResetConsistCommandWithAddr:_currentTrain.dcc_address];
-    
-    //Update Console
-    [self showConsoleMessage:[NSString stringWithFormat:@"Sending %@", command_to_send] withReset:NO];
-    
-    //Block
-    [_appDelegate.serialManager sendCommand:command_to_send withPacketResponseLength:1 andUserInfo:@"AE" andCallback:^(BOOL success, NSString *response)
-     {
-         if(success)
-         {
-             [self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:YES];
-         }
-         else
-         {
-             [self showConsoleMessage:[NSString stringWithFormat:@"%@ %@", response, command_to_send] withReset:NO];
-         }
-         
-         //Refresh UI
-         [self refreshUI];
-     }];
-}
-
-
-
 //---------------------------------- Keyboard Events ----------------------------------//
 
 /*

@@ -55,7 +55,7 @@
 
 
 
--(NSData*)locomotiveConsistCommandWithAddr:(NSInteger)addr consistNumber:(NSInteger)consistNumber andPosition:(NSInteger)position
+-(NSData*)locomotiveConsistCommandWithAddr:(NSInteger)addr consistNumber:(NSInteger)consistNumber andDirection:(NSInteger)direction
 {
     //Postion, 0 = F, 1 = R
     
@@ -66,7 +66,7 @@
     NSString *addr_l = [NSString stringWithFormat:@"%02x", (unsigned int) addr];
     NSString *cv_h = @"00";
     NSString *cv_l = @"13";
-    NSString *data_1 = (position == 0) ? [NSString stringWithFormat:@"%02x", (unsigned int) consistNumber] : [NSString stringWithFormat:@"%02x", (unsigned int) consistNumber + 128];
+    NSString *data_1 = (direction == 0) ? [NSString stringWithFormat:@"%02x", (unsigned int) consistNumber] : [NSString stringWithFormat:@"%02x", (unsigned int) consistNumber + 128];
     
     //------------------------ Final Command
     NSString *command_string = [NSString stringWithFormat:@"%@ %@ %@ %@ %@ %@", cmd, addr_h, addr_l, cv_h, cv_l, data_1];

@@ -2760,7 +2760,7 @@ Gw
                             <rect key="frame" x="0.0" y="53" width="519" height="186"/>
                             <clipView key="contentView" id="kCc-wD-TSY">
                                 <rect key="frame" x="1" y="1" width="517" height="184"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <tableView verticalHuggingPriority="750" tag="1" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="31" viewBased="YES" id="agO-9N-V2x">
                                         <rect key="frame" x="0.0" y="0.0" width="517" height="184"/>

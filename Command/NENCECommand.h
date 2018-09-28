@@ -36,5 +36,6 @@ typedef NS_OPTIONS(NSUInteger, FunctionGroup)
 -(NSData*)locomotiveFunctionCommand:(NSInteger)addr andFunctionKey:(NSNumber*)functionNumber andFunctionState:(BOOL)state;
 -(NSData*)softwareVersion;
 -(NSData*)locomotiveResetConsistCommandWithAddr:(NSInteger)addr;
+-(NSString*)binaryStringFromInteger:(NSInteger)number;
 
 @end

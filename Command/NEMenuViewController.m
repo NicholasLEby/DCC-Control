@@ -331,6 +331,18 @@
              [self.hardware_label setStringValue:[NSString stringWithFormat:@"Version: %@", response]];
          }
      }];
+    
+    
+    //Test
+    NSString *s = [command binaryStringFromInteger:00];
+    NSString *s1 = [command binaryStringFromInteger:003];
+    NSString *s2 = [command binaryStringFromInteger:3];
+    NSString *s3 = [command binaryStringFromInteger:127];
+    NSString *l1 = [command binaryStringFromInteger:128];
+    NSString *l2 = [command binaryStringFromInteger:164];
+    NSString *l3 = [command binaryStringFromInteger:9999];
+    
+    NSLog(@"\n%@\n%@\n%@\n%@\n%@\n%@\n%@", s, s1, s2, s3, l1, l2, l3);
 }
 
 -(void)serialPortWasRemovedFromSystem

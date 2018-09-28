@@ -15,17 +15,14 @@
 
 -(NSData*)locomotiveSpeedCommandWithAddr:(NSInteger)addr andSpeed:(NSInteger)speed andDirection:(NSInteger)direction
 {
-    int dcc_address_mode = 0;//for future / remove this, check if addr is 0,127 or > to determine long or short
-
     NSString *cmd = @"A2";
-    NSString *addr_h  = (dcc_address_mode == 0) ? @"00" : @"c0";
-    NSString *addr_l = [NSString stringWithFormat:@"%02x", (unsigned int) addr];
+    NSString *address  = [self binaryStringFromInteger:addr];
     NSString *op_1 = (direction == 0) ? @"03" : @"04";
     NSString *data_1 = [NSString stringWithFormat:@"%02x", (unsigned int) speed];
     
     
     //------------------------ Final Command
-    NSString *command_string = [NSString stringWithFormat:@"%@ %@ %@ %@ %@", cmd, addr_h, addr_l, op_1, data_1];
+    NSString *command_string = [NSString stringWithFormat:@"%@ %@ %@ %@", cmd, address, op_1, data_1];
 
     NSLog(@"Command: %@", command_string);
 
@@ -34,18 +31,15 @@
 
 -(NSData*)locomotiveEmergencyStopCommandWithAddr:(NSInteger)addr andDirection:(NSInteger)direction
 {
-    int dcc_address_mode = 0;//for future / remove this, check if addr is 0,127 or > to determine long or short
-
     NSString *cmd = @"A2";
-    NSString *addr_h  = (dcc_address_mode == 0) ? @"00" : @"c0";
-    NSString *addr_l = [NSString stringWithFormat:@"%02x", (unsigned int) addr];
+    NSString *address  = [self binaryStringFromInteger:addr];
     NSString *op_1 = (direction == 0) ? @"05" : @"06";
     NSString *data_1 = @"00";
     
  
     
     //------------------------ Final Command
-    NSString *command_string = [NSString stringWithFormat:@"%@ %@ %@ %@ %@", cmd, addr_h, addr_l, op_1, data_1];
+    NSString *command_string = [NSString stringWithFormat:@"%@ %@ %@ %@", cmd, address, op_1, data_1];
    
     NSLog(@"Command: %@", command_string);
 
@@ -59,17 +53,14 @@
 {
     //Postion, 0 = F, 1 = R
     
-    int dcc_address_mode = 0;//for future / remove this, check if addr is 0,127 or > to determine long or short
-    
     NSString *cmd = @"AE";
-    NSString *addr_h  = (dcc_address_mode == 0) ? @"00" : @"c0";
-    NSString *addr_l = [NSString stringWithFormat:@"%02x", (unsigned int) addr];
+    NSString *address  = [self binaryStringFromInteger:addr];
     NSString *cv_h = @"00";
     NSString *cv_l = @"13";
     NSString *data_1 = (direction == 0) ? [NSString stringWithFormat:@"%02x", (unsigned int) consistNumber] : [NSString stringWithFormat:@"%02x", (unsigned int) consistNumber + 128];
     
     //------------------------ Final Command
-    NSString *command_string = [NSString stringWithFormat:@"%@ %@ %@ %@ %@ %@", cmd, addr_h, addr_l, cv_h, cv_l, data_1];
+    NSString *command_string = [NSString stringWithFormat:@"%@ %@ %@ %@ %@", cmd, address, cv_h, cv_l, data_1];
     
     NSLog(@"Command: %@", command_string);
     
@@ -80,17 +71,14 @@
 {
     //Postion, 0 = F, 1 = R
     
-    int dcc_address_mode = 0;//for future / remove this, check if addr is 0,127 or > to determine long or short
-    
     NSString *cmd = @"AE";
-    NSString *addr_h  = (dcc_address_mode == 0) ? @"00" : @"c0";
-    NSString *addr_l = [NSString stringWithFormat:@"%02x", (unsigned int) addr];
+    NSString *address  = [self binaryStringFromInteger:addr];
     NSString *cv_h = @"00";
     NSString *cv_l = @"13";
     NSString *data_1 = @"00";
     
     //------------------------ Final Command
-    NSString *command_string = [NSString stringWithFormat:@"%@ %@ %@ %@ %@ %@", cmd, addr_h, addr_l, cv_h, cv_l, data_1];
+    NSString *command_string = [NSString stringWithFormat:@"%@ %@ %@ %@ %@", cmd, address, cv_h, cv_l, data_1];
     
     NSLog(@"Command: %@", command_string);
     
@@ -112,11 +100,8 @@
 
 -(NSData*)locomotiveNCEConsistCommandWithAddr:(NSInteger)addr andPosition:(NSInteger)position
 {
-    int dcc_address_mode = 0;//for future / remove this, check if addr is 0,127 or > to determine long or short
-
     NSString *cmd = @"A2";
-    NSString *addr_h  = (dcc_address_mode == 0) ? @"00" : @"c0";
-    NSString *addr_l = [NSString stringWithFormat:@"%02x", (unsigned int) addr];
+    NSString *address  = [self binaryStringFromInteger:addr];
     NSString *op_1;
  
     switch (position)
@@ -134,7 +119,7 @@
     NSString *data_1 = (position == 0) ? @"00" : [NSString stringWithFormat:@"%02x", (unsigned int) 127];
     
     //------------------------ Final Command
-    NSString *command_string = [NSString stringWithFormat:@"%@ %@ %@ %@ %@", cmd, addr_h, addr_l, op_1, data_1];
+    NSString *command_string = [NSString stringWithFormat:@"%@ %@ %@ %@", cmd, address, op_1, data_1];
     
     NSLog(@"Command: %@", command_string);
     
@@ -143,12 +128,9 @@
 
     
 -(NSData*)locomotiveFunctionCommand:(NSInteger)addr andFunctionKey:(NSNumber*)functionNumber andFunctionState:(BOOL)state
-{
-    int dcc_address_mode = 0;//for future / remove this, check if addr is 0,127 or > to determine long or short
-    
+{    
     NSString *cmd = @"A2";
-    NSString *addr_h  = (dcc_address_mode == 0) ? @"00" : @"c0";
-    NSString *addr_l = [NSString stringWithFormat:@"%02x", (unsigned int) addr];
+    NSString *address = [self binaryStringFromInteger:addr];
     NSString *op_1;
     NSString *data_1;
     
@@ -243,7 +225,7 @@
     }
     
     //------------------------ Final Command
-    NSString *command_string = [NSString stringWithFormat:@"%@ %@ %@ %@ %@", cmd, addr_h, addr_l, op_1, data_1];
+    NSString *command_string = [NSString stringWithFormat:@"%@ %@ %@ %@", cmd, address, op_1, data_1];
     
     //NSLog(@"Command: %@", command_string);
     
@@ -271,6 +253,27 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//--------------------------------------------- Utilz  ---------------------------------------------//
+
 -(NSData*)hexStringToNSData:(NSString*)hex
 {
     hex = [hex stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -290,6 +293,82 @@
     
     return [NSData dataWithBytesNoCopy:bytes length:[hex length]/2 freeWhenDone:YES];
 }
+
+
+-(NSString*)binaryStringFromInteger:(NSInteger)number
+{
+    if(number <= 127)
+    {
+        return [NSString stringWithFormat:@"00 %02x", (unsigned int) number];
+    }
+    else
+    {
+        NSLog(@"%ld", (long)number);
+
+        NSMutableString * string = [[NSMutableString alloc] init];
+        
+        int spacing = pow( 2, 3 );
+        int width = 24;
+        int binaryDigit = 8;
+        //int integer = (int)number;
+        
+        while( binaryDigit < width )
+        {
+            binaryDigit++;
+            
+            [string insertString:( (number & 1) ? @"1" : @"0" )atIndex:0];
+            
+            if( binaryDigit % spacing == 0 && binaryDigit != width )
+            {
+                [string insertString:@" " atIndex:0];
+            }
+            
+            number = number >> 1;
+        }
+        
+        NSLog(@"%@", string);
+        
+        if(string.length == 17)
+        {
+            NSArray *split = [string componentsSeparatedByString:@" "];
+            
+            if(split.count == 2)
+            {
+                NSString *first = split.firstObject;
+                
+                if(first.length == 8)
+                {
+                    first = [first stringByReplacingCharactersInRange:NSMakeRange(0, 2) withString:@"11"];
+                }
+                else
+                {
+                    return nil;
+                }
+                
+                NSString *second = split.lastObject;
+                
+                NSUInteger first_number = [self convertBinaryStringToDecimalNumber:first];
+                NSUInteger second_number = [self convertBinaryStringToDecimalNumber:second];
+                
+                return [NSString stringWithFormat:@"%2x %02x", (unsigned int)first_number, (unsigned int)second_number];
+            }
+        }
+    }
+    
+    return @"00 00"; //fallback
+}
+
+-(NSUInteger)convertBinaryStringToDecimalNumber:(NSString *)binaryString
+{
+    NSUInteger totalValue = 0;
+    
+    for (int i = 0; i < binaryString.length; i++)
+    {
+        totalValue += (int)([binaryString characterAtIndex:(binaryString.length - 1 - i)] - 48) * pow(2, i);
+    }
+    return totalValue;
+}
+
 
 
 @end

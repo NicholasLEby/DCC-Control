@@ -19,9 +19,11 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+	<key>LSUIElement</key>
+	<true/>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2017 Nicholas Eby. All rights reserved.</string>
 	<key>NSMainStoryboardFile</key>
@@ -34,7 +36,5 @@
 		<string>DS-Digital-Bold</string>
 		<string>LEDCalculator</string>
 	</array>
-	<key>LSUIElement</key>
-	<true/>
 </dict>
 </plist>

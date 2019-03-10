@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
-        <capability name="box content view" minToolsVersion="7.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
-        <capability name="system font weights other than Regular or Bold" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -73,7 +71,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController storyboardIdentifier="NEWindowController" id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="Command" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" appearanceType="aqua" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="Command" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" appearanceType="aqua" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <rect key="contentRect" x="196" y="240" width="416" height="510"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
@@ -94,7 +92,7 @@
         <scene sceneID="1xl-7z-QrE">
             <objects>
                 <windowController storyboardIdentifier="NEConsistWindowController" id="6nH-Z8-2i0" sceneMemberID="viewController">
-                    <window key="window" title="Command" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" appearanceType="aqua" animationBehavior="default" id="lzA-oA-qMS">
+                    <window key="window" title="Command" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" appearanceType="aqua" animationBehavior="default" id="lzA-oA-qMS">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <rect key="contentRect" x="196" y="240" width="416" height="510"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
@@ -392,7 +390,7 @@
                                     </button>
                                     <button verticalHuggingPriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="KRQ-lM-cG0">
                                         <rect key="frame" x="10" y="18" width="297" height="32"/>
-                                        <buttonCell key="cell" type="push" title="Consist Throttle" bezelStyle="rounded" imagePosition="right" alignment="center" borderStyle="border" imageScaling="proportionallyDown" sound="Tink" inset="2" id="852-4A-TiU">
+                                        <buttonCell key="cell" type="push" title="Consist Throttle (Coming soon!)" bezelStyle="rounded" imagePosition="right" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" sound="Tink" inset="2" id="852-4A-TiU">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="systemMedium" size="13"/>
                                         </buttonCell>
@@ -513,7 +511,7 @@
         <scene sceneID="1XX-7e-jIm">
             <objects>
                 <windowController storyboardIdentifier="NEOnboardingWindowController" id="xUA-EI-8ZK" sceneMemberID="viewController">
-                    <window key="window" identifier="NEOnboardingWindowController" title="Getting Started" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="01P-nF-UDp">
+                    <window key="window" identifier="NEOnboardingWindowController" title="Getting Started" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="01P-nF-UDp">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <rect key="contentRect" x="458" y="290" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
@@ -534,13 +532,12 @@
             <objects>
                 <viewController id="E2h-fo-WfI" customClass="NEOnboardingViewController" sceneMemberID="viewController">
                     <view key="view" id="OUB-sF-btU">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="330"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="74o-Sy-rIO">
-                                <rect key="frame" x="200" y="47" width="80" height="19"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="roundRect" title="Get Started\" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="umj-jB-6Kc">
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="74o-Sy-rIO">
+                                <rect key="frame" x="175" y="31" width="131" height="19"/>
+                                <buttonCell key="cell" type="roundRect" title="I Agree, Get Started!" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="umj-jB-6Kc">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="cellTitle"/>
                                 </buttonCell>
@@ -548,7 +545,70 @@
                                     <action selector="showMenu:" target="E2h-fo-WfI" id="FQe-TW-UzH"/>
                                 </connections>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ent-hw-eoS">
+                                <rect key="frame" x="14" y="279" width="452" height="19"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Welcome to Command for NCE PowerCab 1.65" id="Bkw-9Q-gWu">
+                                    <font key="font" metaFont="systemBold" size="15"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6DN-SO-hv4">
+                                <rect key="frame" x="14" y="246" width="452" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Please read the software disclaimer below:" id="mth-2o-puu">
+                                    <font key="font" metaFont="systemMedium" size="13"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dmM-fl-YOS">
+                                <rect key="frame" x="16" y="74" width="448" height="160"/>
+                                <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="XfL-om-2Jr">
+                                    <rect key="frame" x="0.0" y="0.0" width="448" height="160"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textView editable="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" id="tXv-Fs-vmI">
+                                            <rect key="frame" x="0.0" y="0.0" width="448" height="224"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <size key="minSize" width="448" height="160"/>
+                                            <size key="maxSize" width="448" height="10000000"/>
+                                            <attributedString key="textStorage">
+                                                <fragment>
+                                                    <mutableString key="content">THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</mutableString>
+                                                    <attributes>
+                                                        <font key="NSFont" metaFont="system"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                            <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        </textView>
+                                    </subviews>
+                                </clipView>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="160" id="cNQ-ip-ye1"/>
+                                </constraints>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="HWH-n1-AAr">
+                                    <rect key="frame" x="432" y="0.0" width="16" height="160"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="dmM-fl-YOS" firstAttribute="top" secondItem="6DN-SO-hv4" secondAttribute="bottom" constant="12" id="04k-26-oAU"/>
+                            <constraint firstAttribute="trailing" secondItem="ent-hw-eoS" secondAttribute="trailing" constant="16" id="3cQ-Oz-IVy"/>
+                            <constraint firstItem="ent-hw-eoS" firstAttribute="top" secondItem="OUB-sF-btU" secondAttribute="top" constant="32" id="PUQ-2D-NmM"/>
+                            <constraint firstAttribute="trailing" secondItem="dmM-fl-YOS" secondAttribute="trailing" constant="16" id="RWt-HV-sb1"/>
+                            <constraint firstItem="6DN-SO-hv4" firstAttribute="leading" secondItem="OUB-sF-btU" secondAttribute="leading" constant="16" id="SyH-n9-INn"/>
+                            <constraint firstItem="74o-Sy-rIO" firstAttribute="top" secondItem="dmM-fl-YOS" secondAttribute="bottom" constant="24" id="T97-DQ-W7Q"/>
+                            <constraint firstItem="6DN-SO-hv4" firstAttribute="top" secondItem="ent-hw-eoS" secondAttribute="bottom" constant="16" id="Urt-oO-8mj"/>
+                            <constraint firstAttribute="bottom" secondItem="74o-Sy-rIO" secondAttribute="bottom" constant="32" id="cBY-9W-BuX"/>
+                            <constraint firstItem="dmM-fl-YOS" firstAttribute="leading" secondItem="OUB-sF-btU" secondAttribute="leading" constant="16" id="exW-sb-Tju"/>
+                            <constraint firstItem="ent-hw-eoS" firstAttribute="leading" secondItem="OUB-sF-btU" secondAttribute="leading" constant="16" id="f8B-Kt-QIk"/>
+                            <constraint firstAttribute="trailing" secondItem="6DN-SO-hv4" secondAttribute="trailing" constant="16" id="jI9-VS-5mG"/>
+                            <constraint firstItem="74o-Sy-rIO" firstAttribute="centerX" secondItem="OUB-sF-btU" secondAttribute="centerX" id="kMD-A9-vpe"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <customObject id="7gP-T2-QaG" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -560,7 +620,7 @@
             <objects>
                 <customObject id="A0L-jt-BBg" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <windowController id="iMN-dg-Cmu" sceneMemberID="viewController">
-                    <window key="window" title="Add / Edit Trains" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="TSF-l2-UQV">
+                    <window key="window" title="Add / Edit Trains" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="TSF-l2-UQV">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="700" height="500"/>
@@ -710,7 +770,7 @@
                                                 <rect key="frame" x="84" y="549" width="258" height="22"/>
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="Untitled" placeholderString="Metra F40PH" drawsBackground="YES" id="MJF-sJ-ExY">
                                                     <font key="font" metaFont="system"/>
-                                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                                 <connections>
@@ -739,7 +799,7 @@
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="1" drawsBackground="YES" id="5xl-yS-MBN">
                                                     <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="Z9a-Iu-jZV"/>
                                                     <font key="font" metaFont="system"/>
-                                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                                 <connections>
@@ -752,7 +812,7 @@
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="0" drawsBackground="YES" id="uMC-Z0-gg1">
                                                     <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="i0o-eN-SSr"/>
                                                     <font key="font" metaFont="system"/>
-                                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                                 <connections>
@@ -802,7 +862,7 @@ Gw
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="3 or 1995" drawsBackground="YES" id="ope-t6-Mze">
                                                     <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="Jyk-5P-vgJ"/>
                                                     <font key="font" metaFont="system"/>
-                                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                                 <connections>
@@ -815,7 +875,7 @@ Gw
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="2" drawsBackground="YES" id="cP9-xA-ceU">
                                                     <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="ZCK-Sr-6yy"/>
                                                     <font key="font" metaFont="system"/>
-                                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                                 <connections>
@@ -847,7 +907,7 @@ Gw
                                                                     <rect key="frame" x="104" y="334" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="PUp-JP-T0C">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -869,7 +929,7 @@ Gw
                                                                     <rect key="frame" x="104" y="359" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="p1a-xp-4TJ">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -891,7 +951,7 @@ Gw
                                                                     <rect key="frame" x="104" y="309" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="0Ur-fx-O3l">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -913,7 +973,7 @@ Gw
                                                                     <rect key="frame" x="104" y="284" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="w3g-EE-g6h">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -935,7 +995,7 @@ Gw
                                                                     <rect key="frame" x="104" y="259" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="CzW-BP-cOq">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -957,7 +1017,7 @@ Gw
                                                                     <rect key="frame" x="104" y="234" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="kVf-0b-SAw">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -979,7 +1039,7 @@ Gw
                                                                     <rect key="frame" x="104" y="209" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="9wI-ij-W4u">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -1001,7 +1061,7 @@ Gw
                                                                     <rect key="frame" x="104" y="184" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="dm7-S8-0TE">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -1023,7 +1083,7 @@ Gw
                                                                     <rect key="frame" x="104" y="159" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Eme-jb-FaA">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -1045,7 +1105,7 @@ Gw
                                                                     <rect key="frame" x="104" y="134" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="iaH-f3-irO">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -1067,7 +1127,7 @@ Gw
                                                                     <rect key="frame" x="104" y="109" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="EcD-Je-GUb">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -1089,7 +1149,7 @@ Gw
                                                                     <rect key="frame" x="104" y="84" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="app-Z8-pES">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -1111,7 +1171,7 @@ Gw
                                                                     <rect key="frame" x="104" y="59" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="SvZ-1B-pZ3">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -1133,7 +1193,7 @@ Gw
                                                                     <rect key="frame" x="104" y="34" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="QFG-uT-IRr">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -1155,7 +1215,7 @@ Gw
                                                                     <rect key="frame" x="104" y="9" width="259" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="byS-d4-Uf4">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -1262,7 +1322,7 @@ Gw
                                                                     <rect key="frame" x="104" y="359" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="NI5-bU-z66">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -1284,7 +1344,7 @@ Gw
                                                                     <rect key="frame" x="104" y="334" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Opn-sz-nDd">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -1306,7 +1366,7 @@ Gw
                                                                     <rect key="frame" x="104" y="309" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="A26-vk-wjo">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -1328,7 +1388,7 @@ Gw
                                                                     <rect key="frame" x="104" y="284" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="WmU-fg-26m">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -1350,7 +1410,7 @@ Gw
                                                                     <rect key="frame" x="104" y="259" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="4Q0-4G-gsK">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -1372,7 +1432,7 @@ Gw
                                                                     <rect key="frame" x="104" y="234" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="iEf-TB-PWL">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -1394,7 +1454,7 @@ Gw
                                                                     <rect key="frame" x="104" y="209" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="qSf-cb-htk">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -1416,7 +1476,7 @@ Gw
                                                                     <rect key="frame" x="104" y="184" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="UzN-n3-AMU">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -1438,7 +1498,7 @@ Gw
                                                                     <rect key="frame" x="104" y="159" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="GPf-XW-bnC">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -1460,7 +1520,7 @@ Gw
                                                                     <rect key="frame" x="104" y="134" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="GqI-ce-usH">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -1482,7 +1542,7 @@ Gw
                                                                     <rect key="frame" x="104" y="109" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="nSS-HF-KpU">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -1504,7 +1564,7 @@ Gw
                                                                     <rect key="frame" x="104" y="84" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="rbp-Gl-XKf">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -1526,7 +1586,7 @@ Gw
                                                                     <rect key="frame" x="104" y="59" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="ujL-ht-17A">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -1548,7 +1608,7 @@ Gw
                                                                     <rect key="frame" x="104" y="34" width="260" height="22"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="qPj-x0-beI">
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
@@ -1746,24 +1806,24 @@ Gw
             <objects>
                 <viewController title="NCE Command" id="XfG-lQ-9wD" customClass="ViewController" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="500" height="793"/>
+                        <rect key="frame" x="0.0" y="0.0" width="556" height="793"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="33" horizontalPageScroll="10" verticalLineScroll="33" verticalPageScroll="10" usesPredominantAxisScrolling="NO" scrollerKnobStyle="light" translatesAutoresizingMaskIntoConstraints="NO" id="P20-HN-Bhd">
-                                <rect key="frame" x="16" y="217" width="468" height="385"/>
+                                <rect key="frame" x="16" y="217" width="524" height="385"/>
                                 <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="fkc-IO-RS1">
-                                    <rect key="frame" x="0.0" y="0.0" width="468" height="385"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="524" height="385"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView identifier="FunctionTable" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="31" headerView="ys8-2K-PwV" viewBased="YES" id="vUm-3t-KLy">
-                                            <rect key="frame" x="0.0" y="0.0" width="468" height="362"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="524" height="362"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <tableViewGridLines key="gridStyleMask" horizontal="YES"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn identifier="FunctionColumn" width="465" minWidth="40" maxWidth="1000" id="6Ay-k9-Cri">
+                                                <tableColumn identifier="FunctionColumn" width="521" minWidth="40" maxWidth="3000" id="6Ay-k9-Cri">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="DCC Functions">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -1773,13 +1833,14 @@ Gw
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="nFg-w5-4FH" customClass="NEFunctionCell">
-                                                            <rect key="frame" x="1" y="1" width="465" height="31"/>
+                                                            <rect key="frame" x="1" y="1" width="521" height="31"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="n1Y-Vh-TgO">
-                                                                    <rect key="frame" x="388" y="-2" width="83" height="32"/>
+                                                                    <rect key="frame" x="455" y="-2" width="72" height="32"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="21" id="0GV-LJ-F1B"/>
+                                                                        <constraint firstAttribute="width" constant="60" id="Jjr-Wn-xvL"/>
                                                                     </constraints>
                                                                     <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" sound="Tink" inset="2" id="7ZT-bp-mB7">
                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1787,7 +1848,7 @@ Gw
                                                                     </buttonCell>
                                                                 </button>
                                                                 <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GHb-tJ-slN">
-                                                                    <rect key="frame" x="-2" y="7" width="382" height="17"/>
+                                                                    <rect key="frame" x="-2" y="7" width="449" height="17"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="tMV-VZ-zSL">
                                                                         <font key="font" metaFont="systemSemibold" size="13"/>
                                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1822,7 +1883,7 @@ Gw
                                     <constraint firstAttribute="height" constant="385" id="qVf-64-k03"/>
                                 </constraints>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="WTH-HS-gJh">
-                                    <rect key="frame" x="0.0" y="304" width="468" height="16"/>
+                                    <rect key="frame" x="0.0" y="369" width="468" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="khg-X7-u8U">
@@ -1830,19 +1891,19 @@ Gw
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <tableHeaderView key="headerView" id="ys8-2K-PwV">
-                                    <rect key="frame" x="0.0" y="0.0" width="468" height="23"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="524" height="23"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="bye-to-UB4">
-                                <rect key="frame" x="0.0" y="618" width="500" height="31"/>
+                                <rect key="frame" x="0.0" y="618" width="556" height="31"/>
                                 <subviews>
                                     <button horizontalHuggingPriority="249" verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="Vg2-DE-LB1">
-                                        <rect key="frame" x="135" y="-7" width="121" height="42"/>
+                                        <rect key="frame" x="149" y="-7" width="135" height="42"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="31" id="ZxB-Mf-5af"/>
                                         </constraints>
-                                        <buttonCell key="cell" type="push" title="Bell" alternateTitle="(⌘1)" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" sound="Tink" inset="2" id="Fgj-mm-lle">
+                                        <buttonCell key="cell" type="push" title="Bell (⌘1)" alternateTitle="(⌘1)" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" sound="Tink" inset="2" id="Fgj-mm-lle">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="systemMedium" size="13"/>
                                         </buttonCell>
@@ -1851,11 +1912,11 @@ Gw
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="tM1-u8-Ydv">
-                                        <rect key="frame" x="252" y="-7" width="121" height="42"/>
+                                        <rect key="frame" x="280" y="-7" width="135" height="42"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="31" id="qqm-G6-V5E"/>
                                         </constraints>
-                                        <buttonCell key="cell" type="push" title="Horn" alternateTitle="(⌘2)" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" sound="Tink" inset="2" id="xXH-LW-jfW">
+                                        <buttonCell key="cell" type="push" title="Horn (⌘2)" alternateTitle="(⌘2)" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" sound="Tink" inset="2" id="xXH-LW-jfW">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="systemMedium" size="13"/>
                                         </buttonCell>
@@ -1864,11 +1925,11 @@ Gw
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tS4-Lf-SYp">
-                                        <rect key="frame" x="369" y="-7" width="121" height="42"/>
+                                        <rect key="frame" x="411" y="-7" width="135" height="42"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="31" id="78g-pf-ORp"/>
                                         </constraints>
-                                        <buttonCell key="cell" type="push" title="Headlight" alternateTitle="(⌘0)" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" sound="Tink" inset="2" id="HTN-mZ-PtD">
+                                        <buttonCell key="cell" type="push" title="Headlight (⌘0)" alternateTitle="(⌘0)" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" sound="Tink" inset="2" id="HTN-mZ-PtD">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="systemMedium" size="13"/>
                                         </buttonCell>
@@ -1877,7 +1938,7 @@ Gw
                                         </connections>
                                     </button>
                                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EVI-l8-8eC">
-                                        <rect key="frame" x="14" y="2" width="114" height="26"/>
+                                        <rect key="frame" x="14" y="2" width="128" height="26"/>
                                         <popUpButtonCell key="cell" type="push" title="Default" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="RVE-P0-ERZ" id="hLn-Wt-79a">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="menu"/>
@@ -1913,10 +1974,10 @@ Gw
                                 </constraints>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="ceZ-SX-MkQ">
-                                <rect key="frame" x="0.0" y="0.0" width="500" height="48"/>
+                                <rect key="frame" x="0.0" y="0.0" width="556" height="48"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="749" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Aem-8k-dAR">
-                                        <rect key="frame" x="14" y="16" width="472" height="16"/>
+                                        <rect key="frame" x="14" y="16" width="528" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Status: status message" id="k0u-1W-OfJ">
                                             <font key="font" size="12" name=".AppleSystemUIFontDemi"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1932,25 +1993,25 @@ Gw
                                 </constraints>
                             </customView>
                             <box boxType="custom" cornerRadius="4" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="lfe-hm-IeL">
-                                <rect key="frame" x="16" y="665" width="468" height="100"/>
+                                <rect key="frame" x="16" y="665" width="524" height="100"/>
                                 <view key="contentView" id="rjT-dQ-Ybv">
-                                    <rect key="frame" x="1" y="1" width="466" height="98"/>
+                                    <rect key="frame" x="1" y="1" width="522" height="98"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="JDo-fa-2VP" customClass="NEConsoleView">
-                                            <rect key="frame" x="16" y="56" width="434" height="26"/>
+                                            <rect key="frame" x="16" y="56" width="490" height="26"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="26" id="tjN-v0-snT"/>
                                             </constraints>
                                         </customView>
                                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="I5b-mr-YjL" customClass="NEConsoleView">
-                                            <rect key="frame" x="16" y="22" width="434" height="26"/>
+                                            <rect key="frame" x="16" y="22" width="490" height="26"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="26" id="1VL-kZ-JXv"/>
                                             </constraints>
                                         </customView>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Z5D-HP-VgM">
-                                            <rect key="frame" x="14" y="56" width="330" height="26"/>
+                                            <rect key="frame" x="14" y="56" width="386" height="26"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="24L-ct-mtT">
                                                 <font key="font" size="22" name="LEDCalculator"/>
                                                 <color key="textColor" name="controlDarkShadowColor" catalog="System" colorSpace="catalog"/>
@@ -1966,7 +2027,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <imageView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-OK-sFq">
-                                            <rect key="frame" x="358" y="62" width="20" height="20"/>
+                                            <rect key="frame" x="414" y="62" width="20" height="20"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="3IO-1Q-9vx"/>
                                                 <constraint firstAttribute="width" constant="20" id="UxI-6b-hgN"/>
@@ -1974,7 +2035,7 @@ Gw
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="bell_icon" id="1uB-ll-PML"/>
                                         </imageView>
                                         <imageView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="44w-Hx-6m5">
-                                            <rect key="frame" x="430" y="62" width="20" height="20"/>
+                                            <rect key="frame" x="486" y="62" width="20" height="20"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="aSN-qU-vu5"/>
                                                 <constraint firstAttribute="width" constant="20" id="bDl-13-wHb"/>
@@ -1982,7 +2043,7 @@ Gw
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="headlight_icon" id="jId-ks-ZVC"/>
                                         </imageView>
                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aQw-kU-TEX">
-                                            <rect key="frame" x="80" y="23" width="372" height="17"/>
+                                            <rect key="frame" x="80" y="23" width="428" height="17"/>
                                             <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="SMPH" id="w7d-lG-hS6">
                                                 <font key="font" size="15" name="LEDCalculator"/>
                                                 <color key="textColor" name="controlDarkShadowColor" catalog="System" colorSpace="catalog"/>
@@ -1990,7 +2051,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <imageView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8iv-79-3TQ">
-                                            <rect key="frame" x="394" y="62" width="20" height="20"/>
+                                            <rect key="frame" x="450" y="62" width="20" height="20"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="20" id="NTy-Ap-Xlj"/>
                                                 <constraint firstAttribute="height" constant="20" id="tef-kR-dxS"/>
@@ -2027,10 +2088,10 @@ Gw
                                 <color key="fillColor" red="0.72234265148539145" green="0.85490196078431369" blue="0.35428377246819365" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </box>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="ehh-rk-k1v">
-                                <rect key="frame" x="0.0" y="48" width="500" height="169"/>
+                                <rect key="frame" x="0.0" y="48" width="556" height="169"/>
                                 <subviews>
                                     <button verticalHuggingPriority="750" tag="993" translatesAutoresizingMaskIntoConstraints="NO" id="rLb-VA-lOh" customClass="NEStopButton">
-                                        <rect key="frame" x="419" y="125" width="71" height="32"/>
+                                        <rect key="frame" x="475" y="125" width="71" height="32"/>
                                         <buttonCell key="cell" type="push" title="Stop" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="axesIndependently" sound="Tink" inset="2" id="fgr-BS-Uvt">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="systemBold"/>
@@ -2048,13 +2109,13 @@ Gw
                                         </textFieldCell>
                                     </textField>
                                     <box title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Ejr-Zo-7qw">
-                                        <rect key="frame" x="13" y="12" width="474" height="114"/>
+                                        <rect key="frame" x="13" y="12" width="530" height="114"/>
                                         <view key="contentView" id="hMf-Io-0a0">
-                                            <rect key="frame" x="2" y="2" width="470" height="110"/>
+                                            <rect key="frame" x="2" y="2" width="526" height="110"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <slider verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zbe-XH-dgk">
-                                                    <rect key="frame" x="14" y="52" width="442" height="24"/>
+                                                    <rect key="frame" x="14" y="52" width="498" height="24"/>
                                                     <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="50" doubleValue="25" tickMarkPosition="above" numberOfTickMarks="50" sliderType="linear" id="omI-uB-4Nh"/>
                                                     <connections>
                                                         <action selector="adjustSpeed:" target="XfG-lQ-9wD" id="tVU-S5-jdJ"/>
@@ -2069,7 +2130,7 @@ Gw
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DrO-FC-TYK">
-                                                    <rect key="frame" x="426" y="36" width="28" height="14"/>
+                                                    <rect key="frame" x="482" y="36" width="28" height="14"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Max" drawsBackground="YES" id="ban-ps-OR5">
                                                         <font key="font" metaFont="smallSystemBold"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -2085,7 +2146,7 @@ Gw
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="s6L-sk-ZNw">
-                                                    <rect key="frame" x="224" y="80" width="22" height="14"/>
+                                                    <rect key="frame" x="252" y="80" width="22" height="14"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="25" drawsBackground="YES" id="GKI-8A-dCs">
                                                         <font key="font" metaFont="systemMedium" size="11"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -2093,7 +2154,7 @@ Gw
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KDW-jB-CBi">
-                                                    <rect key="frame" x="435" y="80" width="19" height="14"/>
+                                                    <rect key="frame" x="491" y="80" width="19" height="14"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="50" drawsBackground="YES" id="o6r-RK-sf5">
                                                         <font key="font" metaFont="systemMedium" size="11"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -2101,7 +2162,7 @@ Gw
                                                     </textFieldCell>
                                                 </textField>
                                                 <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5jY-Is-sf6">
-                                                    <rect key="frame" x="161" y="15" width="149" height="23"/>
+                                                    <rect key="frame" x="189" y="15" width="149" height="23"/>
                                                     <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedRounded" trackingMode="selectOne" id="Qje-Hj-1o6">
                                                         <font key="font" metaFont="system"/>
                                                         <segments>
@@ -2116,10 +2177,11 @@ Gw
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="s6L-sk-ZNw" firstAttribute="centerX" secondItem="hMf-Io-0a0" secondAttribute="centerX" id="6LT-Yy-e31"/>
-                                                <constraint firstItem="DrO-FC-TYK" firstAttribute="leading" secondItem="hMf-Io-0a0" secondAttribute="leading" constant="426" id="6Wc-Oy-xzj"/>
+                                                <constraint firstItem="DrO-FC-TYK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hMf-Io-0a0" secondAttribute="leading" symbolic="YES" id="6Wc-Oy-xzj"/>
                                                 <constraint firstItem="5jY-Is-sf6" firstAttribute="top" secondItem="Zbe-XH-dgk" secondAttribute="bottom" constant="16" id="8tg-3C-tu0"/>
+                                                <constraint firstItem="s6L-sk-ZNw" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="uPl-ec-2Gu" secondAttribute="trailing" constant="8" symbolic="YES" id="Dn5-gK-kEr"/>
                                                 <constraint firstItem="tyc-Qq-BG2" firstAttribute="leading" secondItem="hMf-Io-0a0" secondAttribute="leading" constant="16" id="F7w-qm-KYh"/>
-                                                <constraint firstItem="KDW-jB-CBi" firstAttribute="leading" secondItem="hMf-Io-0a0" secondAttribute="leading" constant="435" id="HbD-Uc-ySy"/>
+                                                <constraint firstItem="KDW-jB-CBi" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hMf-Io-0a0" secondAttribute="leading" symbolic="YES" id="HbD-Uc-ySy"/>
                                                 <constraint firstItem="tyc-Qq-BG2" firstAttribute="top" secondItem="Zbe-XH-dgk" secondAttribute="bottom" constant="4" id="LZd-oG-iN6"/>
                                                 <constraint firstItem="Zbe-XH-dgk" firstAttribute="top" secondItem="s6L-sk-ZNw" secondAttribute="bottom" constant="4" id="QGq-WZ-0Wu"/>
                                                 <constraint firstAttribute="trailing" secondItem="DrO-FC-TYK" secondAttribute="trailing" constant="16" id="QcY-0Q-gg9"/>
@@ -2128,6 +2190,7 @@ Gw
                                                 <constraint firstItem="5jY-Is-sf6" firstAttribute="centerX" secondItem="hMf-Io-0a0" secondAttribute="centerX" id="bBo-po-6cf"/>
                                                 <constraint firstItem="uPl-ec-2Gu" firstAttribute="leading" secondItem="hMf-Io-0a0" secondAttribute="leading" constant="16" id="ddW-bs-eve"/>
                                                 <constraint firstItem="Zbe-XH-dgk" firstAttribute="top" secondItem="uPl-ec-2Gu" secondAttribute="bottom" constant="4" id="i57-rl-8oH"/>
+                                                <constraint firstItem="DrO-FC-TYK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tyc-Qq-BG2" secondAttribute="trailing" constant="8" symbolic="YES" id="krP-0r-VJW"/>
                                                 <constraint firstAttribute="trailing" secondItem="KDW-jB-CBi" secondAttribute="trailing" constant="16" id="o40-NZ-bOQ"/>
                                                 <constraint firstItem="DrO-FC-TYK" firstAttribute="top" secondItem="Zbe-XH-dgk" secondAttribute="bottom" constant="4" id="t3E-cA-OIP"/>
                                                 <constraint firstItem="Zbe-XH-dgk" firstAttribute="leading" secondItem="hMf-Io-0a0" secondAttribute="leading" constant="16" id="trd-5g-pwS"/>
@@ -2138,9 +2201,9 @@ Gw
                                         </view>
                                     </box>
                                     <box boxType="custom" borderType="line" cornerRadius="4" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="WRu-0H-8Y2">
-                                        <rect key="frame" x="0.0" y="0.0" width="500" height="1"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="556" height="1"/>
                                         <view key="contentView" id="Jrv-Ek-Pdj">
-                                            <rect key="frame" x="1" y="1" width="498" height="0.0"/>
+                                            <rect key="frame" x="1" y="1" width="554" height="0.0"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </view>
                                         <constraints>
@@ -2150,9 +2213,9 @@ Gw
                                         <color key="fillColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     </box>
                                     <box boxType="custom" cornerRadius="4" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="PwF-w2-7ZR">
-                                        <rect key="frame" x="0.0" y="168" width="500" height="1"/>
+                                        <rect key="frame" x="0.0" y="168" width="556" height="1"/>
                                         <view key="contentView" id="yub-rr-owC">
-                                            <rect key="frame" x="1" y="1" width="498" height="0.0"/>
+                                            <rect key="frame" x="1" y="1" width="554" height="0.0"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </view>
                                         <constraints>
@@ -2727,7 +2790,7 @@ Gw
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="112-127" drawsBackground="YES" id="DOZ-DC-neP">
                                         <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="wgt-eC-abi"/>
                                         <font key="font" metaFont="system"/>
-                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                     <connections>
@@ -2760,7 +2823,7 @@ Gw
                             <rect key="frame" x="0.0" y="53" width="519" height="186"/>
                             <clipView key="contentView" id="kCc-wD-TSY">
                                 <rect key="frame" x="1" y="1" width="517" height="184"/>
-                                <autoresizingMask key="autoresizingMask"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <tableView verticalHuggingPriority="750" tag="1" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="31" viewBased="YES" id="agO-9N-V2x">
                                         <rect key="frame" x="0.0" y="0.0" width="517" height="184"/>

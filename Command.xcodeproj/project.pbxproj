@@ -38,6 +38,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A512768A215EB17900CF6741 /* Command.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Command.entitlements; sourceTree = "<group>"; };
 		A516FED620E6C53200F41196 /* NEStopButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NEStopButton.h; sourceTree = "<group>"; };
 		A516FED720E6C53200F41196 /* NEStopButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NEStopButton.m; sourceTree = "<group>"; };
 		A5411D9F20D8976200B2435B /* NENCECommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NENCECommand.m; sourceTree = "<group>"; };
@@ -180,6 +181,7 @@
 		A5FC9D2D1E52AF9700D5F086 /* Command */ = {
 			isa = PBXGroup;
 			children = (
+				A512768A215EB17900CF6741 /* Command.entitlements */,
 				A5411D9E20D8964800B2435B /* Commands */,
 				A5B2981B20D88832005DF55E /* Singleton */,
 				A5FC9D4D1E567C8800D5F086 /* Third Party */,
@@ -326,6 +328,11 @@
 						DevelopmentTeam = T4562QZ3Y4;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.HardenedRuntime = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -513,8 +520,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = T4562QZ3Y4;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Command/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
@@ -529,8 +538,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = T4562QZ3Y4;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Command/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;

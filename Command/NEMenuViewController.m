@@ -151,7 +151,7 @@
 
 -(IBAction)help:(id)sender
 {
-    NSURL *url = [NSURL URLWithString:@"http://www.stackoverflow.com/"];
+    NSURL *url = [NSURL URLWithString:@"https://www.nleby.com/control"];
     
     if(![[NSWorkspace sharedWorkspace] openURL:url] )
     {
@@ -168,8 +168,8 @@
     [self.appDelegate.serialManager closeSerial];
     
     #warning debug only
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"kFirstLaunch"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    //[[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"kFirstLaunch"];
+    //[[NSUserDefaults standardUserDefaults] synchronize];
     
     [NSApp performSelector:@selector(terminate:) withObject:nil afterDelay:0.0];
 }
@@ -281,7 +281,7 @@
     
     self.quit_button.title = @"Close Port & Quit";
     self.control_button.enabled = YES;
-    self.controlConsist_button.enabled = YES;
+    //self.controlConsist_button.enabled = YES;
 
     self.disconnect_button.enabled = YES;
     
